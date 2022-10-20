@@ -6,9 +6,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +21,7 @@ public class WeatherAPIController {
 		String serviceKey = "7ddVKyFaynHpUmAi2l%2FLwGWOdys7U9uRZONpGFhKaUVrzvbZm%2Fufz4nwDM8xEiClH6XrsaKmawyily9qPmW%2BUg%3D%3D";
         String pageNo = "1";
         String numOfRows = "100000";
-		String baseDate = "20221018";	//조회하고싶은 날짜
+		String baseDate = "20221020";	//조회하고싶은 날짜
 		String baseTime = "0500";	//조회하고싶은 시간
 		String type = "JSON";	//타입 xml, json 등등 ..
         String nx = "60";	//위도
