@@ -2,6 +2,7 @@ package com.example.CLOOK.dao;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -16,30 +17,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.io.BufferedReader;
+import java.io.IOException;
+import org.json.simple.parser.ParseException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CLOOK.domain.GeocodingVO;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import lombok.AllArgsConstructor;
 
 @Repository
-public interface GeocodingRepsitory{
+public interface GeocodingRepsitory {
 
     public static GeocodingVO getData(String address) {
 
         GeocodingVO geocodingVO = new GeocodingVO();
 
         // 주소 입력 -> 위도, 경도 좌표 추출.
-        //BufferedReader io = new BufferedReader(new InputStreamReader(System.in));
+        // BufferedReader io = new BufferedReader(new InputStreamReader(System.in));
         String clientId = "7kl71pnx4p";
         String clientSecret = "A8vT5bFAcIuGkzIlrxbRhIi1XLut8Ga6NMyBa60M";
 
         try {
             System.out.println("주소를 입력해주세요 : ");
 
-            //String address = io.readLine();
+            // String address = io.readLine();
             String addr = URLEncoder.encode(address, "UTF-8");
 
             // Geocoding 개요에 나와있는 API URL 입력.
@@ -93,7 +103,7 @@ public interface GeocodingRepsitory{
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         return geocodingVO;
     }
 
@@ -144,8 +154,16 @@ public interface GeocodingRepsitory{
         double x = Math.floor(ra * Math.sin(theta) + XO + 0.5);
         double y = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
 
-        geocodingVO.setXLat(x);
-        geocodingVO.setYLon(y);
+        System.out.println(x);
+        
+
+        String stringX = String.valueOf((int)x);
+        String stringY = String.valueOf((int)y);
+
+        System.out.println("X"+stringX);
+
+        geocodingVO.setXLat(stringX);
+        geocodingVO.setYLon(stringY);
         // rs.x = Math.floor(ra * Math.sin(theta) + XO + 0.5);
         // rs.y = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
 

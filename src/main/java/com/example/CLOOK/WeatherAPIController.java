@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WeatherAPIController {
     
-    @GetMapping("/weatherAPI")
+    @GetMapping(value = "/weatherAPI", produces = "application/json; charset=UTF-8")
     public static String main(String[] args) throws IOException, ParseException {
 		
 		String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
@@ -50,7 +50,7 @@ public class WeatherAPIController {
         System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         }
