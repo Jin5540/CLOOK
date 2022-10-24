@@ -17,18 +17,18 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api")
 public class CLOOKController {
 
-    private final String address = "역삼동";
+    private final String address = "충청북도 아산시";
 
     private CLOOKService clookService;
 
     @GetMapping(value = "/clook", produces = "application/json; charset=UTF-8")
-    public String geocoidngAPI() {
+    public String clook() {
         System.out.println("controller:::------------------------------");
 
         String fail = "fail";
 
         try {
-            return clookService.getweather(clookService.gecoding(address));
+            return clookService.getweather(clookService.gecodingnxny(address));
         } catch (IOException e) {
             
             e.printStackTrace();
@@ -41,5 +41,12 @@ public class CLOOKController {
             return fail;
         }
 
+    }
+
+    @GetMapping(value = "/location", produces = "application/json; charset=UTF-8")
+    public GeocodingVO gecodingAPI() throws IOException {
+        System.out.println("controller:::------------------------------");
+
+        return clookService.location(address);
     }
 }

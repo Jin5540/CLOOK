@@ -1,9 +1,13 @@
 package com.example.CLOOK.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class GeocodingVO {
+
+    private List<String> address;
 
     private double lat; // gps로 반환받은 위도
     private double lon; // gps로 반환받은 경도

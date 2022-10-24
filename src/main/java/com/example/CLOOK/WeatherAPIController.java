@@ -22,7 +22,7 @@ public class WeatherAPIController {
         String pageNo = "1";
         String numOfRows = "100000";
 		String baseDate = "20221020";	//조회하고싶은 날짜
-		String baseTime = "0500";	//조회하고싶은 시간
+		String baseTime = "0200";	//조회하고싶은 시간
 		String type = "JSON";	//타입 xml, json 등등 ..
         String nx = "60";	//위도
 		String ny = "125";	//경도

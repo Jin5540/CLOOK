@@ -18,11 +18,25 @@ import com.example.CLOOK.service.CLOOKService;
 
 @Service
 public class CLOOKServiceImpl implements CLOOKService{
-    
+
+
     @Override
-	public GeocodingVO gecoding(String address) {
+	public GeocodingVO location(String address) {
 
         System.out.println("geocoding_serviceImpl:::------------------------------");
+
+        GeocodingVO vo = GeocodingRepsitory.getData(address);
+
+        System.out.println(vo);
+
+        return vo;
+
+	}
+    
+    @Override
+	public GeocodingVO gecodingnxny(String address) {
+
+        System.out.println("geocodingnxny_serviceImpl:::------------------------------");
 
         GeocodingVO vo = GeocodingRepsitory.getData(address);
 

@@ -6,7 +6,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -84,6 +86,8 @@ public interface GeocodingRepsitory {
 
             br.close();
 
+            List<String> addressList = new ArrayList<String>();
+
             JSONTokener tokener = new JSONTokener(response.toString());
             JSONObject object = new JSONObject(tokener);
             JSONArray arr = object.getJSONArray("addresses");
@@ -98,6 +102,11 @@ public interface GeocodingRepsitory {
 
                 geocodingVO.setLat(y);
                 geocodingVO.setLon(x);
+                
+                addressList.add((String) temp.get("roadAddress"));
+                geocodingVO.setAddress(addressList);
+
+                System.out.println("address : "+ geocodingVO.getAddress());
             }
 
         } catch (Exception e) {

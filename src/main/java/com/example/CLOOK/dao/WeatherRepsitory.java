@@ -18,19 +18,29 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import com.example.CLOOK.domain.GeocodingVO;
 
 public interface WeatherRepsitory {
-    
+
     public static String getWeather(GeocodingVO geocodingVO) throws IOException, ParseException {
+
+        // 현재 날짜 구하기
+        LocalDate now = LocalDate.now();
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+        // 결과 출력
+        System.out.println(formatedNow); 
 
         String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
         // 홈페이지에서 받은 키
         String serviceKey = "7ddVKyFaynHpUmAi2l%2FLwGWOdys7U9uRZONpGFhKaUVrzvbZm%2Fufz4nwDM8xEiClH6XrsaKmawyily9qPmW%2BUg%3D%3D";
         String pageNo = "1";
         String numOfRows = "100000";
-        String baseDate = "20221021"; // 조회하고싶은 날짜
+        String baseDate = formatedNow; // 조회하고싶은 날짜
         String baseTime = "0200"; // 조회하고싶은 시간
         String type = "JSON"; // 타입 xml, json 등등 ..
         String nx = geocodingVO.getXLat(); // 위도
@@ -53,7 +63,7 @@ public interface WeatherRepsitory {
         urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "="
                 + URLEncoder.encode(baseTime, "UTF-8")); /* 조회하고싶은 시간 AM 02시부터 3시간 단위 */
 
-        urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "=" + URLEncoder.encode(nx, "UTF-8")); 
+        urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "=" + URLEncoder.encode(nx, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("ny", "UTF-8") + "=" + URLEncoder.encode(ny, "UTF-8"));
         // urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" +
         // URLEncoder.encode("UTF-8")); //경도
@@ -72,9 +82,9 @@ public interface WeatherRepsitory {
         System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -88,6 +98,5 @@ public interface WeatherRepsitory {
         return result;
 
     }
-
 
 }
