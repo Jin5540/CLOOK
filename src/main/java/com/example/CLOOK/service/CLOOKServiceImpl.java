@@ -1,6 +1,7 @@
 package com.example.CLOOK.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import lombok.extern.log4j.Log4j;
 
 import com.example.CLOOK.dao.GeocodingRepsitory;
 import com.example.CLOOK.dao.WeatherRepsitory;
+import com.example.CLOOK.dao.SearchRepsitory;
 import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.service.CLOOKService;
 
@@ -21,15 +23,11 @@ public class CLOOKServiceImpl implements CLOOKService{
 
 
     @Override
-	public GeocodingVO location(String address) {
+	public List<String> location(String address) throws IOException, ParseException {
 
-        System.out.println("geocoding_serviceImpl:::------------------------------");
+        System.out.println("location_serviceImpl:::------------------------------");
 
-        GeocodingVO vo = GeocodingRepsitory.getData(address);
-
-        System.out.println(vo);
-
-        return vo;
+        return SearchRepsitory.getLocation(address);
 
 	}
     
@@ -51,7 +49,7 @@ public class CLOOKServiceImpl implements CLOOKService{
         
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
-        return WeatherRepsitory.getWeather(gecoding);
+        return WeatherRepsitory.getShortPartWeather(gecoding);
     }
 
 }

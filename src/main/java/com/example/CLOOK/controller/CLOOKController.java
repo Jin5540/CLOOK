@@ -1,6 +1,7 @@
 package com.example.CLOOK.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,36 +18,31 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api")
 public class CLOOKController {
 
-    private final String address = "충청북도 아산시";
+    private final String address = "경기도 성남시";
 
     private CLOOKService clookService;
 
-    @GetMapping(value = "/clook", produces = "application/json; charset=UTF-8")
-    public String clook() {
+    @GetMapping(value = "/short", produces = "application/json; charset=UTF-8")
+    public String shortweather() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
-        String fail = "fail";
+        return clookService.getweather(clookService.gecodingnxny(address));
 
-        try {
-            return clookService.getweather(clookService.gecodingnxny(address));
-        } catch (IOException e) {
-            
-            e.printStackTrace();
-            
-            return fail;
-        } catch (ParseException e) {
+    }
 
-            e.printStackTrace();
+    @GetMapping(value = "/shortpart", produces = "application/json; charset=UTF-8")
+    public String shortpartweather() throws IOException, ParseException {
+        System.out.println("controller:::------------------------------");
 
-            return fail;
-        }
+        return clookService.getweather(clookService.gecodingnxny(address));
 
     }
 
     @GetMapping(value = "/location", produces = "application/json; charset=UTF-8")
-    public GeocodingVO gecodingAPI() throws IOException {
+    public List<String> searchAPI() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
         return clookService.location(address);
     }
+
 }
