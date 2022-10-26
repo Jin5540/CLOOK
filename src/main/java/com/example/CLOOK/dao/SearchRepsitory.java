@@ -88,10 +88,12 @@ public interface SearchRepsitory {
         if(status.equals("NOT_FOUND"))
         {
             resultString="잘못된 주소입니다. 다시한번 확인해 주시기 바랍니다";
+            addressList.add(resultString);
 
         }else if(status.equals("ERROR"))
         {
             resultString="서버 에러입니다. 관리자에게 문의해주시기 바랍니다";
+            addressList.add(resultString);
         }else{
 
             JSONObject result = (JSONObject) response.get("result");

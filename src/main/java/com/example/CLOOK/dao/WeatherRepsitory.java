@@ -115,7 +115,7 @@ public interface WeatherRepsitory {
 
     }
 
-    public static String getShortPartWeather(GeocodingVO geocodingVO) throws IOException, ParseException {
+    public static WeatherVO getShortPartWeather(GeocodingVO geocodingVO) throws IOException, ParseException {
 
         Calendar cal = Calendar.getInstance();
         Date date = new Date();
@@ -226,6 +226,7 @@ public interface WeatherRepsitory {
         //String status = (String) response.get("status");
         int countsky = 0;
         int countt1h = 0;
+        int countpty = 0;
         for(int i=0; i<item.size();i++){
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
@@ -242,11 +243,15 @@ public interface WeatherRepsitory {
                 countt1h+=1;
                 String t1h = (String) object.get("fcstValue");
                 System.out.println("T1H::"+t1h);
-                weatherVO.setSky(t1h);
+                weatherVO.setT1h(t1h);
+            }
+            if(category.equals("PTY")&&countpty<1){
+                countpty+=1;
+                String pty = (String) object.get("fcstValue");
+                System.out.println("PTY::"+pty);
+                weatherVO.setPty(pty);
             }
         }
-
-        String resultString = "test";
 
         /*
          * if(status.equals("NOT_FOUND"))
@@ -262,7 +267,7 @@ public interface WeatherRepsitory {
         //System.out.println(item);
 
 
-        return resultString;
+        return weatherVO;
 
     }
 

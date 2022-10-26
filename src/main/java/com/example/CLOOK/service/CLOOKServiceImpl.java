@@ -15,6 +15,7 @@ import com.example.CLOOK.dao.GeocodingRepsitory;
 import com.example.CLOOK.dao.WeatherRepsitory;
 import com.example.CLOOK.dao.SearchRepsitory;
 import com.example.CLOOK.domain.GeocodingVO;
+import com.example.CLOOK.domain.WeatherVO;
 import com.example.CLOOK.service.CLOOKService;
 
 
@@ -47,6 +48,13 @@ public class CLOOKServiceImpl implements CLOOKService{
     @Override
     public String getweather(GeocodingVO gecoding) throws IOException, ParseException {
         
+        System.out.println("geocoding_serviceImpl:::------------------------------");
+
+        return WeatherRepsitory.getShortWeather(gecoding);
+    }
+
+    @Override
+    public WeatherVO getpartweather(GeocodingVO gecoding) throws IOException, ParseException {
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
         return WeatherRepsitory.getShortPartWeather(gecoding);

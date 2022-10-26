@@ -6,9 +6,11 @@ import java.util.List;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CLOOK.domain.GeocodingVO;
+import com.example.CLOOK.domain.WeatherVO;
 import com.example.CLOOK.service.CLOOKService;
 
 import lombok.AllArgsConstructor;
@@ -31,10 +33,10 @@ public class CLOOKController {
     }
 
     @GetMapping(value = "/shortpart", produces = "application/json; charset=UTF-8")
-    public String shortpartweather() throws IOException, ParseException {
+    public WeatherVO shortpartweather() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
-        return clookService.getweather(clookService.gecodingnxny(address));
+        return clookService.getpartweather(clookService.gecodingnxny(address));
 
     }
 
