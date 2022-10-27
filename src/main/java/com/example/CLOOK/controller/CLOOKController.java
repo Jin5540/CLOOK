@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.SunVO;
+import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
 import com.example.CLOOK.service.CLOOKService;
 
@@ -64,12 +65,19 @@ public class CLOOKController {
 
         return clookService.getair(address);
     }
+    
+    @GetMapping(value = "/uv", produces = "application/json; charset=UTF-8")
+    public List<UvVO> uvAPI() throws IOException, ParseException {
+        System.out.println("controller:::------------------------------");
+
+        return clookService.getUv();
+    }
+
     @GetMapping(value = "/sun", produces = "application/json; charset=UTF-8")
     public List<SunVO> sunAPI() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
         return clookService.getsun();
     }
-
 
 }

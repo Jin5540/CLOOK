@@ -1,5 +1,7 @@
 package com.example.CLOOK.domain;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
@@ -7,7 +9,5 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class SunVO {
-
-    private String sunrise; //일출
-    private String sunset;  //일몰
+    private List<String> sun;
 }

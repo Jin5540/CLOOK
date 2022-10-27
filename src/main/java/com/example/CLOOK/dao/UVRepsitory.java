@@ -1,6 +1,5 @@
 package com.example.CLOOK.dao;
 
-import org.json.XML;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,29 +32,35 @@ import java.time.format.DateTimeFormatter;
 
 import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.GeocodingVO;
-import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
 
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public interface SunRepsitory {
+public interface UVRepsitory {
 
-    public static List<SunVO> getSun()
+    public static List<UvVO> getUV()
             throws IOException, ParseException {
 
-        String apiUrl = "http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getAreaRiseSetInfo";
+        String apiUrl = "http://apis.data.go.kr/1360000/LivingWthrIdxServiceV3/getUVIdxV3";
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
-        String locdate = "20221027"; // 조회하고싶은 날짜
-        String location ="서울";
+        String pageNo = "1";
+        String numOfRows = "10";
+        String dataType = "JSON"; // 타입 xml, json 등등 ..
+        String areaNo = "1100000000"; // 조회하고싶은 날짜
+        String time ="2022102702";
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
-        urlBuilder.append("&" + URLEncoder.encode("locdate", "UTF-8") + "=" + URLEncoder.encode(locdate, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("location", "UTF-8") + "="+ URLEncoder.encode(location, "UTF-8"));
-
+        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
+        + URLEncoder.encode(numOfRows, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=" + URLEncoder.encode(dataType, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("areaNo", "UTF-8") + "="
+                + URLEncoder.encode(areaNo, "UTF-8")); 
+        urlBuilder.append("&" + URLEncoder.encode("time", "UTF-8") + "=" + URLEncoder.encode(time, "UTF-8"));
 
         // urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" +
         // URLEncoder.encode("UTF-8")); //경도
@@ -88,13 +93,11 @@ public interface SunRepsitory {
          * return result;
          */
 
-        List<SunVO> listsunVO = new ArrayList<SunVO>();
+        List<UvVO> listsunVO = new ArrayList<UvVO>();
 
         JSONParser parser = new JSONParser();
-        org.json.JSONObject json = XML.toJSONObject(rd.readLine());
-        //System.out.println(json);
-        //JSONObject object = (JSONObject) parser.parse(json);
-        JSONObject response = (JSONObject) json.get("response");
+        JSONObject object = (JSONObject) parser.parse(rd.readLine());
+        JSONObject response = (JSONObject) object.get("response");
         JSONObject body = (JSONObject) response.get("body");
         JSONObject items = (JSONObject) body.get("items");
         JSONArray item = (JSONArray) items.get("item");
@@ -102,17 +105,15 @@ public interface SunRepsitory {
 
         // String status = (String) response.get("status");
         for (int i = 0; i < item.size(); i++) {
-            SunVO sunVO = new SunVO();
-            json = (org.json.JSONObject) item.get(i);
-            String sunrise = (String) json.get("sunrise");
-            String sunset = (String) json.get("sunset");
+            UvVO sunVO = new UvVO();
+            object = (JSONObject) item.get(i);
+            //String h0 = (String) object.get("h0");
 
-            sunVO.setSunrise(sunrise);
-            sunVO.setSunset(sunset);
+            //sunVO.setSun(time);
 
-            listsunVO.add(sunVO);
+            
         }
-        
+        listsunVO.addAll(item);
 
         return listsunVO;
 
