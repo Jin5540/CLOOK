@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.WeatherVO;
 import com.example.CLOOK.service.CLOOKService;
@@ -20,23 +21,32 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api")
 public class CLOOKController {
 
-    private final String address = "경기도 성남시";
+    private final String address = "종로구";
 
     private CLOOKService clookService;
 
     @GetMapping(value = "/short", produces = "application/json; charset=UTF-8")
-    public String shortweather() throws IOException, ParseException {
+    public List<WeatherVO> shortweather() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
         return clookService.getweather(clookService.gecodingnxny(address));
 
     }
-
-    @GetMapping(value = "/shortpart", produces = "application/json; charset=UTF-8")
-    public WeatherVO shortpartweather() throws IOException, ParseException {
+    /* 상단 - TMX / TMN */
+    @GetMapping(value = "/shortpart1", produces = "application/json; charset=UTF-8") 
+    public WeatherVO shortpartweather1() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
-        return clookService.getpartweather(clookService.gecodingnxny(address));
+        return clookService.getpartweather1(clookService.gecodingnxny(address));
+
+    }
+
+    /* 상단 - SKY / PTY / T1H */
+    @GetMapping(value = "/shortpart2", produces = "application/json; charset=UTF-8")
+    public WeatherVO shortpartweather2() throws IOException, ParseException {
+        System.out.println("controller:::------------------------------");
+
+        return clookService.getpartweather2(clookService.gecodingnxny(address));
 
     }
 
@@ -45,6 +55,13 @@ public class CLOOKController {
         System.out.println("controller:::------------------------------");
 
         return clookService.location(address);
+    }
+
+    @GetMapping(value = "/air", produces = "application/json; charset=UTF-8")
+    public List<AirVO> airAPI() throws IOException, ParseException {
+        System.out.println("controller:::------------------------------");
+
+        return clookService.getair(address);
     }
 
 }

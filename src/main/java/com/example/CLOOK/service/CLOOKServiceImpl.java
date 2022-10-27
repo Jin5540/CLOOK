@@ -11,9 +11,11 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+import com.example.CLOOK.dao.AirRepsitory;
 import com.example.CLOOK.dao.GeocodingRepsitory;
 import com.example.CLOOK.dao.WeatherRepsitory;
 import com.example.CLOOK.dao.SearchRepsitory;
+import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.WeatherVO;
 import com.example.CLOOK.service.CLOOKService;
@@ -21,6 +23,8 @@ import com.example.CLOOK.service.CLOOKService;
 
 @Service
 public class CLOOKServiceImpl implements CLOOKService{
+
+    WeatherVO weatherVO = new WeatherVO();
 
 
     @Override
@@ -46,7 +50,7 @@ public class CLOOKServiceImpl implements CLOOKService{
 	}
 
     @Override
-    public String getweather(GeocodingVO gecoding) throws IOException, ParseException {
+    public List<WeatherVO> getweather(GeocodingVO gecoding) throws IOException, ParseException {
         
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
@@ -54,10 +58,24 @@ public class CLOOKServiceImpl implements CLOOKService{
     }
 
     @Override
-    public WeatherVO getpartweather(GeocodingVO gecoding) throws IOException, ParseException {
+    public WeatherVO getpartweather1(GeocodingVO gecoding) throws IOException, ParseException {
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
-        return WeatherRepsitory.getShortPartWeather(gecoding);
+        return WeatherRepsitory.getShortPartWeather1(gecoding);
+    }
+
+    @Override
+    public WeatherVO getpartweather2(GeocodingVO gecoding) throws IOException, ParseException {
+        System.out.println("geocoding_serviceImpl:::------------------------------");
+
+        return WeatherRepsitory.getShortPartWeather2(gecoding);
+    }
+
+    @Override
+    public List<AirVO> getair(String stationName) throws IOException, ParseException {
+        System.out.println("geocoding_serviceImpl:::------------------------------");
+
+        return AirRepsitory.getAir(stationName);
     }
 
 }
