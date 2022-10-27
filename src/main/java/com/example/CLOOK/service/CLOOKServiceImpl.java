@@ -15,8 +15,10 @@ import com.example.CLOOK.dao.AirRepsitory;
 import com.example.CLOOK.dao.GeocodingRepsitory;
 import com.example.CLOOK.dao.WeatherRepsitory;
 import com.example.CLOOK.dao.SearchRepsitory;
+import com.example.CLOOK.dao.SunRepsitory;
 import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.GeocodingVO;
+import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.WeatherVO;
 import com.example.CLOOK.service.CLOOKService;
 
@@ -76,6 +78,12 @@ public class CLOOKServiceImpl implements CLOOKService{
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
         return AirRepsitory.getAir(stationName);
+    }
+
+    @Override
+    public List<SunVO> getsun() throws IOException, ParseException {
+        // TODO Auto-generated method stub
+        return SunRepsitory.getSun();
     }
 
 }
