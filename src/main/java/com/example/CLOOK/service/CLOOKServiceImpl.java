@@ -3,6 +3,7 @@ package com.example.CLOOK.service;
 import java.io.IOException;
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,14 +85,19 @@ public class CLOOKServiceImpl implements CLOOKService{
 
     @Override
     public List<UvVO> getUv() throws IOException, ParseException {
-        // TODO Auto-generated method stub
+
         return UVRepsitory.getUV();
     }
 
     @Override
     public List<SunVO> getsun() throws IOException, ParseException {
-        // TODO Auto-generated method stub
         return SunRepsitory.getSun();
+    }
+
+    @Override
+    public JSONObject getweather2(GeocodingVO gecoding) throws IOException, ParseException {
+
+        return WeatherRepsitory.getShortWeather2(gecoding);
     }
 
 }

@@ -8,6 +8,6 @@ import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-public class SunVO {
+public class UvVO {
     private List<String> sun;
 }

@@ -3,6 +3,7 @@ package com.example.CLOOK.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,6 +79,14 @@ public class CLOOKController {
         System.out.println("controller:::------------------------------");
 
         return clookService.getsun();
+    }
+
+    @GetMapping(value = "/short2", produces = "application/json; charset=UTF-8")
+    public JSONObject shortweather2() throws IOException, ParseException {
+        System.out.println("controller:::------------------------------");
+
+        return clookService.getweather2(clookService.gecodingnxny(address));
+
     }
 
 }

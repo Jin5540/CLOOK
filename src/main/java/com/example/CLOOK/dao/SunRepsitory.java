@@ -94,14 +94,28 @@ public interface SunRepsitory {
         org.json.JSONObject json = XML.toJSONObject(rd.readLine());
         //System.out.println(json);
         //JSONObject object = (JSONObject) parser.parse(json);
-        JSONObject response = (JSONObject) json.get("response");
-        JSONObject body = (JSONObject) response.get("body");
-        JSONObject items = (JSONObject) body.get("items");
-        JSONArray item = (JSONArray) items.get("item");
+        
+        org.json.JSONObject response = (org.json.JSONObject) json.get("response");
+
+        org.json.JSONObject body = (org.json.JSONObject) response.get("body");
+        org.json.JSONObject items = (org.json.JSONObject) body.get("items");
+        //System.out.println(items);
+        org.json.JSONObject item = (org.json.JSONObject) items.get("item");
+        System.out.println(item);
+
+        SunVO sunVO = new SunVO();
+
+        String sunrise = (String) item.get("sunrise");
+        int sunset = (Integer) item.get("sunset");
+
+        sunVO.setSunrise(sunrise);
+        sunVO.setSunset(sunset);
+
+        listsunVO.add(sunVO);
         //JSONArray item = (JSONArray) items.get("item");
 
         // String status = (String) response.get("status");
-        for (int i = 0; i < item.size(); i++) {
+        /*for (int i = 0; i < item.length(); i++) {
             SunVO sunVO = new SunVO();
             json = (org.json.JSONObject) item.get(i);
             String sunrise = (String) json.get("sunrise");
@@ -111,8 +125,7 @@ public interface SunRepsitory {
             sunVO.setSunset(sunset);
 
             listsunVO.add(sunVO);
-        }
-        
+        }*/
 
         return listsunVO;
 

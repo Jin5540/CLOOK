@@ -9,5 +9,5 @@ import lombok.Data;
 public class SunVO {
 
     private String sunrise; //일출
-    private String sunset;  //일몰
+    private int sunset;  //일몰
 }
