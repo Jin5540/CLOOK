@@ -18,6 +18,7 @@ import com.example.CLOOK.dao.WeatherRepsitory;
 import com.example.CLOOK.dao.SearchRepsitory;
 import com.example.CLOOK.dao.SunRepsitory;
 import com.example.CLOOK.dao.UVRepsitory;
+import com.example.CLOOK.dao.UVRepsitory_copy;
 import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.SunVO;
@@ -98,6 +99,11 @@ public class CLOOKServiceImpl implements CLOOKService{
     public JSONObject getweather2(GeocodingVO gecoding) throws IOException, ParseException {
 
         return WeatherRepsitory.getShortWeather2(gecoding);
+    }
+
+    @Override
+    public String getUv_copy() throws IOException, ParseException {
+        return UVRepsitory_copy.getUV();
     }
 
 }

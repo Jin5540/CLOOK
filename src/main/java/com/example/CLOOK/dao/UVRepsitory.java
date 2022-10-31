@@ -43,6 +43,11 @@ public interface UVRepsitory {
     public static List<UvVO> getUV()
             throws IOException, ParseException {
 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        DateFormat df = new SimpleDateFormat("yyyyMMdd02");
+        String currentdate = df.format(cal.getTime());
+
         String apiUrl = "http://apis.data.go.kr/1360000/LivingWthrIdxServiceV3/getUVIdxV3";
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
@@ -50,16 +55,16 @@ public interface UVRepsitory {
         String numOfRows = "10";
         String dataType = "JSON"; // 타입 xml, json 등등 ..
         String areaNo = "1100000000"; // 조회하고싶은 날짜
-        String time ="2022102702";
+        String time = currentdate;
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
-        + URLEncoder.encode(numOfRows, "UTF-8"));
+                + URLEncoder.encode(numOfRows, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=" + URLEncoder.encode(dataType, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("areaNo", "UTF-8") + "="
-                + URLEncoder.encode(areaNo, "UTF-8")); 
+                + URLEncoder.encode(areaNo, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("time", "UTF-8") + "=" + URLEncoder.encode(time, "UTF-8"));
 
         // urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" +
@@ -101,17 +106,16 @@ public interface UVRepsitory {
         JSONObject body = (JSONObject) response.get("body");
         JSONObject items = (JSONObject) body.get("items");
         JSONArray item = (JSONArray) items.get("item");
-        //JSONArray item = (JSONArray) items.get("item");
+        // JSONArray item = (JSONArray) items.get("item");
 
         // String status = (String) response.get("status");
         for (int i = 0; i < item.size(); i++) {
             UvVO sunVO = new UvVO();
             object = (JSONObject) item.get(i);
-            //String h0 = (String) object.get("h0");
+            // String h0 = (String) object.get("h0");
 
-            //sunVO.setSun(time);
+            // sunVO.setSun(time);
 
-            
         }
         listsunVO.addAll(item);
 

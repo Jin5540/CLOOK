@@ -89,4 +89,11 @@ public class CLOOKController {
 
     }
 
+    @GetMapping(value = "/uvcopy", produces = "application/json; charset=UTF-8")
+    public String uvAPI_copy() throws IOException, ParseException {
+        System.out.println("controller:::------------------------------");
+
+        return clookService.getUv_copy();
+    }
+
 }
