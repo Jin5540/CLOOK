@@ -39,26 +39,46 @@ public interface WeatherRepsitory {
 
     public static List<WeatherVO> getShortWeather(GeocodingVO geocodingVO)
             throws IOException, ParseException {
+        // 현재 시간        
+        LocalTime now = LocalTime.now();               
+        // 포맷 정의하기        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");         
+        // 포맷 적용하기        
+        String formatedNow = now.format(formatter);         
+        // 포맷 적용된 현재 시간 출력        
+        System.out.println("포맷한 시간 ::: "+formatedNow);  // 06시 20분 57초
+
+        int formatnow = Integer.parseInt(formatedNow);
+        
+        
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         DateFormat df = new SimpleDateFormat("yyyyMMdd");
         String currentdate = df.format(cal.getTime());
 
+        cal.add(Calendar.DATE, -1);
+        String oneth = df.format(cal.getTime());
+        System.out.println(oneth);
+
         String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
         String pageNo = "1";
         String numOfRows = "100000";
-        String baseDate = currentdate; // 조회하고싶은 날짜
+        String baseDate =  "";
+         // 조회하고싶은 날짜
+        if(formatnow >= 0 & formatnow <=210){
+            baseDate = oneth;
+        }else{
+            baseDate = currentdate;
+        }
         String baseTime = "0200"; // 조회하고싶은 시간
         String type = "JSON"; // 타입 xml, json 등등 ..
         String nx = geocodingVO.getXLat(); // 위도
         String ny = geocodingVO.getYLon();
 
-        cal.add(Calendar.DATE, 1);
-        String oneth = df.format(cal.getTime());
-        System.out.println(oneth);
+
         cal.add(Calendar.DATE, 1);
         String twoth = df.format(cal.getTime());
         System.out.println(twoth);
@@ -311,7 +331,6 @@ public interface WeatherRepsitory {
 
         rd.close();
         conn.disconnect();
-
 
         /*
          * List<WeatherVO> listweatherVO = new ArrayList<WeatherVO>();

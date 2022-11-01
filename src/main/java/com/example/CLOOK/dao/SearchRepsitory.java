@@ -106,9 +106,7 @@ public interface SearchRepsitory {
                 addressList.add(title);
                 geocodingVO.setAddress(addressList);
             }
-
-            System.out.println("address : "+ geocodingVO.getAddress());
-
+            
             return geocodingVO.getAddress();
 
         }
