@@ -5,20 +5,16 @@ const Fetch = () => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/location', {method: 'GET'})
+        fetch('/api/location', {method: 'GET'})
         .then(res => res.json())
         .then(data => {
             setPosts(data)
-            
         })
     },[])
 
     return (
         <div>
-            <ul>
-              <div>{posts}</div>
-            </ul>
-
+            {posts}
         </div>
     )
 }
