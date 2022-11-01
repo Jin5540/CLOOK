@@ -27,6 +27,7 @@ dependencies {
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 	implementation 'org.json:json:20211205'
 	implementation 'org.apache.commons:commons-collections4:4.0'
+	implementation 'org.springframework.session:spring-session-core'
 	
 }
 

@@ -515,6 +515,12 @@ public interface WeatherRepsitory {
         // 현재시간 출력
         System.out.println(nowTime);
 
+        SimpleDateFormat datatime = new SimpleDateFormat("HH");
+
+        String time = datatime.format(cal.getTime());
+
+        int hh = Integer.parseInt(time);
+
         // 포맷변경 ( 년월일 시분초)
         SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
 
@@ -629,6 +635,36 @@ public interface WeatherRepsitory {
                 weatherVO.setPty(pty);
             }
         }
+/* 
+        String sky = weatherVO.getSky();
+        String pty = weatherVO.getPty();
+
+        if(pty=="1"||pty=="5")
+        {
+
+        }else if(pty=="2"||pty=="6"){
+
+        }else if(pty=="3"||pty=="7"){
+
+        }else{
+
+            if(sky=="1"){
+                if(6<hh&19>hh){
+
+                }else{
+
+                }
+            }
+            if(sky=="3"){
+                if(6<hh&19>hh){
+
+                }else{
+                    
+                }
+
+            }
+
+        }*/
 
         /*
          * if(status.equals("NOT_FOUND"))

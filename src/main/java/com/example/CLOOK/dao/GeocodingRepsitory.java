@@ -49,8 +49,6 @@ public interface GeocodingRepsitory {
         String clientSecret = "A8vT5bFAcIuGkzIlrxbRhIi1XLut8Ga6NMyBa60M";
 
         try {
-            System.out.println("주소를 입력해주세요 : ");
-
             // String address = io.readLine();
             String addr = URLEncoder.encode(address, "UTF-8");
 
@@ -94,8 +92,6 @@ public interface GeocodingRepsitory {
 
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject temp = (JSONObject) arr.get(i);
-                System.out.println("address : " + temp.get("roadAddress"));
-                System.out.println("jibunAddress : " + temp.get("jibunAddress"));
 
                 double x = Double.valueOf(temp.get("x").toString()).doubleValue();
                 double y = Double.valueOf(temp.get("y").toString()).doubleValue();
@@ -105,8 +101,6 @@ public interface GeocodingRepsitory {
                 
                 addressList.add((String) temp.get("roadAddress"));
                 geocodingVO.setAddress(addressList);
-
-                System.out.println("address : "+ geocodingVO.getAddress());
             }
 
         } catch (Exception e) {
@@ -151,7 +145,7 @@ public interface GeocodingRepsitory {
         // rs.lat = lat_X; //gps 좌표 위도
         // rs.lng = lng_Y; //gps 좌표 경도
         double ra = Math.tan(Math.PI * 0.25 + (geocodingVO.getLat()) * DEGRAD * 0.5);
-        System.out.println("vo" + ra);
+
         ra = re * sf / Math.pow(ra, sn);
         double theta = geocodingVO.getLon() * DEGRAD
                 - olon;
@@ -163,9 +157,6 @@ public interface GeocodingRepsitory {
         double x = Math.floor(ra * Math.sin(theta) + XO + 0.5);
         double y = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
 
-        System.out.println(x);
-        
-
         String stringX = String.valueOf((int)x);
         String stringY = String.valueOf((int)y);
 
@@ -175,11 +166,6 @@ public interface GeocodingRepsitory {
         geocodingVO.setYLon(stringY);
         // rs.x = Math.floor(ra * Math.sin(theta) + XO + 0.5);
         // rs.y = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
-
-        System.out.println(geocodingVO.getLat());
-        System.out.println(geocodingVO.getXLat());
-        System.out.println(geocodingVO.getLon());
-        System.out.println(geocodingVO.getYLon());
 
         return geocodingVO;
 

@@ -102,6 +102,31 @@ public interface SearchRepsitory {
             for(int i=0; i<items.size();i++){
                 object = (JSONObject) items.get(i);
                 String title = (String) object.get("title");
+                String resultlocation = title.substring(2,5);
+                System.out.println(resultlocation);
+
+                if(resultlocation.equals("특별시")){
+                    title = title.replaceFirst("특별시","시");
+                    System.out.print(resultlocation);
+                }else if(resultlocation=="특별자"){
+                    title.replaceFirst("특별자치시","시");
+                }else if(resultlocation=="광역시"){
+                    title.replaceFirst("광역시","시");
+                }
+                resultlocation = title.substring(0,3);
+                if(resultlocation=="충청남"){
+                    title.replaceFirst("충청남도","충남");
+                }else if(resultlocation=="충청북"){
+                    title.replaceFirst("충청북도","충북");
+                }else if(resultlocation=="경상남"){
+                    title.replaceFirst("경상남도","경남");
+                }else if(resultlocation=="경상북"){
+                    title.replaceFirst("경상북도","경북");
+                }else if(resultlocation=="전라남"){
+                    title.replaceFirst("전라남도","전남");
+                }else if(resultlocation=="전라북"){
+                    title.replaceFirst("전라북도","전북");
+                }
                 
                 addressList.add(title);
                 geocodingVO.setAddress(addressList);
