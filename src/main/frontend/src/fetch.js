@@ -14,7 +14,14 @@ const Fetch = () => {
 
     return (
         <div>
-            {posts}
+            <ul>
+                {
+                    posts.map(post => 
+                    <li>{post}</li>
+                    )
+                }
+            </ul>
+
         </div>
     )
 }
