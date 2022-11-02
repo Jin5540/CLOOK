@@ -14,6 +14,7 @@ public interface CLOOKService {
    public GeocodingVO gecodingnxny(String address);
    public List<WeatherVO> getweather(GeocodingVO gecoding) throws IOException, ParseException;
    public JSONObject getweather2(GeocodingVO gecoding) throws IOException, ParseException;
+   public String getweather3(GeocodingVO gecoding) throws IOException, ParseException;
    public WeatherVO getpartweather1(GeocodingVO gecoding) throws IOException, ParseException;
    public WeatherVO getpartweather2(GeocodingVO gecoding) throws IOException, ParseException;
    public List<AirVO> getair(String stationName) throws IOException, ParseException;

@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api")
 public class CLOOKController {
 
-    private final String address = "아산시";
+    private final String address = "충청남도 아산시";
 
     private CLOOKService clookService;
 
@@ -54,6 +54,7 @@ public class CLOOKController {
         String sessionlocation =  (String) session.getAttribute("location");
         if(sessionlocation == null){
             session.setAttribute("location", "서울특별시 강남구 역삼동");
+            return clookService.getweather(clookService.gecodingnxny("서울특별시 강남구 역삼동"));
         }else{
             session.removeAttribute("location");
             session.setAttribute("location", address);
@@ -106,6 +107,14 @@ public class CLOOKController {
         System.out.println("controller:::------------------------------");
 
         return clookService.getweather2(clookService.gecodingnxny(address));
+
+    }
+
+    @GetMapping(value = "/short3", produces = "application/json; charset=UTF-8")
+    public String shortweather3() throws IOException, ParseException {
+        System.out.println("controller:::------------------------------");
+
+        return clookService.getweather3(clookService.gecodingnxny(address));
 
     }
 

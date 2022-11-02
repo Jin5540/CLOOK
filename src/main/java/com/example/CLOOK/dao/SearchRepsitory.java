@@ -105,7 +105,7 @@ public interface SearchRepsitory {
                 String resultlocation = title.substring(2,5);
                 System.out.println(resultlocation);
 
-                if(resultlocation.equals("특별시")){
+                /*if(resultlocation.equals("특별시")){
                     title = title.replaceFirst("특별시","시");
                     System.out.print(resultlocation);
                 }else if(resultlocation=="특별자"){
@@ -126,7 +126,7 @@ public interface SearchRepsitory {
                     title.replaceFirst("전라남도","전남");
                 }else if(resultlocation=="전라북"){
                     title.replaceFirst("전라북도","전북");
-                }
+                }*/
                 
                 addressList.add(title);
                 geocodingVO.setAddress(addressList);

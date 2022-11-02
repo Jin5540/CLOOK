@@ -100,6 +100,12 @@ public class CLOOKServiceImpl implements CLOOKService{
 
         return WeatherRepsitory.getShortWeather2(gecoding);
     }
+    
+    @Override
+    public String getweather3(GeocodingVO gecoding) throws IOException, ParseException {
+
+        return WeatherRepsitory.getShortWeather3(gecoding);
+    }
 
     @Override
     public String getUv_copy() throws IOException, ParseException {
