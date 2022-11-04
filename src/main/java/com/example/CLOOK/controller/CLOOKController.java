@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -32,13 +33,13 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api")
 public class CLOOKController {
 
-    private final String address = "충청남도 아산시";
+    private final String address2 = "대전광역시 중구 읍내동";
 
     private CLOOKService clookService;
 
     /* 위치정보 */
     @GetMapping(value = "/location", produces = "application/json; charset=UTF-8")
-    public List<String> searchAPI() throws IOException, ParseException {
+    public List<String> searchAPI(@RequestParam(value = "address")String address) throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
         return clookService.location(address);
@@ -47,45 +48,46 @@ public class CLOOKController {
     /* 단기예보 */
     @GetMapping(value = "/short", produces = "application/json; charset=UTF-8")
     public List<WeatherVO> shortweather(HttpServletRequest req, RedirectAttributes redirect) throws IOException, ParseException {
+        
         System.out.println("controller:::------------------------------");
 
         HttpSession session = req.getSession();
 
         String sessionlocation =  (String) session.getAttribute("location");
         if(sessionlocation == null){
-            session.setAttribute("location", "서울특별시 강남구 역삼동");
-            return clookService.getweather(clookService.gecodingnxny("서울특별시 강남구 역삼동"));
+            session.setAttribute("location", "서울특별시 강남구 개포1동");
+            return clookService.getweather(clookService.gecodingnxny("서울특별시 강남구 개포1동"));
         }else{
             session.removeAttribute("location");
-            session.setAttribute("location", address);
+            session.setAttribute("location", address2);
         }
 
         return clookService.getweather(clookService.gecodingnxny(sessionlocation));
 
     }
-    /* 상단 - TMX / TMN 
+    /* 상단 - TMX / TMN */
     @GetMapping(value = "/shortpart1", produces = "application/json; charset=UTF-8") 
     public WeatherVO shortpartweather1() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
-        return clookService.getpartweather1(clookService.gecodingnxny(address));
+        return clookService.getpartweather1(clookService.gecodingnxny(address2));
 
-    }*/
+    }
 
-    /* 상단 - SKY / PTY / T1H */
+    /* 상단 - SKY / PTY / T1H 
     @GetMapping(value = "/shortpart2", produces = "application/json; charset=UTF-8")
     public WeatherVO shortpartweather2() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
-        return clookService.getpartweather2(clookService.gecodingnxny(address));
+        return clookService.getpartweather2(clookService.gecodingnxny(address2));
 
-    }
+    }*/
 
     @GetMapping(value = "/air", produces = "application/json; charset=UTF-8")
     public List<AirVO> airAPI() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
-        return clookService.getair(address);
+        return clookService.getair(address2);
     }
     
     @GetMapping(value = "/uv", produces = "application/json; charset=UTF-8")
@@ -106,7 +108,7 @@ public class CLOOKController {
     public JSONObject shortweather2() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
-        return clookService.getweather2(clookService.gecodingnxny(address));
+        return clookService.getweather2(clookService.gecodingnxny(address2));
 
     }
 
@@ -114,7 +116,7 @@ public class CLOOKController {
     public String shortweather3() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");
 
-        return clookService.getweather3(clookService.gecodingnxny(address));
+        return clookService.getweather3(clookService.gecodingnxny(address2));
 
     }
 

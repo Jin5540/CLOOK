@@ -42,25 +42,52 @@ public interface AirRepsitory {
     public static List<AirVO> getAir(String stationName)
             throws IOException, ParseException {
 
-        String apiUrl = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty";
+        String resultlocation = stationName.substring(2, 5);
+        String gang = stationName.substring(0, 2);
+        System.out.println(resultlocation);
+        System.out.println(gang);
+
+        if (resultlocation.equals("특별시")) {
+            stationName = stationName.replaceFirst(stationName, "서울");
+        } else if (resultlocation.equals("특별자")) {
+            stationName = stationName.replaceFirst(stationName, "세종");
+        } else if (resultlocation.equals("광역시")) {
+            stationName = stationName.replaceFirst(stationName, gang);
+        } else {
+            resultlocation = stationName.substring(0, 3);
+            System.out.println(resultlocation);
+            if (resultlocation.equals("충청남")) {
+                stationName = stationName.replaceFirst(stationName, "충남");
+            } else if (resultlocation.equals("충청북")) {
+                stationName = stationName.replaceFirst(stationName, "충북");
+            } else if (resultlocation.equals("경상남")) {
+                stationName = stationName.replaceFirst(stationName, "경남");
+            } else if (resultlocation.equals("경상북")) {
+                stationName = stationName.replaceFirst(stationName, "경북");
+            } else if (resultlocation.equals("전라남")) {
+                stationName = stationName.replaceFirst(stationName, "전남");
+            } else if (resultlocation.equals("전라북")) {
+                stationName = stationName.replaceFirst(stationName, "전북");
+            }
+        }
+
+        String apiUrl = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty";
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
         String returnType = "JSON"; // 타입 xml, json 등등 ..
-        String numOfRows = "100";
+        String numOfRows = "1000";
         String pageNo = "1";
-        String dataTerm = "DAILY"; // 조회하고싶은 날짜
-        String ver ="1.3";
+        String ver = "1.3";
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
-        urlBuilder.append("&" + URLEncoder.encode("returnType", "UTF-8") + "=" + URLEncoder.encode(returnType, "UTF-8"));
+        urlBuilder
+                .append("&" + URLEncoder.encode("returnType", "UTF-8") + "=" + URLEncoder.encode(returnType, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
                 + URLEncoder.encode(numOfRows, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("stationName", "UTF-8") + "="
+        urlBuilder.append("&" + URLEncoder.encode("sidoName", "UTF-8") + "="
                 + URLEncoder.encode(stationName, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("dataTerm", "UTF-8") + "="
-                + URLEncoder.encode(dataTerm, "UTF-8"));          
         urlBuilder.append("&" + URLEncoder.encode("ver", "UTF-8") + "=" + URLEncoder.encode(ver, "UTF-8"));
 
         // urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" +
@@ -101,8 +128,8 @@ public interface AirRepsitory {
         JSONObject response = (JSONObject) object.get("response");
         JSONObject body = (JSONObject) response.get("body");
         JSONArray items = (JSONArray) body.get("items");
-        System.out.println(items);
-        //JSONArray item = (JSONArray) items.get("item");
+
+        // JSONArray item = (JSONArray) items.get("item");
 
         // String status = (String) response.get("status");
         for (int i = 0; i < items.size(); i++) {
@@ -112,14 +139,12 @@ public interface AirRepsitory {
             String pm10Value24 = (String) object.get("pm10Value24");
             String pm25Value24 = (String) object.get("pm25Value24");
 
-            
             airVO.setDataTime(dataTime);
             airVO.setPm10Value24(pm10Value24);
             airVO.setPm25Value24(pm25Value24);
 
             listairVO.add(airVO);
         }
-
 
         return listairVO;
 
