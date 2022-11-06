@@ -136,12 +136,12 @@ public interface AirRepsitory {
             AirVO airVO = new AirVO();
             object = (JSONObject) items.get(i);
             String dataTime = (String) object.get("dataTime");
-            String pm10Value24 = (String) object.get("pm10Value24");
-            String pm25Value24 = (String) object.get("pm25Value24");
+            String pm10Grade1h = (String) object.get("pm10Grade1h");
+            String pm25Grade1h = (String) object.get("pm25Grade1h");
 
             airVO.setDataTime(dataTime);
-            airVO.setPm10Value24(pm10Value24);
-            airVO.setPm25Value24(pm25Value24);
+            airVO.setPm10Value24(pm10Grade1h);
+            airVO.setPm25Value24(pm25Grade1h);
 
             listairVO.add(airVO);
         }
