@@ -102,8 +102,8 @@ public interface SearchRepsitory {
             for(int i=0; i<items.size();i++){
                 object = (JSONObject) items.get(i);
                 String title = (String) object.get("title");
-                String resultlocation = title.substring(2,5);
-                System.out.println(resultlocation);
+                //String resultlocation = title.substring(2,5);
+                //System.out.println(resultlocation);
 
                 /*if(resultlocation.equals("특별시")){
                     title = title.replaceFirst("특별시","시");

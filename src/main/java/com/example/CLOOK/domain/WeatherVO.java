@@ -11,7 +11,7 @@ import lombok.Data;
 public class WeatherVO {
 
     private String sky; //하늘상태
-    private String t1h; //기온
+    private int t1h; //기온
     private String pty; //강수형태
     private String tmn; //최저온도
     private String tmx; //최고온도
@@ -20,6 +20,9 @@ public class WeatherVO {
     private String pop; //강수확률
     private String pcp; //강수량
     private String sno; //신적설
+
+    private String icon; //icon
+    private String character; //캐릭터
 
     private String fcstDate;
     private String fcstTime;
