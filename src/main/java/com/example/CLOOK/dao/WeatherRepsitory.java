@@ -499,7 +499,7 @@ public interface WeatherRepsitory {
         } else {
             baseDate = currentdate;
         }
-        String baseTime = ""; // 조회하고싶은 시간
+        String baseTime = ""; 
         if (formatnow >= 0 & formatnow <= 210) {
             baseTime = "2300";
         } else {

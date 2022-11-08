@@ -77,9 +77,11 @@ public class CLOOKController {
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
-
-        return clookService.getpartweather1(clookService.gecodingnxny(sessionlocation));
-
+        if (sessionlocation == null) {
+            return clookService.getpartweather1(clookService.gecodingnxny("서울특별시 강남구 개포1동"));
+        } else {
+            return clookService.getpartweather1(clookService.gecodingnxny(sessionlocation));
+        }
     }
 
     /* 상단 - SKY / PTY / T1H */
@@ -89,8 +91,11 @@ public class CLOOKController {
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
 
-        return clookService.getpartweather2(clookService.gecodingnxny(sessionlocation));
-
+        if (sessionlocation == null) {
+            return clookService.getpartweather2(clookService.gecodingnxny("서울특별시 강남구 개포1동"));
+        } else {
+            return clookService.getpartweather2(clookService.gecodingnxny(sessionlocation));
+        }
     }
 
     /* 단기예보 */

@@ -21,7 +21,7 @@ const Fetch = () => {
       .then((res) => res.json())
       .then((data) => {
         setTms(data);
-        console.log(data);
+        //console.log(data);
       });
   }, []);
 
@@ -30,7 +30,7 @@ const Fetch = () => {
       .then((res) => res.json())
       .then((data) => {
         setSpt(data);
-        console.log(data);
+        //console.log(data);
       });
   }, []);
 
@@ -38,7 +38,7 @@ const Fetch = () => {
     fetch("/api/search?saddress=충청남도 아산시", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
-        setAdresses(data);
+        //setAdresses(data);
       });
   }, []);
 
