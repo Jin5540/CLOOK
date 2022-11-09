@@ -7,6 +7,7 @@ const Fetch = () => {
   const [tms, setTms] = useState([]);
   const [spt, setSpt] = useState([]);
   const [time, setTime] = useState([]);
+  const [message, setMessage] = useState([]);
 
   useEffect(() => {
     fetch("/api/location?address=충청남도 아산시 모종동", { method: "GET" })
@@ -22,17 +23,21 @@ const Fetch = () => {
       .then((res) => res.json())
       .then((data) => {
         setTms(data);
-        if(data.time!==undefined & data.message!==undefined){
-
-        }else{
-          console.log('console ::: undefined')
-        }
-        //console.log(data);
-        //for(let i=0; i<data.time.length; i++){
-          //if(data.time[i]!=="null"){
-           // setTime(data.time[i]);
-          //}
+        if ((data.time !== undefined) & (data.message !== undefined)) {
           
+          for(let i=0; i<data.message.length; i++){
+            //console.log(data.message[0]);
+            message.push(data.message[i]);
+          }
+          for(let i=0; i<data.time.length; i++){
+            //console.log(data.message[0]);
+            time.push(data.time[i]);
+          }
+        } else {
+          console.log("console ::: undefined");
+        }
+
+
         //}
       });
   }, []);
@@ -65,15 +70,23 @@ const Fetch = () => {
         ))}
       </ul>
       <ul>
-      <li>{tms.tmn}</li>
-      <li>{tms.tmx}</li>
-      <li>{tms.message}</li>
-      <li>{tms.time}</li>
+        <li>{tms.tmn}</li>
+        <li>{tms.tmx}</li>
       </ul>
       <ul>
-      <li>{spt.icon}</li>
-      <li>{spt.t1h}</li>
-      <li>{spt.character}</li>
+        {message.map((m) => (
+          <li>{m}</li>
+        ))}
+      </ul>
+      <ul>
+        {time.map((t) => (
+          <li>{t}</li>
+        ))}
+      </ul>
+      <ul>
+        <li>{spt.icon}</li>
+        <li>{spt.t1h}</li>
+        <li>{spt.character}</li>
       </ul>
     </div>
   );
