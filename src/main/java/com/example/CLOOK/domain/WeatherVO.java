@@ -27,6 +27,9 @@ public class WeatherVO {
     private String fcstDate;
     private String fcstTime;
 
+    private List<String> time;
+    private List<String> message;
+
     private List<WeatherVO> weatherVoList;
     
 }

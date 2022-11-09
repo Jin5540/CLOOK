@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.WeatherVO;
@@ -466,7 +467,7 @@ public interface WeatherRepsitory {
     }
 
     /* 상단 - TMX / TMN */
-    public static WeatherVO getShortPartWeather1(GeocodingVO geocodingVO) throws IOException, ParseException {
+    public static WeatherVO getShortPartWeather1(GeocodingVO geocodingVO) throws IOException, ParseException, java.text.ParseException {
 
         // 현재 시간
         LocalTime now = LocalTime.now();
@@ -478,6 +479,10 @@ public interface WeatherRepsitory {
 
         int formatnow = Integer.parseInt(formatedNow);
         // int formatnow = 02;
+        
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat nowformatter = new SimpleDateFormat("yyyyMMddHHmm");
+        String nowformat = nowformatter.format(calendar.getTime());
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
@@ -499,7 +504,7 @@ public interface WeatherRepsitory {
         } else {
             baseDate = currentdate;
         }
-        String baseTime = ""; 
+        String baseTime = "";
         if (formatnow >= 0 & formatnow <= 210) {
             baseTime = "2300";
         } else {
@@ -590,6 +595,65 @@ public interface WeatherRepsitory {
             }
         }
 
+        List<String> timeList = new ArrayList<String>();
+        List<String> messageList = new ArrayList<String>();
+
+        for (int i = 0; i < item.size(); i++) {
+            object = (JSONObject) item.get(i);
+            String category = (String) object.get("category");
+            String fcstDate = (String) object.get("fcstDate");
+            String fcstTime = (String) object.get("fcstTime");
+
+            if (category.equals("PTY")) {
+                String pty = (String) object.get("fcstValue");
+                weatherVO.setFcstDate(fcstDate);
+                weatherVO.setFcstTime(fcstTime);
+                weatherVO.setPty(pty);
+
+                String setdatetime = weatherVO.getFcstDate() + weatherVO.getFcstTime();
+                Date format1 = new SimpleDateFormat("yyyyMMddHHmm").parse(setdatetime);
+                Date format2 = new SimpleDateFormat("yyyyMMddHHmm").parse(nowformat);
+
+                long time_difference = format1.getTime() - format2.getTime();
+                long hours_difference = (time_difference / (1000 * 60 * 60)) % 24;
+
+                if (hours_difference>=0 &hours_difference <= 23 & 83460000>= time_difference) {
+
+                    if (pty.equals("1") || pty.equals("5")) {
+                        messageList.add("비");
+                        weatherVO.setMessage(messageList);
+                        if (hours_difference <= 3) {
+                            timeList.add("3시간 이내");
+                            weatherVO.setTime(timeList);
+                        } else if (hours_difference <= 23) {
+                            timeList.add((weatherVO.getFcstTime()));
+                            weatherVO.setTime(timeList);
+                        }
+                    } else if (pty.equals("2") || pty.equals("6")) {
+                        messageList.add("진눈깨비");
+                        weatherVO.setMessage(messageList);
+                        if (hours_difference <= 3) {
+                            timeList.add("3시간 이내");
+                            weatherVO.setTime(timeList);
+                        } else if (hours_difference <= 23) {
+                            timeList.add((weatherVO.getFcstTime()));
+                            weatherVO.setTime(timeList);
+                        }
+                    } else if (pty.equals("3") || pty.equals("7")) {
+                        messageList.add("눈");
+                        weatherVO.setMessage(messageList);
+                        if (hours_difference <= 3) {
+                            timeList.add("3시간 이내");
+                            weatherVO.setTime(timeList);
+                        } else if (hours_difference <= 23) {
+                            timeList.add((weatherVO.getFcstTime()));
+                            weatherVO.setTime(timeList);
+                        }
+                    }
+                }
+            }
+        }
+
         /*
          * if(status.equals("NOT_FOUND"))
          * {
@@ -608,7 +672,9 @@ public interface WeatherRepsitory {
 
     }
 
-    public static WeatherVO getShortPartWeather2(GeocodingVO geocodingVO) throws IOException, ParseException {
+    /* 상단 - SKY / PTY / T1H / ICON / CHARACTER */
+    public static WeatherVO getShortPartWeather2(GeocodingVO geocodingVO)
+            throws IOException, ParseException, java.text.ParseException {
 
         Calendar cal = Calendar.getInstance();
         Date date = new Date();
@@ -618,18 +684,12 @@ public interface WeatherRepsitory {
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
         // 포맷 적용
         String formatedNowDate = nowDate.format(formatterDate);
-        // 결과 출력
-        System.out.println(formatedNowDate);
-        // 현재 시간
-        LocalTime nowTime = LocalTime.now();
-        // 현재시간 출력
-        System.out.println(nowTime);
 
-        SimpleDateFormat datatime = new SimpleDateFormat("HH");
+        SimpleDateFormat hhtime = new SimpleDateFormat("HH");
 
-        String time = datatime.format(cal.getTime());
+        String htime = hhtime.format(cal.getTime());
 
-        int hh = Integer.parseInt(time);
+        int hh = Integer.parseInt(htime);
 
         // 포맷변경 ( 년월일 시분초)
         SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
@@ -778,23 +838,20 @@ public interface WeatherRepsitory {
                 weatherVO.setIcon("구름");
             }
 
-            if(t1h>=28)
-            {
+            if (t1h >= 28) {
                 weatherVO.setCharacter("더움");
-            }else if(t1h<4){
+            } else if (t1h < 4) {
                 weatherVO.setCharacter("추움");
-            }else{
-                if(hh<=5 || hh>=21){
+            } else {
+                if (hh <= 5 || hh >= 21) {
                     weatherVO.setCharacter("졸림");
-                }else{
+                } else {
                     int index = rnd.nextInt(3);
-                    weatherVO.setCharacter( Integer.toString(index));
+                    weatherVO.setCharacter(Integer.toString(index));
                 }
             }
 
         }
-
-
 
         /*
          * if(status.equals("NOT_FOUND"))

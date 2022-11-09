@@ -49,8 +49,8 @@ public class CLOOKController {
 
         if (req.getParameter("address") == null) {
             if (sessionlocation == null) {
-                session.setAttribute("location", "서울특별시 강남구 개포1동");
-                result = "서울특별시 강남구 개포1동";
+                session.setAttribute("location", "서울특별시 강남구 신사동");
+                result = "서울특별시 강남구 신사동";
                 return JSONObject.quote(result);
             } else {
                 result = sessionlocation;
@@ -65,6 +65,7 @@ public class CLOOKController {
                 result = address;
                 return JSONObject.quote(result);
             } else {
+                session.setAttribute("location", address);
                 result = address;
                 return JSONObject.quote(result);
             }
@@ -73,12 +74,12 @@ public class CLOOKController {
 
     /* 상단 - TMX / TMN */
     @GetMapping(value = "/toptm", produces = "application/json; charset=UTF-8")
-    public WeatherVO shortpartweather1(HttpServletRequest req) throws IOException, ParseException {
+    public WeatherVO shortpartweather1(HttpServletRequest req) throws IOException, ParseException, java.text.ParseException {
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getpartweather1(clookService.gecodingnxny("서울특별시 강남구 개포1동"));
+            return clookService.getpartweather1(clookService.gecodingnxny("서울특별시 강남구 신사동"));
         } else {
             return clookService.getpartweather1(clookService.gecodingnxny(sessionlocation));
         }
@@ -86,13 +87,13 @@ public class CLOOKController {
 
     /* 상단 - SKY / PTY / T1H */
     @GetMapping(value = "/topspt", produces = "application/json; charset=UTF-8")
-    public WeatherVO shortpartweather2(HttpServletRequest req) throws IOException, ParseException {
+    public WeatherVO shortpartweather2(HttpServletRequest req) throws IOException, ParseException, java.text.ParseException {
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
 
         if (sessionlocation == null) {
-            return clookService.getpartweather2(clookService.gecodingnxny("서울특별시 강남구 개포1동"));
+            return clookService.getpartweather2(clookService.gecodingnxny("서울특별시 강남구 신사동"));
         } else {
             return clookService.getpartweather2(clookService.gecodingnxny(sessionlocation));
         }
@@ -109,8 +110,8 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            session.setAttribute("location", "서울특별시 강남구 개포1동");
-            return clookService.getweather(clookService.gecodingnxny("서울특별시 강남구 개포1동"));
+            session.setAttribute("location", "서울특별시 강남구 신사동");
+            return clookService.getweather(clookService.gecodingnxny("서울특별시 강남구 신사동"));
         } else {
             session.removeAttribute("location");
             session.setAttribute("location", address2);

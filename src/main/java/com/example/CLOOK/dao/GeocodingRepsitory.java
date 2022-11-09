@@ -161,6 +161,7 @@ public interface GeocodingRepsitory {
         String stringY = String.valueOf((int)y);
 
         System.out.println("X"+stringX);
+        System.out.println("Y"+stringY);
 
         geocodingVO.setXLat(stringX);
         geocodingVO.setYLon(stringY);

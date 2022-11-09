@@ -6,9 +6,10 @@ const Fetch = () => {
   const [sweathers, setSweahters] = useState([]);
   const [tms, setTms] = useState([]);
   const [spt, setSpt] = useState([]);
+  const [time, setTime] = useState([]);
 
   useEffect(() => {
-    fetch("/api/location", { method: "GET" })
+    fetch("/api/location?address=충청남도 아산시 모종동", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setLocation(data);
@@ -21,7 +22,18 @@ const Fetch = () => {
       .then((res) => res.json())
       .then((data) => {
         setTms(data);
+        if(data.time!==undefined & data.message!==undefined){
+
+        }else{
+          console.log('console ::: undefined')
+        }
         //console.log(data);
+        //for(let i=0; i<data.time.length; i++){
+          //if(data.time[i]!=="null"){
+           // setTime(data.time[i]);
+          //}
+          
+        //}
       });
   }, []);
 
@@ -30,6 +42,7 @@ const Fetch = () => {
       .then((res) => res.json())
       .then((data) => {
         setSpt(data);
+
         //console.log(data);
       });
   }, []);
@@ -54,6 +67,8 @@ const Fetch = () => {
       <ul>
       <li>{tms.tmn}</li>
       <li>{tms.tmx}</li>
+      <li>{tms.message}</li>
+      <li>{tms.time}</li>
       </ul>
       <ul>
       <li>{spt.icon}</li>
