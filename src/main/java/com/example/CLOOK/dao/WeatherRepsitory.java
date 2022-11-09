@@ -656,17 +656,6 @@ public interface WeatherRepsitory {
                             timeList.add((weatherVO.getFcstTime()));
                             weatherVO.setTime(timeList);
                         }
-                    }else if (pty.equals("0")  &counts<1 ) {
-                        messageList.add("눈");
-                        counts  += 1;
-                        weatherVO.setMessage(messageList);
-                        if (hours_difference <= 3) {
-                            timeList.add("3시간 이내");
-                            weatherVO.setTime(timeList);
-                        } else if (hours_difference <= 23) {
-                            timeList.add((weatherVO.getFcstTime()));
-                            weatherVO.setTime(timeList);
-                        }
                     }
                 }
             }
