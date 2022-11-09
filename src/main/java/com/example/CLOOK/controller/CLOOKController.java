@@ -58,14 +58,15 @@ public class CLOOKController {
             }
         } else {
             String address = req.getParameter("address");
-            if (sessionlocation != null) {
+            if (sessionlocation == null) {
+                session.setAttribute("location", address);
+                result = address;
+                System.out.println(result);
+                return JSONObject.quote(result);
+            } else {
                 session.removeAttribute("location");
                 session.setAttribute("location", address);
 
-                result = address;
-                return JSONObject.quote(result);
-            } else {
-                session.setAttribute("location", address);
                 result = address;
                 return JSONObject.quote(result);
             }
