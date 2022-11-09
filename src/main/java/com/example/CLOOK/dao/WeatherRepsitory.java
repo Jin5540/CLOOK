@@ -598,6 +598,10 @@ public interface WeatherRepsitory {
         List<String> timeList = new ArrayList<String>();
         List<String> messageList = new ArrayList<String>();
 
+        int countgr = 0;
+        int countgrs = 0;
+        int counts = 0;
+
         for (int i = 0; i < item.size(); i++) {
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
@@ -619,8 +623,9 @@ public interface WeatherRepsitory {
 
                 if (hours_difference>=0 &hours_difference <= 23 & 83460000>= time_difference) {
 
-                    if (pty.equals("1") || pty.equals("5")) {
+                    if (pty.equals("1") || pty.equals("5") & countgr<1) {
                         messageList.add("비");
+                        countgr += 1;
                         weatherVO.setMessage(messageList);
                         if (hours_difference <= 3) {
                             timeList.add("3시간 이내");
@@ -629,8 +634,9 @@ public interface WeatherRepsitory {
                             timeList.add((weatherVO.getFcstTime()));
                             weatherVO.setTime(timeList);
                         }
-                    } else if (pty.equals("2") || pty.equals("6")) {
+                    } else if (pty.equals("2") || pty.equals("6")&countgrs<1) {
                         messageList.add("진눈깨비");
+                        countgrs += 1;
                         weatherVO.setMessage(messageList);
                         if (hours_difference <= 3) {
                             timeList.add("3시간 이내");
@@ -639,8 +645,20 @@ public interface WeatherRepsitory {
                             timeList.add((weatherVO.getFcstTime()));
                             weatherVO.setTime(timeList);
                         }
-                    } else if (pty.equals("3") || pty.equals("7")) {
+                    } else if (pty.equals("3") || pty.equals("7") &counts<1 ) {
                         messageList.add("눈");
+                        counts  += 1;
+                        weatherVO.setMessage(messageList);
+                        if (hours_difference <= 3) {
+                            timeList.add("3시간 이내");
+                            weatherVO.setTime(timeList);
+                        } else if (hours_difference <= 23) {
+                            timeList.add((weatherVO.getFcstTime()));
+                            weatherVO.setTime(timeList);
+                        }
+                    }else if (pty.equals("0")  &counts<1 ) {
+                        messageList.add("눈");
+                        counts  += 1;
                         weatherVO.setMessage(messageList);
                         if (hours_difference <= 3) {
                             timeList.add("3시간 이내");

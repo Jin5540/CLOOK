@@ -26,19 +26,15 @@ const Fetch = () => {
         if ((data.time !== undefined) & (data.message !== undefined)) {
           
           for(let i=0; i<data.message.length; i++){
-            //console.log(data.message[0]);
             message.push(data.message[i]);
-          }
-          for(let i=0; i<data.time.length; i++){
-            //console.log(data.message[0]);
             time.push(data.time[i]);
           }
         } else {
           console.log("console ::: undefined");
         }
 
+        console.log(data);
 
-        //}
       });
   }, []);
 
@@ -52,13 +48,13 @@ const Fetch = () => {
       });
   }, []);
 
-  useEffect(() => {
-    fetch("/api/search?saddress=충청남도 아산시", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        //setAdresses(data);
-      });
-  }, []);
+ // useEffect(() => {
+ //   fetch("/api/search?saddress=충청남도 아산시", { method: "GET" })
+ //     .then((res) => res.json())
+ //     .then((data) => {
+ //       //setAdresses(data);
+  //    });
+  //}, []);
 
   return (
     <div>
