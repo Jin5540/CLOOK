@@ -49,8 +49,8 @@ public class CLOOKController {
 
         if (req.getParameter("address") == null) {
             if (sessionlocation == null) {
-                session.setAttribute("location", "서울특별시 강남구 신사동");
-                result = "서울특별시 강남구 신사동";
+                session.setAttribute("location", "서울특별시 중구 명동");
+                result = "서울특별시 중구 명동";
                 return JSONObject.quote(result);
             } else {
                 result = sessionlocation;
@@ -80,7 +80,7 @@ public class CLOOKController {
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getpartweather1(clookService.gecodingnxny("서울특별시 강남구 신사동"));
+            return clookService.getpartweather1(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
             return clookService.getpartweather1(clookService.gecodingnxny(sessionlocation));
         }
@@ -94,7 +94,7 @@ public class CLOOKController {
         String sessionlocation = (String) session.getAttribute("location");
 
         if (sessionlocation == null) {
-            return clookService.getpartweather2(clookService.gecodingnxny("서울특별시 강남구 신사동"));
+            return clookService.getpartweather2(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
             return clookService.getpartweather2(clookService.gecodingnxny(sessionlocation));
         }
@@ -103,7 +103,7 @@ public class CLOOKController {
     /* 단기예보 */
     @GetMapping(value = "/short", produces = "application/json; charset=UTF-8")
     public List<WeatherVO> shortweather(HttpServletRequest req, RedirectAttributes redirect)
-            throws IOException, ParseException {
+            throws IOException, ParseException, java.text.ParseException {
 
         System.out.println("controller:::------------------------------");
 

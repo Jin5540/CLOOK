@@ -405,7 +405,6 @@ public interface WeatherRepsitory {
             if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= -59 & min_difference <= 1440) {
 
                 if (time >= 0 & time < 300) {
-                    weatherVO.setM("0");
                     if (category.equals("TMP")) {
                         String result = (String) object.get("fcstValue");
                             weatherVO.setTmp(result);
@@ -413,52 +412,31 @@ public interface WeatherRepsitory {
                             weatherVO.setFcstDate(fcstDate);
                             listweatherVO.add(weatherVO);
 
-                    } else if (category.equals("SKY")) {
+                    } 
+                        else if (category.equals("PTY")) {
                         String result = (String) object.get("fcstValue");
-                        if (result.equals("1") & countsk < 1) {
-                            countsk += 1;
-                            weatherVO.setSky(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-                        }
-                    } else if (category.equals("PTY")) {
-                        String result = (String) object.get("fcstValue");
-                        if (result.equals("1") || result.equals("5") & countgr < 1) {
-                            countgr += 1;
+                        if (result.equals("1") || result.equals("5")) {
                             weatherVO.setPty(result);
                             weatherVO.setFcstTime(fcstTime);
                             weatherVO.setFcstDate(fcstDate);
                             listweatherVO.add(weatherVO);
                         }
                     }
+                    
                 }
-                    System.out.println("list ::: "+listweatherVO.removeAll(item));
 
                 if (time >= 300 & time < 600) {
                     weatherVO.setM("3");
                     if (category.equals("TMP")) {
                         String result = (String) object.get("fcstValue");
-                        if (counttm < 1) {
-                            counttm += 1;
                             weatherVO.setTmp(result);
                             weatherVO.setFcstTime(fcstTime);
                             weatherVO.setFcstDate(fcstDate);
                             listweatherVO.add(weatherVO);
-                        }
-                    } else if (category.equals("SKY")) {
+        
+                    }  else if (category.equals("PTY")) {
                         String result = (String) object.get("fcstValue");
-                        if (result.equals("1") & countsk < 1) {
-                            countsk += 1;
-                            weatherVO.setSky(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-                        }
-                    } else if (category.equals("PTY")) {
-                        String result = (String) object.get("fcstValue");
-                        if (result.equals("1") || result.equals("5") & countgr < 1) {
-                            countgr += 1;
+                        if (result.equals("1") || result.equals("5") ) {
                             weatherVO.setPty(result);
                             weatherVO.setFcstTime(fcstTime);
                             weatherVO.setFcstDate(fcstDate);
@@ -470,7 +448,38 @@ public interface WeatherRepsitory {
             }
 
         }
+        int sum = 0;
+        int ltmp = 0;
+        int count = 0;
+        int retmp = 0;
 
+        for(int j=0; j<listweatherVO.size(); j++){
+            WeatherVO weatherVO = new WeatherVO();
+
+            if(listweatherVO.get(j).getTmp()!=null){
+                ltmp = Integer.parseInt(listweatherVO.get(j).getTmp());
+                count++;
+                if(count<=3){
+                    sum=ltmp+sum;
+                }
+                if(count ==3){
+                    retmp=sum/3;
+                    weatherVO.setTmpl(retmp);
+                    listweatherVO.add(weatherVO);
+
+                    count = 0;
+                    sum=0;
+                }
+            }
+           
+
+            
+            
+          
+        }
+        
+
+        
         return listweatherVO;
 
     }

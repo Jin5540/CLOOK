@@ -22,6 +22,8 @@ public class WeatherVO {
     private String sno; //신적설
     private String tmp; //1시간 기온
 
+    private int tmpl; //1시간 기온
+
     private String icon; //icon
     private String character; //캐릭터
 
