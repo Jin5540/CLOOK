@@ -6,6 +6,7 @@ const Fetch = () => {
   const [sweathers, setSweahters] = useState([]);
   const [tms, setTms] = useState([]);
   const [spt, setSpt] = useState([]);
+  const [clothes, setClothes] = useState([]);
   const [time, setTime] = useState([]);
   const [message, setMessage] = useState([]);
 
@@ -33,7 +34,7 @@ const Fetch = () => {
           console.log("console ::: undefined");
         }
 
-        console.log(data);
+        //console.log(data);
 
       });
   }, []);
@@ -45,6 +46,16 @@ const Fetch = () => {
         setSpt(data);
 
         //console.log(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/short", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        setClothes(data);
+
+        console.log(data);
       });
   }, []);
 

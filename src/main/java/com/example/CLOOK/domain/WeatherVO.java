@@ -20,6 +20,7 @@ public class WeatherVO {
     private String pop; //강수확률
     private String pcp; //강수량
     private String sno; //신적설
+    private String tmp; //1시간 기온
 
     private String icon; //icon
     private String character; //캐릭터
@@ -29,6 +30,8 @@ public class WeatherVO {
 
     private List<String> time;
     private List<String> message;
+
+    private String m;
 
     private List<WeatherVO> weatherVoList;
     

@@ -56,11 +56,11 @@ public class CLOOKServiceImpl implements CLOOKService{
 	}
 
     @Override
-    public List<WeatherVO> getweather(GeocodingVO gecoding) throws IOException, ParseException {
+    public List<WeatherVO> getweather(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException {
         
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
-        return WeatherRepsitory.getShortWeather(gecoding);
+        return WeatherRepsitory.getShortWeather4(gecoding);
     }
 
     @Override
