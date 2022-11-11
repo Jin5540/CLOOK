@@ -404,16 +404,40 @@ public interface WeatherRepsitory {
 
             if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= -59 & min_difference <= 1440) {
 
-                if (time >= 0 & time < 300) {
-                    if (category.equals("TMP")) {
-                        String result = (String) object.get("fcstValue");
+                for (int y = 1; y < 8; y++) {
+
+                    int threehund = 300;
+
+                    if (time >= (threehund * (y - 1)) & time < (threehund * (y))) {
+                        if (category.equals("TMP")) {
+                            String result = (String) object.get("fcstValue");
                             weatherVO.setTmp(result);
                             weatherVO.setFcstTime(fcstTime);
                             weatherVO.setFcstDate(fcstDate);
                             listweatherVO.add(weatherVO);
 
-                    } 
-                        else if (category.equals("PTY")) {
+                        } else if (category.equals("PTY")) {
+                            String result = (String) object.get("fcstValue");
+                            if (result.equals("1") || result.equals("5")) {
+                                weatherVO.setPty(result);
+                                weatherVO.setFcstTime(fcstTime);
+                                weatherVO.setFcstDate(fcstDate);
+                                listweatherVO.add(weatherVO);
+                            }
+                        }
+
+                    }
+                }
+
+                if (time >= 2100 & time <= 2300) {
+                    if (category.equals("TMP")) {
+                        String result = (String) object.get("fcstValue");
+                        weatherVO.setTmp(result);
+                        weatherVO.setFcstTime(fcstTime);
+                        weatherVO.setFcstDate(fcstDate);
+                        listweatherVO.add(weatherVO);
+
+                    } else if (category.equals("PTY")) {
                         String result = (String) object.get("fcstValue");
                         if (result.equals("1") || result.equals("5")) {
                             weatherVO.setPty(result);
@@ -422,27 +446,7 @@ public interface WeatherRepsitory {
                             listweatherVO.add(weatherVO);
                         }
                     }
-                    
-                }
 
-                if (time >= 300 & time < 600) {
-                    weatherVO.setM("3");
-                    if (category.equals("TMP")) {
-                        String result = (String) object.get("fcstValue");
-                            weatherVO.setTmp(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-        
-                    }  else if (category.equals("PTY")) {
-                        String result = (String) object.get("fcstValue");
-                        if (result.equals("1") || result.equals("5") ) {
-                            weatherVO.setPty(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-                        }
-                    }
                 }
 
             }
@@ -453,33 +457,34 @@ public interface WeatherRepsitory {
         int count = 0;
         int retmp = 0;
 
-        for(int j=0; j<listweatherVO.size(); j++){
+        for (int j = 0; j < listweatherVO.size(); j++) {
             WeatherVO weatherVO = new WeatherVO();
 
-            if(listweatherVO.get(j).getTmp()!=null){
+            if (listweatherVO.get(j).getTmp() != null) {
                 ltmp = Integer.parseInt(listweatherVO.get(j).getTmp());
                 count++;
-                if(count<=3){
-                    sum=ltmp+sum;
+                if (count <= 3) {
+                    sum = ltmp + sum;
                 }
-                if(count ==3){
-                    retmp=sum/3;
+                if (count == 3) {
+                    retmp = sum / 3;
                     weatherVO.setTmpl(retmp);
+                    if(hh<(j+1)&(j-hh)<4){
+                        weatherVO.setM("현재");
+                    }else{
+                        String jj = String.valueOf(j);
+                        weatherVO.setM(jj);
+                    }
+
                     listweatherVO.add(weatherVO);
 
                     count = 0;
-                    sum=0;
+                    sum = 0;
                 }
             }
-           
 
-            
-            
-          
         }
-        
 
-        
         return listweatherVO;
 
     }
