@@ -75,7 +75,8 @@ public class CLOOKController {
 
     /* 상단 - TMX / TMN */
     @GetMapping(value = "/toptm", produces = "application/json; charset=UTF-8")
-    public WeatherVO shortpartweather1(HttpServletRequest req) throws IOException, ParseException, java.text.ParseException {
+    public WeatherVO shortpartweather1(HttpServletRequest req)
+            throws IOException, ParseException, java.text.ParseException {
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
@@ -88,7 +89,8 @@ public class CLOOKController {
 
     /* 상단 - SKY / PTY / T1H */
     @GetMapping(value = "/topspt", produces = "application/json; charset=UTF-8")
-    public WeatherVO shortpartweather2(HttpServletRequest req) throws IOException, ParseException, java.text.ParseException {
+    public WeatherVO shortpartweather2(HttpServletRequest req)
+            throws IOException, ParseException, java.text.ParseException {
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
@@ -101,8 +103,8 @@ public class CLOOKController {
     }
 
     /* 단기예보 */
-    @GetMapping(value = "/short", produces = "application/json; charset=UTF-8")
-    public List<WeatherVO> shortweather(HttpServletRequest req, RedirectAttributes redirect)
+    @GetMapping(value = "/clothes", produces = "application/json; charset=UTF-8")
+    public List<WeatherVO> clothesweather(HttpServletRequest req, RedirectAttributes redirect)
             throws IOException, ParseException, java.text.ParseException {
 
         System.out.println("controller:::------------------------------");
@@ -111,14 +113,30 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            session.setAttribute("location", "서울특별시 강남구 신사동");
-            return clookService.getweather(clookService.gecodingnxny("서울특별시 강남구 신사동"));
+            return clookService.getweatherclothes(clookService.gecodingnxny("서울특별시 강남구 신사동"));
         } else {
-            session.removeAttribute("location");
             session.setAttribute("location", address2);
         }
 
-        return clookService.getweather(clookService.gecodingnxny(sessionlocation));
+        return clookService.getweatherclothes(clookService.gecodingnxny(sessionlocation));
+
+    }
+
+    /* 단기예보 */
+    @GetMapping(value = "/today", produces = "application/json; charset=UTF-8")
+    public List<WeatherVO> todayweather(HttpServletRequest req, RedirectAttributes redirect)
+            throws IOException, ParseException, java.text.ParseException {
+
+        HttpSession session = req.getSession();
+
+        String sessionlocation = (String) session.getAttribute("location");
+        if (sessionlocation == null) {
+            return clookService.getweathertoday(clookService.gecodingnxny("서울특별시 강남구 신사동"));
+        } else {
+            session.setAttribute("location", address2);
+        }
+
+        return clookService.getweathertoday(clookService.gecodingnxny(sessionlocation));
 
     }
 

@@ -21,8 +21,12 @@ public class WeatherVO {
     private String pcp; //강수량
     private String sno; //신적설
     private String tmp; //1시간 기온
+    
 
-    private int tmpl; //1시간 기온
+    private int tmpl; //1시간 기온 평균
+    private String clothes1; //옷
+    private String clothes2; //옷
+    private String item; //옷
 
     private String icon; //icon
     private String character; //캐릭터
@@ -36,5 +40,7 @@ public class WeatherVO {
     private String m;
 
     private List<WeatherVO> weatherVoList;
+
+    private WeatherVO weatherVoresult;
     
 }

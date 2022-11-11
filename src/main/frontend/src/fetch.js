@@ -50,14 +50,25 @@ const Fetch = () => {
   }, []);
 
   useEffect(() => {
-    fetch("/api/short", { method: "GET" })
+    fetch("/api/clothes", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setClothes(data);
 
+        //console.log(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/today", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+      
+
         console.log(data);
       });
   }, []);
+
 
  // useEffect(() => {
  //   fetch("/api/search?saddress=충청남도 아산시", { method: "GET" })
@@ -94,6 +105,16 @@ const Fetch = () => {
         <li>{spt.icon}</li>
         <li>{spt.t1h}</li>
         <li>{spt.character}</li>
+      </ul>
+      <ul>
+        {clothes.map((c) => (
+          <li>{c.clothes1}
+          {c.clothes2}
+          {c.item}
+          {c.m}
+          </li>
+          
+        ))}
       </ul>
     </div>
   );
