@@ -705,7 +705,6 @@ public interface WeatherRepsitory {
 
             if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= -59 & min_difference <= 1440) {
                 
-                    if(fcstTime.equals("1500")){
                         if (category.equals("TMP")) {
                             String result = (String) object.get("fcstValue");
                             weatherVO.setTmp(result);
@@ -720,10 +719,20 @@ public interface WeatherRepsitory {
                             weatherVO.setFcstDate(fcstDate);
                             listweatherVO.add(weatherVO);
                         }
-
-                        
-
-                    }
+                        if (category.equals("PTY")) {
+                            String result = (String) object.get("fcstValue");
+                            weatherVO.setPty(result);
+                            weatherVO.setFcstTime(fcstTime);
+                            weatherVO.setFcstDate(fcstDate);
+                            listweatherVO.add(weatherVO);
+                        }
+                        if (category.equals("POP")) {
+                            String result = (String) object.get("fcstValue");
+                            weatherVO.setPop(result);
+                            weatherVO.setFcstTime(fcstTime);
+                            weatherVO.setFcstDate(fcstDate);
+                            listweatherVO.add(weatherVO);
+                        }
 
                 }
             
