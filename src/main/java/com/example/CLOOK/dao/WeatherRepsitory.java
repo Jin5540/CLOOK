@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -597,6 +598,9 @@ public interface WeatherRepsitory {
         } else {
             baseTime = "0200";
         }
+
+        System.out.println(baseDate);
+        System.out.println(baseTime);
         String type = "JSON"; // 타입 xml, json 등등 ..
         String nx = geocodingVO.getXLat(); // 위도
         String ny = geocodingVO.getYLon();
@@ -657,6 +661,8 @@ public interface WeatherRepsitory {
         List<WeatherVO> resultVO = new ArrayList<WeatherVO>();
         List<WeatherVO> clothesVO = new ArrayList<WeatherVO>();
 
+        WeatherVO weatherVO = new WeatherVO();
+
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(rd.readLine());
         JSONObject response = (JSONObject) object.get("response");
@@ -667,12 +673,12 @@ public interface WeatherRepsitory {
         String fcstDate = "";
         String fcstTime = "";
 
+        String fday = "";
+        String ftime = "";
+
         // String status = (String) response.get("status");
         int count = 0;
         for (int i = 0; i < item.size(); i = i + 1) {
-
-            WeatherVO weatherVO = new WeatherVO();
-            
 
             object = (JSONObject) item.get(i);
 
@@ -690,7 +696,7 @@ public interface WeatherRepsitory {
 
             String setdatetime = weatherVO.getFcstDate() + weatherVO.getFcstTime();
 
-            //int setdatetimeint = Integer.parseInt(setdatetime);
+            // int setdatetimeint = Integer.parseInt(setdatetime);
 
             Date format1 = new SimpleDateFormat("yyyyMMddHHmm").parse(setdatetime);
             Date format2 = new SimpleDateFormat("yyyyMMddHHmm").parse(nowformat);
@@ -704,44 +710,90 @@ public interface WeatherRepsitory {
             int currentdateint = Integer.parseInt(currentdate);
 
             if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= -59 & min_difference <= 1440) {
-                
-                        if (category.equals("TMP")) {
-                            String result = (String) object.get("fcstValue");
-                            weatherVO.setTmp(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-                        } 
-                        if (category.equals("SKY")) {
-                            String result = (String) object.get("fcstValue");
-                            weatherVO.setSky(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-                        }
-                        if (category.equals("PTY")) {
-                            String result = (String) object.get("fcstValue");
-                            weatherVO.setPty(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-                        }
-                        if (category.equals("POP")) {
-                            String result = (String) object.get("fcstValue");
-                            weatherVO.setPop(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-                        }
+
+                /*
+                 * if (category.equals("TMP")) {
+                 * String result = (String) object.get("fcstValue");
+                 * weatherVO.setTmp(result);
+                 * weatherVO.setFcstTime(fcstTime);
+                 * weatherVO.setFcstDate(fcstDate);
+                 * listweatherVO.add(weatherVO);
+                 * }
+                 * if (category.equals("SKY")) {
+                 * String result = (String) object.get("fcstValue");
+                 * weatherVO.setSky(result);
+                 * weatherVO.setFcstTime(fcstTime);
+                 * weatherVO.setFcstDate(fcstDate);
+                 * listweatherVO.add(weatherVO);
+                 * }
+                 * if (category.equals("PTY")) {
+                 * String result = (String) object.get("fcstValue");
+                 * weatherVO.setPty(result);
+                 * weatherVO.setFcstTime(fcstTime);
+                 * weatherVO.setFcstDate(fcstDate);
+                 * listweatherVO.add(weatherVO);
+                 * }
+                 * if (category.equals("POP")) {
+                 * String result = (String) object.get("fcstValue");
+                 * weatherVO.setPop(result);
+                 * weatherVO.setFcstTime(fcstTime);
+                 * weatherVO.setFcstDate(fcstDate);
+                 * listweatherVO.add(weatherVO);
+                 * }
+                 */
+
+                switch (category) {
+                    case "TMP":
+                        weatherVO.setTmp((object.get("fcstValue")).toString());
+                        break;
+                    case "SKY":
+                        weatherVO.setSky((object.get("fcstValue")).toString());
+                        break;
+                    case "PTY":
+                        weatherVO.setPty((object.get("fcstValue")).toString());
+                        break;
+
+                    case "POP":
+                        weatherVO.setPop((object.get("fcstValue")).toString());
+                        break;
 
                 }
-            
+                if (!fday.equals(fcstDate)) {
+                    fday = fcstDate.toString();
+                }
+                if (!ftime.equals(fcstTime)) {
+                    ftime = fcstTime.toString();
+                    System.out.println("데이: " + fday + "  " + "타임: " + ftime);
+                }
+
+                weatherVO.setFcstDate((object.get("fcstDate")).toString());
+                weatherVO.setFcstTime((object.get("fcstTime")).toString());
+
+                WeatherVO test = new WeatherVO();
+
+                test.setTmp(weatherVO.getTmp());
+                test.setSky(weatherVO.getSky());
+                test.setPty(weatherVO.getPty());
+                test.setPop(weatherVO.getPop());
+
+                test.setFcstDate(weatherVO.getFcstDate());
+                test.setFcstTime(weatherVO.getFcstTime());
+
+                // test = vl;
+                if (category.equals("POP")) {
+                    // System.out.println("HAHA!");
+                    //listweatherVO.add(test);
+                    System.out.println(test);
+                } else {
+                    // System.out.println("ㅜㅜ");
+                }
+
+            }
+
         }
+
         return listweatherVO;
     }
-
-        
-    
 
     public static JSONObject getShortWeather2(GeocodingVO geocodingVO)
             throws IOException, ParseException {
@@ -1096,7 +1148,7 @@ public interface WeatherRepsitory {
                         & min_difference <= 1440) {
 
                     if ((pty.equals("1") || pty.equals("5")) & countgr < 1) {
-                        System.out.println("count"+countgr);
+                        System.out.println("count" + countgr);
                         messageList.add("비");
                         countgr += 1;
                         weatherVO.setMessage(messageList);
