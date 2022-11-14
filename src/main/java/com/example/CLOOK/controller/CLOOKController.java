@@ -140,6 +140,24 @@ public class CLOOKController {
 
     }
 
+    /* REH / VEC / WSD / PCP */
+    @GetMapping(value = "/card", produces = "application/json; charset=UTF-8")
+    public WeatherVO cardweather(HttpServletRequest req, RedirectAttributes redirect)
+            throws IOException, ParseException, java.text.ParseException {
+
+        HttpSession session = req.getSession();
+
+        String sessionlocation = (String) session.getAttribute("location");
+        if (sessionlocation == null) {
+            return clookService.getpartweather3(clookService.gecodingnxny("서울특별시 강남구 신사동"));
+        } else {
+            session.setAttribute("location", address2);
+        }
+
+        return clookService.getpartweather3(clookService.gecodingnxny(sessionlocation));
+
+    }
+
     @GetMapping(value = "/air", produces = "application/json; charset=UTF-8")
     public List<AirVO> airAPI() throws IOException, ParseException {
         System.out.println("controller:::------------------------------");

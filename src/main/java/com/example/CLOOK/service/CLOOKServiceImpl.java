@@ -120,4 +120,11 @@ public class CLOOKServiceImpl implements CLOOKService{
         return UVRepsitory_copy.getUV();
     }
 
+    @Override
+    public WeatherVO getpartweather3(GeocodingVO gecoding)
+            throws IOException, ParseException, java.text.ParseException {
+        // TODO Auto-generated method stub
+        return WeatherRepsitory.getShortPartWeather6(gecoding);
+    }
+
 }

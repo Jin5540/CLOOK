@@ -9,6 +9,8 @@ const Fetch = () => {
   const [clothes, setClothes] = useState([]);
   const [time, setTime] = useState([]);
   const [message, setMessage] = useState([]);
+  const [todays, setTodays] = useState([]);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     fetch("/api/location?address=충청남도 아산시 모종동", { method: "GET" })
@@ -64,7 +66,17 @@ const Fetch = () => {
       .then((res) => res.json())
       .then((data) => {
       
+        setTodays(data);
+        console.log(data);
+      });
+  }, []);
 
+  useEffect(() => {
+    fetch("/api/card", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+      
+        setCards(data);
         console.log(data);
       });
   }, []);
@@ -115,6 +127,24 @@ const Fetch = () => {
           </li>
           
         ))}
+      </ul>
+      <ul>
+        {todays.map((t) => (
+          <li>{t.icon}
+          ||{t.tmp}
+          ||{t.pop}
+          ||{t.ftime}
+          </li>
+          
+        ))}
+      </ul>
+      <ul>
+          <li>{cards.vec}</li>
+          <li>{cards.wsd}</li>
+          <li>{cards.reh}</li>
+          <li>{cards.pcp}</li>
+          
+      
       </ul>
     </div>
   );
