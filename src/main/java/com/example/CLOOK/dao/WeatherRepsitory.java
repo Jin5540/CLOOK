@@ -684,6 +684,7 @@ public interface WeatherRepsitory {
 
             fcstDate = (String) object.get("fcstDate");
             fcstTime = (String) object.get("fcstTime");
+            int fhh = Integer.parseInt(fcstTime);
             String category = (String) object.get("category");
 
             int fcstDate2 = Integer.parseInt((String) object.get("fcstDate"));
@@ -776,13 +777,49 @@ public interface WeatherRepsitory {
                 test.setPty(weatherVO.getPty());
                 test.setPop(weatherVO.getPop());
 
+                if(weatherVO.getPty()!=null){
+                    if(weatherVO.getPty().equals("1")||weatherVO.getPty().equals("5"))
+                    {
+                        test.setIcon("비");
+                    }else  if(weatherVO.getPty().equals("2")||weatherVO.getPty().equals("6")){
+                        test.setIcon("진눈깨비");
+                    }else  if(weatherVO.getPty().equals("3")||weatherVO.getPty().equals("7")){
+                        test.setIcon("눈");
+                    }else{
+                        if(weatherVO.getSky()!=null){
+                            if (weatherVO.getSky().equals("1")) {
+                                if (600 <= fhh & 1900 >= fhh) {
+                                    test.setIcon("해");
+                                } else {
+                                    test.setIcon("달");
+                                }
+                            }
+                            if (weatherVO.getSky().equals("3")) {
+                                if (600 <= fhh & 1900 >= fhh) {
+                                    test.setIcon("해구름");
+                                } else {
+                                    test.setIcon("달구름");
+                                    System.out.println(fhh);
+                                }
+                            }
+                            if (weatherVO.getSky().equals("4")) {
+                                test.setIcon("구름");
+                            }
+                        }
+                    }
+                }
+
+                
+
+
+
                 test.setFcstDate(weatherVO.getFcstDate());
                 test.setFcstTime(weatherVO.getFcstTime());
 
                 // test = vl;
                 if (category.equals("POP")) {
                     // System.out.println("HAHA!");
-                    //listweatherVO.add(test);
+                    listweatherVO.add(test);
                     System.out.println(test);
                 } else {
                     // System.out.println("ㅜㅜ");
@@ -1308,6 +1345,7 @@ public interface WeatherRepsitory {
         JSONObject body = (JSONObject) response.get("body");
         JSONObject items = (JSONObject) body.get("items");
         JSONArray item = (JSONArray) items.get("item");
+        
 
         // String status = (String) response.get("status");
         int countsky = 0;
@@ -1316,12 +1354,14 @@ public interface WeatherRepsitory {
         for (int i = 0; i < item.size(); i++) {
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
+            String fcstTime = (String) object.get("fcstTime");
 
             // System.out.println(category);
             if (category.equals("SKY") && countsky < 1) {
                 countsky += 1;
                 String sky = (String) object.get("fcstValue");
                 weatherVO.setSky(sky);
+                weatherVO.setFcstTime(fcstTime);
             }
             if (category.equals("T1H") && countt1h < 1) {
                 countt1h += 1;
@@ -1338,6 +1378,8 @@ public interface WeatherRepsitory {
         int t1h = weatherVO.getT1h();
         String sky = weatherVO.getSky();
         String pty = weatherVO.getPty();
+        int fhh = Integer.parseInt(weatherVO.getFcstTime());
+        
 
         Random rnd = new Random();
 
