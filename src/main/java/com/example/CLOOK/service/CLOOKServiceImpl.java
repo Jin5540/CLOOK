@@ -32,8 +32,8 @@ import com.example.CLOOK.mapper.ClookMapper;
 @Service
 public class CLOOKServiceImpl implements CLOOKService{
 
-    @Autowired
-    ClookMapper Mapper;
+    //@Autowired
+    //ClookMapper Mapper;
 
     @Override
 	public List<String> location(String address) throws IOException, ParseException {
@@ -99,9 +99,9 @@ public class CLOOKServiceImpl implements CLOOKService{
         String result = staionName.substring(0,staionName.indexOf(" ")+1);
         System.out.println(result);
 
-        //return UVRepsitory.getUV(result);
+        return UVRepsitory.getUV(result);
 
-        return UVRepsitory.getUV(Mapper.getLocaionIndex(result));
+        //return UVRepsitory.getUV(Mapper.getLocaionIndex(result));
     }
 
     @Override

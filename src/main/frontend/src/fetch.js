@@ -14,11 +14,11 @@ const Fetch = () => {
   const [uvs, setUvs] = useState([]);
 
   useEffect(() => {
-    fetch("/api/location?address=충청남도 아산시 모종동", { method: "GET" })
+    fetch("/api/location", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setLocation(data);
-        //console.log(data);
+        console.log(data);
       });
   }, []);
 
@@ -37,7 +37,7 @@ const Fetch = () => {
           console.log("console ::: undefined");
         }
 
-        //console.log(data);
+        console.log(data);
 
       });
   }, []);
@@ -48,7 +48,7 @@ const Fetch = () => {
       .then((data) => {
         setSpt(data);
 
-        //console.log(data);
+        console.log(data);
       });
   }, []);
 
@@ -58,7 +58,7 @@ const Fetch = () => {
       .then((data) => {
         setClothes(data);
 
-        //console.log(data);
+        console.log(data);
       });
   }, []);
 
@@ -128,6 +128,7 @@ const Fetch = () => {
         <li>{spt.icon}</li>
         <li>{spt.t1h}</li>
         <li>{spt.character}</li>
+        <li>{spt.background}</li>
       </ul>
       <ul>
         {clothes.map((c) => (

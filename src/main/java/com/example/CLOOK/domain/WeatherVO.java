@@ -28,6 +28,7 @@ public class WeatherVO {
     private String clothes1; //옷
     private String clothes2; //옷
     private String item; //옷
+    private String background;
 
     private String icon; //icon
     private String character; //캐릭터

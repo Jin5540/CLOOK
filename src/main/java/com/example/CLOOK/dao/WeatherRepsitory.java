@@ -474,7 +474,7 @@ public interface WeatherRepsitory {
                 if (count == 3) {
                     retmp = sum / 3;
                     weatherVO.setTmpl(retmp);
-                    if (hh < (j + 1) & (j - hh) < 4) {
+                    if ((hh < (j + 1)) & ((j - hh) < 3)) {
                         weatherVO.setM("현재");
                     } else {
                         String jj = String.valueOf(j + 1);
@@ -497,25 +497,26 @@ public interface WeatherRepsitory {
                 int a = listVO.get(j).getTmpl();
                 String m = listVO.get(j).getM();
                 if (28 <= a) {
-
-                } else if (25 <= a & a < 28) {
                     weatherVO.setClothes1("민소매");
-
-                } else if (23 <= a & a < 25) {
+                } else if (25 <= a & a < 28) {
+                    
                     weatherVO.setClothes1("반팔티");
-
-                } else if (21 <= a & a < 23) {
+                } else if (23 <= a & a < 25) {
+                    
                     weatherVO.setClothes1("반팔티");
                     weatherVO.setClothes2("얇은셔츠");
+                } else if (21 <= a & a < 23) {
 
+                    weatherVO.setClothes1("긴팔티");
+                    weatherVO.setClothes2("얇은셔츠");
                 } else if (16 <= a & a < 21) {
                     weatherVO.setClothes1("긴팔티");
-                    weatherVO.setClothes2("얇은셔츠");
+                    weatherVO.setClothes2("가디건");
 
                 } else if (12 <= a & a < 16) {
+
                     weatherVO.setClothes1("긴팔티");
                     weatherVO.setClothes2("자켓");
-
                 } else if (10 <= a & a < 12) {
                     weatherVO.setClothes1("니트");
                     weatherVO.setClothes2("자켓");
@@ -526,7 +527,7 @@ public interface WeatherRepsitory {
 
                 } else if (4 <= a & a < 7) {
                     weatherVO.setClothes1("니트");
-                    weatherVO.setClothes2("코트");
+                    weatherVO.setClothes2("패딩");
 
                 } else if (a < 4) {
                     weatherVO.setClothes1("니트");
@@ -710,7 +711,7 @@ public interface WeatherRepsitory {
             int formatedNowint = Integer.parseInt(formatedNow2);
             int currentdateint = Integer.parseInt(currentdate);
 
-            if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= -59 & min_difference <= 1440) {
+            if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= 0 & min_difference <= 1440) {
 
                 /*
                  * if (category.equals("TMP")) {
@@ -1366,7 +1367,7 @@ public interface WeatherRepsitory {
                 weatherVO.setSky(sky);
                 weatherVO.setFcstTime(fcstTime);
             }
-            if (category.equals("T1H") && countt1h < 1) {
+            if (category.equals("T1H") && countt1h < 2) {
                 countt1h += 1;
                 int t1h = Integer.parseInt((String) object.get("fcstValue"));
                 weatherVO.setT1h(t1h);
@@ -1383,37 +1384,48 @@ public interface WeatherRepsitory {
         String pty = weatherVO.getPty();
         int fhh = Integer.parseInt(weatherVO.getFcstTime());
         
+        System.out.println("현재 시간 정리 ::: "+hh);
 
         Random rnd = new Random();
 
         if (pty.equals("1") || pty.equals("5")) {
             weatherVO.setIcon("비");
             weatherVO.setCharacter("우산");
+            weatherVO.setBackground("비");
         } else if (pty.equals("2") || pty.equals("6")) {
             weatherVO.setIcon("진눈깨비");
             weatherVO.setCharacter("우산");
+            weatherVO.setBackground("비");
         } else if (pty.equals("3") || pty.equals("7")) {
             weatherVO.setIcon("눈");
             weatherVO.setCharacter("눈사람");
+            weatherVO.setBackground("눈");
         } else {
 
             if (sky.equals("1")) {
                 if (6 <= hh & 19 >= hh) {
                     weatherVO.setIcon("해");
+                    weatherVO.setBackground("구름없는낮");
+                    
                 } else {
                     weatherVO.setIcon("달");
+                    weatherVO.setBackground("구름없는밤");
                 }
             }
             if (sky.equals("3")) {
                 if (6 <= hh & 19 >= hh) {
                     weatherVO.setIcon("해구름");
+                    weatherVO.setBackground("구름많은낮");
                 } else {
                     weatherVO.setIcon("달구름");
+                    weatherVO.setBackground("구름많은밤");
                 }
             }
             if (sky.equals("4")) {
                 weatherVO.setIcon("구름");
+                weatherVO.setBackground("구름");
             }
+
 
             if (t1h >= 28) {
                 weatherVO.setCharacter("더움");
@@ -1562,12 +1574,12 @@ public interface WeatherRepsitory {
             String category = (String) object.get("category");
 
             // System.out.println(category);
-            if (category.equals("REH") && count1 < 1) {
+            if (category.equals("REH") && count1 < 2) {
                 count1 += 1;
                 String reh = (String) object.get("fcstValue");
                 weatherVO.setReh(reh);
             }
-            if (category.equals("VEC") && count2 < 1) {
+            if (category.equals("VEC") && count2 < 2) {
                 count2 += 1;
                 int vec = Integer.parseInt((String) object.get("fcstValue"));
                 String resultvec = "";
@@ -1591,12 +1603,12 @@ public interface WeatherRepsitory {
                 }
                 weatherVO.setVec(resultvec);
             }
-            if (category.equals("WSD") && count3 < 1) {
+            if (category.equals("WSD") && count3 < 2) {
                 count3 += 1;
                 String wsd = (String) object.get("fcstValue");
                 weatherVO.setWsd(wsd);
             }
-            if (category.equals("PCP") && count4 < 1) {
+            if (category.equals("PCP") && count4 < 2) {
                 count4 += 1;
                 String pcp = (String) object.get("fcstValue");
                 weatherVO.setPcp(pcp);
