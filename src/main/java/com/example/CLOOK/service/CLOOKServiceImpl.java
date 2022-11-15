@@ -6,6 +6,8 @@ import java.util.List;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -24,14 +26,14 @@ import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
-import com.example.CLOOK.service.CLOOKService;
+import com.example.CLOOK.mapper.ClookMapper;
 
-
+@Primary
 @Service
 public class CLOOKServiceImpl implements CLOOKService{
 
-    WeatherVO weatherVO = new WeatherVO();
-
+    @Autowired
+    ClookMapper Mapper;
 
     @Override
 	public List<String> location(String address) throws IOException, ParseException {
@@ -93,14 +95,18 @@ public class CLOOKServiceImpl implements CLOOKService{
     }
 
     @Override
-    public List<UvVO> getUv() throws IOException, ParseException {
+    public List<UvVO> getUv(String staionName) throws IOException, ParseException {
+        String result = staionName.substring(0,staionName.indexOf(" ")+1);
+        System.out.println(result);
 
-        return UVRepsitory.getUV();
+        //return UVRepsitory.getUV(result);
+
+        return UVRepsitory.getUV(Mapper.getLocaionIndex(result));
     }
 
     @Override
-    public List<SunVO> getsun() throws IOException, ParseException {
-        return SunRepsitory.getSun();
+    public List<SunVO> getsun(String staionName) throws IOException, ParseException {
+        return SunRepsitory.getSun(staionName);
     }
 
     @Override
@@ -123,7 +129,6 @@ public class CLOOKServiceImpl implements CLOOKService{
     @Override
     public WeatherVO getpartweather3(GeocodingVO gecoding)
             throws IOException, ParseException, java.text.ParseException {
-        // TODO Auto-generated method stub
         return WeatherRepsitory.getShortPartWeather6(gecoding);
     }
 

@@ -11,6 +11,7 @@ const Fetch = () => {
   const [message, setMessage] = useState([]);
   const [todays, setTodays] = useState([]);
   const [cards, setCards] = useState([]);
+  const [uvs, setUvs] = useState([]);
 
   useEffect(() => {
     fetch("/api/location?address=충청남도 아산시 모종동", { method: "GET" })
@@ -81,6 +82,16 @@ const Fetch = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/api/uv", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+      
+        setUvs(data);
+        console.log(data);
+      });
+  }, []);
+
 
  // useEffect(() => {
  //   fetch("/api/search?saddress=충청남도 아산시", { method: "GET" })
@@ -143,6 +154,16 @@ const Fetch = () => {
           <li>{cards.wsd}</li>
           <li>{cards.reh}</li>
           <li>{cards.pcp}</li>
+          
+      
+      </ul>
+
+      <ul>
+      {uvs.map((u) => (
+          <li>{u.h0}
+          </li>
+          
+        ))}
           
       
       </ul>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.CLOOK.mapper.ClookMapper">
+  <select id="getLocaionIndex" resultType="String" parameterType="String">
+    SELECT location_index FROM uv_location WHERE location = ${location_name};
+  </select>
+</mapper>

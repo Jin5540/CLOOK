@@ -8,6 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,7 @@ import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
+import com.example.CLOOK.mapper.ClookMapper;
 import com.example.CLOOK.service.CLOOKService;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +33,7 @@ public class CLOOKController {
 
     private final String address2 = "대전광역시 대덕구 읍내동";
 
+    @Autowired
     private CLOOKService clookService;
 
     /* 위치정보 */
@@ -113,12 +118,10 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getweatherclothes(clookService.gecodingnxny("서울특별시 강남구 신사동"));
+            return clookService.getweatherclothes(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
-            session.setAttribute("location", address2);
+            return clookService.getweatherclothes(clookService.gecodingnxny(sessionlocation));
         }
-
-        return clookService.getweatherclothes(clookService.gecodingnxny(sessionlocation));
 
     }
 
@@ -131,14 +134,11 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getweathertoday(clookService.gecodingnxny("서울특별시 강남구 신사동"));
+            return clookService.getweathertoday(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
-            session.setAttribute("location", address2);
-        }
-
-        return clookService.getweathertoday(clookService.gecodingnxny(sessionlocation));
-
+            return clookService.getweathertoday(clookService.gecodingnxny(sessionlocation));
     }
+}
 
     /* REH / VEC / WSD / PCP */
     @GetMapping(value = "/card", produces = "application/json; charset=UTF-8")
@@ -149,13 +149,10 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getpartweather3(clookService.gecodingnxny("서울특별시 강남구 신사동"));
+            return clookService.getpartweather3(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
-            session.setAttribute("location", address2);
+            return clookService.getpartweather3(clookService.gecodingnxny(sessionlocation));
         }
-
-        return clookService.getpartweather3(clookService.gecodingnxny(sessionlocation));
-
     }
 
     @GetMapping(value = "/air", produces = "application/json; charset=UTF-8")
@@ -166,17 +163,26 @@ public class CLOOKController {
     }
 
     @GetMapping(value = "/uv", produces = "application/json; charset=UTF-8")
-    public List<UvVO> uvAPI() throws IOException, ParseException {
-        System.out.println("controller:::------------------------------");
-
-        return clookService.getUv();
+    public List<UvVO> uvAPI(HttpServletRequest req) throws IOException, ParseException {
+        HttpSession session = req.getSession();
+        String sessionlocation = (String) session.getAttribute("location");
+        if (sessionlocation == null) {
+            return clookService.getUv("서울특별시 중구 명동");
+        }else{
+            return clookService.getUv(sessionlocation);
+        } 
     }
 
     @GetMapping(value = "/sun", produces = "application/json; charset=UTF-8")
-    public List<SunVO> sunAPI() throws IOException, ParseException {
-        System.out.println("controller:::------------------------------");
-
-        return clookService.getsun();
+    public List<SunVO> sunAPI(HttpServletRequest req) throws IOException, ParseException {
+        HttpSession session = req.getSession();
+        String sessionlocation = (String) session.getAttribute("location");
+        if (sessionlocation == null) {
+            return clookService.getsun("서울특별시 중구 명동");
+        }else{
+            return clookService.getsun(sessionlocation);
+        }
+        
     }
 
     /*
@@ -203,5 +209,6 @@ public class CLOOKController {
 
         return clookService.getUv_copy();
     }
-
 }
+
+

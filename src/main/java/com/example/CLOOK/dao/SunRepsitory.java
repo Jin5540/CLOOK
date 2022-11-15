@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 
 public interface SunRepsitory {
 
-    public static List<SunVO> getSun()
+    public static List<SunVO> getSun(String staionName)
             throws IOException, ParseException {
 
         Calendar cal = Calendar.getInstance();

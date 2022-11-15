@@ -28,7 +28,12 @@ dependencies {
 	implementation 'org.json:json:20211205'
 	implementation 'org.apache.commons:commons-collections4:4.0'
 	implementation 'org.springframework.session:spring-session-core'
-	
+	// MyBatis 라이브러리 의존성 추가
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'mysql:mysql-connector-java'
+
 }
 
 tasks.named('test') {

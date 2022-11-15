@@ -1,7 +1,6 @@
 package com.example.CLOOK.domain;
 
 import java.util.List;
-
 import lombok.Data;
 
 @Data

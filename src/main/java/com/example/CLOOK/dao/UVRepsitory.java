@@ -40,22 +40,44 @@ import java.util.stream.Collectors;
 
 public interface UVRepsitory {
 
-    public static List<UvVO> getUV()
+    public static List<UvVO> getUV(String staionName)
             throws IOException, ParseException {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        DateFormat df = new SimpleDateFormat("yyyyMMdd02");
+        DateFormat df = new SimpleDateFormat("yyyyMMdd");
         String currentdate = df.format(cal.getTime());
+
+        SimpleDateFormat hhtime = new SimpleDateFormat("HH");
+        String htime = hhtime.format(cal.getTime());
+        int hh = Integer.parseInt(htime);
 
         String apiUrl = "http://apis.data.go.kr/1360000/LivingWthrIdxServiceV3/getUVIdxV3";
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
         String pageNo = "1";
         String numOfRows = "10";
-        String dataType = "JSON"; // 타입 xml, json 등등 ..
-        String areaNo = "1100000000"; // 조회하고싶은 날짜
-        String time = currentdate;
+        String dataType = "JSON"; // 타입 xml, json
+        String areaNo = staionName; // 
+        String time="";
+
+        if(hh>=0&hh<3){
+            time=currentdate+"00";
+        }else if(hh>=3&hh<6){
+            time=currentdate+"03";
+        }else if(hh>=6&hh<9){
+            time=currentdate+"06";
+        }else if(hh>=9&hh<12){
+            time=currentdate+"09";
+        }else if(hh>=12&hh<15){
+            time=currentdate+"12";
+        }else if(hh>=15&hh<18){
+            time=currentdate+"15";
+        }else if(hh>=18&hh<21){
+            time=currentdate+"18";
+        }else{
+            time=currentdate+"21";
+        }
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
