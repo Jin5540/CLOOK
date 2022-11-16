@@ -58,7 +58,7 @@ public interface UVRepsitory {
         String pageNo = "1";
         String numOfRows = "10";
         String dataType = "JSON"; // 타입 xml, json
-        String areaNo = "1100000000"; // 
+        String areaNo = staionName; // 
         String time="";
 
         if(hh>=0&hh<3){

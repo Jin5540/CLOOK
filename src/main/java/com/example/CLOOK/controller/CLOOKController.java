@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +20,15 @@ import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
-import com.example.CLOOK.mapper.ClookMapper;
 import com.example.CLOOK.service.CLOOKService;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@RestController
-@AllArgsConstructor
+
+@RequiredArgsConstructor
 @RequestMapping("/api")
+@RestController
 public class CLOOKController {
 
     private final String address2 = "대전광역시 대덕구 읍내동";

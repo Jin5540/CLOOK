@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -28,24 +29,24 @@ import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
 import com.example.CLOOK.mapper.ClookMapper;
 
-@Primary
 @Service
-public class CLOOKServiceImpl implements CLOOKService{
+@RequiredArgsConstructor
+public class CLOOKServiceImpl implements CLOOKService {
 
-    //@Autowired
-    //ClookMapper Mapper;
+    @Autowired
+    private ClookMapper mapper;
 
     @Override
-	public List<String> location(String address) throws IOException, ParseException {
+    public List<String> location(String address) throws IOException, ParseException {
 
         System.out.println("location_serviceImpl:::------------------------------");
 
         return SearchRepsitory.getLocation(address);
 
-	}
-    
+    }
+
     @Override
-	public GeocodingVO gecodingnxny(String address) {
+    public GeocodingVO gecodingnxny(String address) {
 
         System.out.println("geocodingnxny_serviceImpl:::------------------------------");
 
@@ -55,33 +56,37 @@ public class CLOOKServiceImpl implements CLOOKService{
 
         return GeocodingRepsitory.changData(vo);
 
-	}
+    }
 
     @Override
-    public List<WeatherVO> getweatherclothes(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException {
-        
+    public List<WeatherVO> getweatherclothes(GeocodingVO gecoding)
+            throws IOException, ParseException, java.text.ParseException {
+
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
         return WeatherRepsitory.getShortWeather4(gecoding);
     }
 
     @Override
-    public List<WeatherVO> getweathertoday(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException {
-        
+    public List<WeatherVO> getweathertoday(GeocodingVO gecoding)
+            throws IOException, ParseException, java.text.ParseException {
+
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
         return WeatherRepsitory.getShortWeather5(gecoding);
     }
 
     @Override
-    public WeatherVO getpartweather1(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException {
+    public WeatherVO getpartweather1(GeocodingVO gecoding)
+            throws IOException, ParseException, java.text.ParseException {
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
         return WeatherRepsitory.getShortPartWeather1(gecoding);
     }
 
     @Override
-    public WeatherVO getpartweather2(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException {
+    public WeatherVO getpartweather2(GeocodingVO gecoding)
+            throws IOException, ParseException, java.text.ParseException {
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
         return WeatherRepsitory.getShortPartWeather2(gecoding);
@@ -96,12 +101,12 @@ public class CLOOKServiceImpl implements CLOOKService{
 
     @Override
     public List<UvVO> getUv(String staionName) throws IOException, ParseException {
-        String result = staionName.substring(0,staionName.indexOf(" ")+1);
-        System.out.println(result);
+        String result = staionName.substring(0, staionName.indexOf(" ") + 1);
+        //System.out.println(result);
 
-        return UVRepsitory.getUV(result);
+        //return UVRepsitory.getUV(result);
 
-        //return UVRepsitory.getUV(Mapper.getLocaionIndex(result));
+        return UVRepsitory.getUV(mapper.getLocaionIndex());
     }
 
     @Override
@@ -114,7 +119,7 @@ public class CLOOKServiceImpl implements CLOOKService{
 
         return WeatherRepsitory.getShortWeather2(gecoding);
     }
-    
+
     @Override
     public String getweather3(GeocodingVO gecoding) throws IOException, ParseException {
 
