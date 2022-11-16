@@ -299,13 +299,13 @@ public interface WeatherRepsitory {
         String numOfRows = "100000";
         String baseDate = "";
         // 조회하고싶은 날짜
-        if (formatnow >= 0 & formatnow <= 210) {
+        if (formatnow <= 210 & formatnow >= 0) {
             baseDate = oneth;
         } else {
             baseDate = currentdate;
         }
         String baseTime = ""; // 조회하고싶은 시간
-        if (formatnow >= 0 & formatnow <= 210) {
+        if (formatnow <= 210 & formatnow >= 0) {
             baseTime = "2300";
         } else {
             baseTime = "0200";
@@ -588,30 +588,42 @@ public interface WeatherRepsitory {
         String numOfRows = "100000";
         String baseDate = "";
         // 조회하고싶은 날짜
-        if (formatnow >= 0 & formatnow <= 210) {
-            baseDate = oneth;
+        if (formatnow <= 210 & formatnow >= 0) {
+            baseDate = oneth; 
         } else {
             baseDate = currentdate;
         }
         String baseTime = ""; // 조회하고싶은 시간
-        if (formatnow >= 0 & formatnow <= 210) {
-            baseTime = "2300";
-        } else {
+        if (formatnow >= 210 & formatnow < 510) {
             baseTime = "0200";
+        } else if (formatnow >= 510 & formatnow < 810) {
+            baseTime = "0500";
+        } else if (formatnow >= 810 & formatnow < 1110) {
+            baseTime = "0800";
+        } else if (formatnow >= 1110 & formatnow < 1410) {
+            baseTime = "1100";
+        } else if (formatnow >= 1410 & formatnow < 1710) {
+            baseTime = "1400";
+        } else if (formatnow >= 1710 & formatnow < 2010) {
+            baseTime = "1700";
+        } else if (formatnow >= 2010 & formatnow < 2310) {
+            baseTime = "2000";
+        } else{
+            baseTime = "2300";
         }
 
         System.out.println(baseDate);
-        System.out.println(baseTime);
+        System.out.println("today + weather"+baseTime);
         String type = "JSON"; // 타입 xml, json 등등 ..
         String nx = geocodingVO.getXLat(); // 위도
         String ny = geocodingVO.getYLon();
 
         cal.add(Calendar.DATE, 1);
         String twoth = df.format(cal.getTime());
-        System.out.println(twoth);
+        //System.out.println(twoth);
         cal.add(Calendar.DATE, 1);
         String threeth = df.format(cal.getTime());
-        System.out.println(threeth);
+        //System.out.println(threeth);
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
@@ -1062,13 +1074,13 @@ public interface WeatherRepsitory {
         String numOfRows = "100000";
         String baseDate = "";
         // 조회하고싶은 날짜
-        if (formatnow >= 0 & formatnow <= 210) {
-            baseDate = oneth;
+        if (formatnow <= 210 & formatnow >= 0) {
+            baseDate = oneth; 
         } else {
             baseDate = currentdate;
         }
         String baseTime = "";
-        if (formatnow >= 0 & formatnow <= 210) {
+        if (formatnow <= 210 & formatnow >= 0) {
             baseTime = "2300";
         } else {
             baseTime = "0200";
