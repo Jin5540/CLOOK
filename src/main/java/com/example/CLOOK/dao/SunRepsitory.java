@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 
 public interface SunRepsitory {
 
-    public static List<SunVO> getSun(String staionName)
+    public static SunVO getSun(String result)
             throws IOException, ParseException {
 
         Calendar cal = Calendar.getInstance();
@@ -54,7 +54,8 @@ public interface SunRepsitory {
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
         String locdate = currentdate; // 조회하고싶은 날짜
-        String location = "서울";
+
+        String location = result;
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
@@ -105,7 +106,7 @@ public interface SunRepsitory {
         org.json.JSONObject items = (org.json.JSONObject) body.get("items");
         // System.out.println(items);
         org.json.JSONObject item = (org.json.JSONObject) items.get("item");
-        System.out.println(item);
+        //System.out.println(item);
 
         SunVO sunVO = new SunVO();
 
@@ -115,7 +116,9 @@ public interface SunRepsitory {
         sunVO.setSunrise(sunrise);
         sunVO.setSunset(sunset);
 
-        listsunVO.add(sunVO);
+        //listsunVO.add(sunVO);
+
+        //System.out.println(listsunVO);
         // JSONArray item = (JSONArray) items.get("item");
 
         // String status = (String) response.get("status");
@@ -133,7 +136,7 @@ public interface SunRepsitory {
          * }
          */
 
-        return listsunVO;
+        return sunVO;
 
     }
 

@@ -12,9 +12,10 @@ const Fetch = () => {
   const [todays, setTodays] = useState([]);
   const [cards, setCards] = useState([]);
   const [uvs, setUvs] = useState([]);
+  const [sun, setSun] = useState([]);
 
   useEffect(() => {
-    fetch("/api/location", { method: "GET" })
+    fetch("/api/location?address=경기도 성남시 수정구 복정동", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setLocation(data);
@@ -88,6 +89,16 @@ const Fetch = () => {
       .then((data) => {
       
         setUvs(data);
+        console.log(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/sun", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+      
+        setSun(data);
         console.log(data);
       });
   }, []);

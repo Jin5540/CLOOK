@@ -174,7 +174,7 @@ public class CLOOKController {
     }
 
     @GetMapping(value = "/sun", produces = "application/json; charset=UTF-8")
-    public List<SunVO> sunAPI(HttpServletRequest req) throws IOException, ParseException {
+    public SunVO sunAPI(HttpServletRequest req) throws IOException, ParseException {
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {

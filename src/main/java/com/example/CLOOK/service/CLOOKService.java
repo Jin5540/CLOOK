@@ -25,5 +25,5 @@ public interface CLOOKService {
    public List<AirVO> getair(String stationName) throws IOException, ParseException;
    public List<UvVO> getUv(String staionName) throws IOException, ParseException;
    public String getUv_copy() throws IOException, ParseException;
-   public List<SunVO> getsun(String staionName) throws IOException, ParseException;
+   public SunVO getsun(String result) throws IOException, ParseException;
 }
