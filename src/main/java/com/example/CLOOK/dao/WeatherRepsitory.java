@@ -33,6 +33,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import com.example.CLOOK.domain.GeocodingVO;
+import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.WeatherVO;
 
 import java.util.stream.Collector;
@@ -544,7 +545,7 @@ public interface WeatherRepsitory {
 
     }
 
-    public static List<WeatherVO> getShortWeather5(GeocodingVO geocodingVO)
+    public static List<WeatherVO> getShortWeather5(GeocodingVO geocodingVO, SunVO sun)
             throws IOException, ParseException, java.text.ParseException {
         // 현재 시간
         LocalTime now = LocalTime.now();
@@ -752,6 +753,10 @@ public interface WeatherRepsitory {
                 test.setPty(weatherVO.getPty());
                 test.setPop(weatherVO.getPop());
 
+                int sunrise = Integer.parseInt(sun.getSunrise());
+                int sunset = sun.getSunset();
+                
+
                 if (weatherVO.getPty() != null) {
                     if (weatherVO.getPty().equals("1") || weatherVO.getPty().equals("5")) {
                         test.setIcon("비");
@@ -762,14 +767,14 @@ public interface WeatherRepsitory {
                     } else {
                         if (weatherVO.getSky() != null) {
                             if (weatherVO.getSky().equals("1")) {
-                                if (600 <= fhh & 1900 >= fhh) {
+                                if (sunrise <= fhh & sunset >= fhh) {
                                     test.setIcon("해");
                                 } else {
                                     test.setIcon("달");
                                 }
                             }
                             if (weatherVO.getSky().equals("3")) {
-                                if (600 <= fhh & 1900 >= fhh) {
+                                if (sunrise <= fhh & sunset >= fhh) {
                                     test.setIcon("해구름");
                                 } else {
                                     test.setIcon("달구름");
@@ -1395,7 +1400,7 @@ public interface WeatherRepsitory {
     }
 
     /* 상단 - SKY / PTY / T1H / ICON / CHARACTER */
-    public static WeatherVO getShortPartWeather2(GeocodingVO geocodingVO)
+    public static WeatherVO getShortPartWeather2(GeocodingVO geocodingVO, SunVO sun)
             throws IOException, ParseException, java.text.ParseException {
 
         Calendar cal = Calendar.getInstance();
@@ -1407,7 +1412,7 @@ public interface WeatherRepsitory {
         // 포맷 적용
         String formatedNowDate = nowDate.format(formatterDate);
 
-        SimpleDateFormat hhtime = new SimpleDateFormat("HH");
+        SimpleDateFormat hhtime = new SimpleDateFormat("HHmm");
 
         String htime = hhtime.format(cal.getTime());
 
@@ -1500,6 +1505,10 @@ public interface WeatherRepsitory {
         JSONArray item = (JSONArray) items.get("item");
 
         // String status = (String) response.get("status");
+
+        int sunrise = Integer.parseInt(sun.getSunrise());
+        int sunset = sun.getSunset();
+
         int countsky = 0;
         int countt1h = 0;
         int countpty = 0;
@@ -1551,7 +1560,7 @@ public interface WeatherRepsitory {
         } else {
 
             if (sky.equals("1")) {
-                if (6 <= hh & 19 >= hh) {
+                if (sunrise <= hh & sunset >= hh) {
                     weatherVO.setIcon("해");
                     weatherVO.setBackground("구름없는낮");
 
@@ -1561,7 +1570,7 @@ public interface WeatherRepsitory {
                 }
             }
             if (sky.equals("3")) {
-                if (6 <= hh & 19 >= hh) {
+                if (sunrise <= hh & sunset >= hh) {
                     weatherVO.setIcon("해구름");
                     weatherVO.setBackground("구름많은낮");
                 } else {

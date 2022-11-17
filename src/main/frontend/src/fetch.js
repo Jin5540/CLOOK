@@ -179,6 +179,11 @@ const Fetch = () => {
           
       
       </ul>
+
+      <ul>
+          <li>{sun.sunrise}</li>
+          <li>{sun.sunset}</li>
+      </ul>
     </div>
   );
 };

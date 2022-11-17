@@ -25,7 +25,6 @@ import com.example.CLOOK.service.CLOOKService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
@@ -101,9 +100,11 @@ public class CLOOKController {
         String sessionlocation = (String) session.getAttribute("location");
 
         if (sessionlocation == null) {
-            return clookService.getpartweather2(clookService.gecodingnxny("서울특별시 중구 명동"));
+            return clookService.getpartweather2(clookService.gecodingnxny("서울특별시 중구 명동"),
+                    clookService.getsun("서울특별시 중구 명동"));
         } else {
-            return clookService.getpartweather2(clookService.gecodingnxny(sessionlocation));
+            return clookService.getpartweather2(clookService.gecodingnxny(sessionlocation),
+                    clookService.getsun(sessionlocation));
         }
     }
 
@@ -134,11 +135,13 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getweathertoday(clookService.gecodingnxny("서울특별시 중구 명동"));
+            return clookService.getweathertoday(clookService.gecodingnxny("서울특별시 중구 명동"),
+                    clookService.getsun("서울특별시 중구 명동"));
         } else {
-            return clookService.getweathertoday(clookService.gecodingnxny(sessionlocation));
+            return clookService.getweathertoday(clookService.gecodingnxny(sessionlocation),
+                    clookService.getsun(sessionlocation));
+        }
     }
-}
 
     /* REH / VEC / WSD / PCP */
     @GetMapping(value = "/card", produces = "application/json; charset=UTF-8")
@@ -168,9 +171,9 @@ public class CLOOKController {
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
             return clookService.getUv("서울특별시 중구 명동");
-        }else{
+        } else {
             return clookService.getUv(sessionlocation);
-        } 
+        }
     }
 
     @GetMapping(value = "/sun", produces = "application/json; charset=UTF-8")
@@ -179,10 +182,10 @@ public class CLOOKController {
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
             return clookService.getsun("서울특별시 중구 명동");
-        }else{
+        } else {
             return clookService.getsun(sessionlocation);
         }
-        
+
     }
 
     /*
@@ -210,5 +213,3 @@ public class CLOOKController {
         return clookService.getUv_copy();
     }
 }
-
-
