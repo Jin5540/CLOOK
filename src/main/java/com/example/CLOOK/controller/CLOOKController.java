@@ -188,28 +188,4 @@ public class CLOOKController {
 
     }
 
-    /*
-     * @GetMapping(value = "/short2", produces = "application/json; charset=UTF-8")
-     * public JSONObject shortweather2() throws IOException, ParseException {
-     * System.out.println("controller:::------------------------------");
-     * 
-     * return clookService.getweather2(clookService.gecodingnxny(address2));
-     * 
-     * }
-     */
-
-    @GetMapping(value = "/short3", produces = "application/json; charset=UTF-8")
-    public String shortweather3() throws IOException, ParseException {
-        System.out.println("controller:::------------------------------");
-
-        return clookService.getweather3(clookService.gecodingnxny(address2));
-
-    }
-
-    @GetMapping(value = "/uvcopy", produces = "application/json; charset=UTF-8")
-    public String uvAPI_copy() throws IOException, ParseException {
-        System.out.println("controller:::------------------------------");
-
-        return clookService.getUv_copy();
-    }
 }

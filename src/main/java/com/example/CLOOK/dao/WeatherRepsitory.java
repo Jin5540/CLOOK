@@ -288,7 +288,9 @@ public interface WeatherRepsitory {
 
         String htime = hhtime.format(cal.getTime());
 
-        int hh = Integer.parseInt(htime);
+        int hh = Integer.parseInt(htime) + 1;
+
+        String hhh = String.valueOf(hh) + "00";
 
         cal.add(Calendar.DATE, -1);
         String oneth = df.format(cal.getTime());
@@ -306,21 +308,29 @@ public interface WeatherRepsitory {
             baseDate = currentdate;
         }
         String baseTime = ""; // 조회하고싶은 시간
-        if (formatnow <= 210 & formatnow >= 0) {
-            baseTime = "2300";
-        } else {
+        if (formatnow >= 210 & formatnow < 510) {
             baseTime = "0200";
+        } else if (formatnow >= 510 & formatnow < 810) {
+            baseTime = "0500";
+        } else if (formatnow >= 810 & formatnow < 1110) {
+            baseTime = "0800";
+        } else if (formatnow >= 1110 & formatnow < 1410) {
+            baseTime = "1100";
+        } else if (formatnow >= 1410 & formatnow < 1710) {
+            baseTime = "1400";
+        } else if (formatnow >= 1710 & formatnow < 2010) {
+            baseTime = "1700";
+        } else if (formatnow >= 2010 & formatnow < 2310) {
+            baseTime = "2000";
+        } else {
+            baseTime = "2300";
         }
+
         String type = "JSON"; // 타입 xml, json 등등 ..
         String nx = geocodingVO.getXLat(); // 위도
         String ny = geocodingVO.getYLon();
 
-        cal.add(Calendar.DATE, 1);
-        String twoth = df.format(cal.getTime());
-        System.out.println(twoth);
-        cal.add(Calendar.DATE, 1);
-        String threeth = df.format(cal.getTime());
-        System.out.println(threeth);
+        System.out.println("clothes ::: " + baseTime);
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
@@ -407,51 +417,23 @@ public interface WeatherRepsitory {
             long hours_difference = (time_difference / (1000 * 60 * 60)) % 24;
             long min_difference = time_difference / 60000;
 
-            if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= -59 & min_difference <= 1440) {
+            if (min_difference >= 0 & min_difference <= 1440) {
 
-                for (int y = 1; y < 8; y++) {
+                if (category.equals("TMP")) {
+                    String result = (String) object.get("fcstValue");
+                    weatherVO.setTmp(result);
+                    weatherVO.setFcstTime(fcstTime);
+                    weatherVO.setFcstDate(fcstDate);
+                    listweatherVO.add(weatherVO);
 
-                    int threehund = 300;
-
-                    if (time >= (threehund * (y - 1)) & time < (threehund * (y))) {
-                        if (category.equals("TMP")) {
-                            String result = (String) object.get("fcstValue");
-                            weatherVO.setTmp(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listweatherVO.add(weatherVO);
-
-                        } else if (category.equals("PTY")) {
-                            String result = (String) object.get("fcstValue");
-                            if (result.equals("1") || result.equals("5")) {
-                                weatherVO.setPty(result);
-                                weatherVO.setFcstTime(fcstTime);
-                                weatherVO.setFcstDate(fcstDate);
-                                listVO.add(weatherVO);
-                            }
-                        }
-
-                    }
-                }
-
-                if (time >= 2100 & time <= 2300) {
-                    if (category.equals("TMP")) {
-                        String result = (String) object.get("fcstValue");
-                        weatherVO.setTmp(result);
+                } else if (category.equals("PTY")) {
+                    String result = (String) object.get("fcstValue");
+                    if (result.equals("1") || result.equals("5")) {
+                        weatherVO.setPty(result);
                         weatherVO.setFcstTime(fcstTime);
                         weatherVO.setFcstDate(fcstDate);
-                        listweatherVO.add(weatherVO);
-
-                    } else if (category.equals("PTY")) {
-                        String result = (String) object.get("fcstValue");
-                        if (result.equals("1") || result.equals("5")) {
-                            weatherVO.setPty(result);
-                            weatherVO.setFcstTime(fcstTime);
-                            weatherVO.setFcstDate(fcstDate);
-                            listVO.add(weatherVO);
-                        }
+                        listVO.add(weatherVO);
                     }
-
                 }
 
             }
@@ -459,34 +441,76 @@ public interface WeatherRepsitory {
         }
 
         int sum = 0;
-        int ltmp = 0;
         int count = 0;
         int retmp = 0;
+        int nowcount = 0;
 
         for (int j = 0; j < listweatherVO.size(); j++) {
             WeatherVO weatherVO = new WeatherVO();
 
-            if (listweatherVO.get(j).getTmp() != null) {
-                ltmp = Integer.parseInt(listweatherVO.get(j).getTmp());
+            int fcTime = Integer.parseInt(listweatherVO.get(j).getFcstTime());
+            int ltmp = Integer.parseInt(listweatherVO.get(j).getTmp());
+            System.out.println("clothes:::" + listweatherVO.get(j).getFcstTime());
+
+            int hhhint = Integer.parseInt(hhh);
+
+            if (listweatherVO.get(j).getTmp() != null & listweatherVO.get(j).getFcstTime() != null) {
+
                 count++;
-                if (count <= 3) {
-                    sum = ltmp + sum;
-                }
-                if (count == 3) {
-                    retmp = sum / 3;
-                    weatherVO.setTmpl(retmp);
-                    if ((hh < (j + 1)) & ((j - hh) < 3)) {
-                        weatherVO.setM("현재");
-                    } else {
-                        String jj = String.valueOf(j + 1);
-                        weatherVO.setM(jj);
+                nowcount++;
+
+                if (nowcount == 3) {
+                    weatherVO.setM("현재");
+                    if (fcTime - hhhint == 200) {
+                        if (count <= 3) {
+                            sum = ltmp + sum;
+                        }
+                        if (count == 3) {
+                            retmp = sum / 3;
+                            weatherVO.setTmpl(retmp);
+                            listVO.add(weatherVO);
+
+                            count = 0;
+                            sum = 0;
+                        }
+                    } else if (fcTime - hhhint == 100) {
+                        if (count <= 2) {
+                            sum = ltmp + sum;
+                        }
+                        if (count == 2) {
+                            retmp = sum / 2;
+                            weatherVO.setTmpl(retmp);
+
+                            listVO.add(weatherVO);
+
+                            count = 0;
+                            sum = 0;
+                        }
+                    } else if (fcTime - hhhint == 0) {
+                        weatherVO.setTmpl(ltmp);
+    
+                        listVO.add(weatherVO);
+
+                        count = 0;
+                        sum = 0;
+
                     }
+                } else {
+                    if (count <= 3) {
+                        sum = ltmp + sum;
+                    }
+                    if (count == 3) {
+                        retmp = sum / 3;
+                        weatherVO.setTmpl(retmp);
+                        weatherVO.setM(listweatherVO.get(j).getFcstTime());
 
-                    listVO.add(weatherVO);
+                        listVO.add(weatherVO);
 
-                    count = 0;
-                    sum = 0;
+                        count = 0;
+                        sum = 0;
+                    }
                 }
+
             }
 
         }
@@ -755,7 +779,6 @@ public interface WeatherRepsitory {
 
                 int sunrise = Integer.parseInt(sun.getSunrise());
                 int sunset = sun.getSunset();
-                
 
                 if (weatherVO.getPty() != null) {
                     if (weatherVO.getPty().equals("1") || weatherVO.getPty().equals("5")) {
@@ -1301,13 +1324,11 @@ public interface WeatherRepsitory {
             if (category.equals("TMN") && counttmn < 1) {
                 counttmn += 1;
                 String tmn = (String) object.get("fcstValue");
-                System.out.println("TMN::" + tmn);
                 weatherVO.setTmn(tmn);
             }
             if (category.equals("TMX") && counttmx < 1) {
                 counttmx += 1;
                 String tmx = (String) object.get("fcstValue");
-                System.out.println("TMX::" + tmx);
                 weatherVO.setTmx(tmx);
             }
         }
@@ -1518,7 +1539,7 @@ public interface WeatherRepsitory {
             String fcstTime = (String) object.get("fcstTime");
 
             // System.out.println(category);
-            if (category.equals("SKY") && countsky < 1) {
+            if (category.equals("SKY") && countsky < 2) {
                 countsky += 1;
                 String sky = (String) object.get("fcstValue");
                 weatherVO.setSky(sky);
@@ -1529,7 +1550,7 @@ public interface WeatherRepsitory {
                 int t1h = Integer.parseInt((String) object.get("fcstValue"));
                 weatherVO.setT1h(t1h);
             }
-            if (category.equals("PTY") && countpty < 1) {
+            if (category.equals("PTY") && countpty < 2) {
                 countpty += 1;
                 String pty = (String) object.get("fcstValue");
                 weatherVO.setPty(pty);
@@ -1740,21 +1761,21 @@ public interface WeatherRepsitory {
                 int vec = Integer.parseInt((String) object.get("fcstValue"));
                 String resultvec = "";
                 if (0 <= vec & 45 > vec) {
-                    resultvec = "N";
+                    resultvec = "북";
                 } else if (45 <= vec & 90 > vec) {
-                    resultvec = "NE";
+                    resultvec = "북동";
                 } else if (90 <= vec & 135 > vec) {
-                    resultvec = "E";
+                    resultvec = "동";
                 } else if (135 <= vec & 180 > vec) {
-                    resultvec = "SE";
+                    resultvec = "남동";
                 } else if (180 <= vec & 225 > vec) {
-                    resultvec = "S";
+                    resultvec = "남";
                 } else if (225 <= vec & 270 > vec) {
-                    resultvec = "SW";
+                    resultvec = "남서";
                 } else if (270 <= vec & 315 > vec) {
-                    resultvec = "W";
+                    resultvec = "서";
                 } else if (315 <= vec & 360 > vec) {
-                    resultvec = "NW";
+                    resultvec = "북서";
                 }
                 weatherVO.setVec(resultvec);
             }
