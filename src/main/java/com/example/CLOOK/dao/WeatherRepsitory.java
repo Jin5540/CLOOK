@@ -330,8 +330,6 @@ public interface WeatherRepsitory {
         String nx = geocodingVO.getXLat(); // 위도
         String ny = geocodingVO.getYLon();
 
-        System.out.println("clothes ::: " + baseTime);
-
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
@@ -457,52 +455,55 @@ public interface WeatherRepsitory {
             if (listweatherVO.get(j).getTmp() != null & listweatherVO.get(j).getFcstTime() != null) {
 
                 count++;
-                nowcount++;
-
-                if (nowcount == 3) {
+                if(hhhint%300==0&nowcount<1&j<3){
+                    nowcount++;
                     weatherVO.setM("현재");
-                    if (fcTime - hhhint == 200) {
-                        if (count <= 3) {
-                            sum = ltmp + sum;
-                        }
-                        if (count == 3) {
-                            retmp = sum / 3;
-                            weatherVO.setTmpl(retmp);
-                            listVO.add(weatherVO);
 
-                            count = 0;
-                            sum = 0;
-                        }
-                    } else if (fcTime - hhhint == 100) {
-                        if (count <= 2) {
-                            sum = ltmp + sum;
-                        }
-                        if (count == 2) {
-                            retmp = sum / 2;
-                            weatherVO.setTmpl(retmp);
-
-                            listVO.add(weatherVO);
-
-                            count = 0;
-                            sum = 0;
-                        }
-                    } else if (fcTime - hhhint == 0) {
-                        weatherVO.setTmpl(ltmp);
-    
-                        listVO.add(weatherVO);
-
-                        count = 0;
-                        sum = 0;
-
-                    }
-                } else {
                     if (count <= 3) {
                         sum = ltmp + sum;
                     }
                     if (count == 3) {
                         retmp = sum / 3;
                         weatherVO.setTmpl(retmp);
-                        weatherVO.setM(listweatherVO.get(j).getFcstTime());
+                        listVO.add(weatherVO);
+
+                        count = 0;
+                        sum = 0;
+                    }
+                }else if(hhhint%300==100&nowcount<1&j<3){
+                    nowcount++;
+                    weatherVO.setM("현재");
+                    if (count <= 2) {
+                        sum = ltmp + sum;
+                    }
+                    if (count == 2) {
+                        retmp = sum / 2;
+                        weatherVO.setTmpl(retmp);
+
+                        listVO.add(weatherVO);
+
+                        count = 0;
+                        sum = 0;
+                    }
+                }else if(hhhint%300==200&nowcount<1&j<3){
+                    nowcount++;
+                    weatherVO.setM("현재");
+                    weatherVO.setTmpl(ltmp);
+
+                    System.out.println("여기서 현재 값");
+
+                    listVO.add(weatherVO);
+
+                    count = 0;
+                    sum = 0;
+                }else {
+                    if (count <= 3) {
+                        sum = ltmp + sum;
+                    }
+                    if (count == 3) {
+                        retmp = sum / 3;
+                        weatherVO.setTmpl(retmp);
+                        weatherVO.setM(listweatherVO.get(j+1).getFcstTime());
 
                         listVO.add(weatherVO);
 
