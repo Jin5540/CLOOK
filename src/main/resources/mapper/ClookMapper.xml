@@ -6,6 +6,6 @@
     </select>
 
     <select id="getLocaion" resultType="String">
-        SELECT IF((SELECT CASE WHEN #{result2}="false" THEN true ELSE false END),(SELECT Column_3 FROM sun_location WHERE Column_1=#{result1}),(SELECT Column_3 FROM sun_location WHERE Column_1=#{result1} AND Column_2=#{result2}));
+        SELECT IF((SELECT CASE WHEN #{result2}="false" THEN true ELSE false END),(SELECT Column_3 FROM sun_location WHERE Column_1=#{result1} LIMIT 1),(SELECT Column_3 FROM sun_location WHERE Column_1=#{result1} AND Column_2=#{result2}  LIMIT 1));
     </select>
 </mapper>

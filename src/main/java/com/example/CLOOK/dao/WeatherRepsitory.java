@@ -453,9 +453,10 @@ public interface WeatherRepsitory {
             int hhhint = Integer.parseInt(hhh);
 
             if (listweatherVO.get(j).getTmp() != null & listweatherVO.get(j).getFcstTime() != null) {
-                //System.out.println("nowcount"+nowcount);
+
                 count++;
-                if(hhhint%300==0&j<3){
+                if(hhhint%300==0&j<3&nowcount<3){
+                    nowcount++;
                     weatherVO.setM("현재");
 
                     if (count <= 3) {
@@ -469,8 +470,8 @@ public interface WeatherRepsitory {
                         count = 0;
                         sum = 0;
                     }
-                }else if(hhhint%300==100&&j<3){
-                    System.out.println("현재");
+                }else if(hhhint%300==100&&j<3&nowcount<2){
+                    nowcount++;
                     weatherVO.setM("현재");
                     if (count <= 2) {
                         sum = ltmp + sum;
@@ -484,7 +485,8 @@ public interface WeatherRepsitory {
                         count = 0;
                         sum = 0;
                     }
-                }else if(hhhint%300==200&j<3){
+                }else if(hhhint%300==200&j<3&nowcount<1){
+                    nowcount++;
                     weatherVO.setM("현재");
                     weatherVO.setTmpl(ltmp);
 
@@ -763,7 +765,6 @@ public interface WeatherRepsitory {
                 }
                 if (!ftime.equals(fcstTime)) {
                     ftime = fcstTime.toString();
-                    System.out.println("데이: " + fday + "  " + "타임: " + ftime);
                 }
 
                 weatherVO.setFcstDate((object.get("fcstDate")).toString());
@@ -946,7 +947,6 @@ public interface WeatherRepsitory {
                     }
                     if (!ftime.equals(fcstTime)) {
                         ftime = fcstTime.toString();
-                        System.out.println("데이: " + fday + "  " + "타임: " + ftime);
                     }
 
                     weatherVO.setFcstDate((object.get("fcstDate")).toString());
@@ -1362,7 +1362,7 @@ public interface WeatherRepsitory {
                 long hours_difference = (time_difference / (1000 * 60 * 60)) % 24;
                 long min_difference = time_difference / 60000;
 
-                if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= -59
+                if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= 0
                         & min_difference <= 1440) {
 
                     if ((pty.equals("1") || pty.equals("5")) & countgr < 1) {
@@ -1370,10 +1370,10 @@ public interface WeatherRepsitory {
                         messageList.add("비");
                         countgr += 1;
                         weatherVO.setMessage(messageList);
-                        if (hours_difference <= 3) {
+                        if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
-                        } else if (hours_difference <= 23) {
+                        } else if (min_difference <= 1440) {
                             timeList.add((weatherVO.getFcstTime()));
                             weatherVO.setTime(timeList);
                         }
@@ -1381,10 +1381,10 @@ public interface WeatherRepsitory {
                         messageList.add("진눈깨비");
                         countgrs += 1;
                         weatherVO.setMessage(messageList);
-                        if (hours_difference <= 3) {
+                        if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
-                        } else if (hours_difference <= 23) {
+                        } else if (min_difference <= 1440) {
                             timeList.add((weatherVO.getFcstTime()));
                             weatherVO.setTime(timeList);
                         }
@@ -1392,10 +1392,10 @@ public interface WeatherRepsitory {
                         messageList.add("눈");
                         counts += 1;
                         weatherVO.setMessage(messageList);
-                        if (hours_difference <= 3) {
+                        if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
-                        } else if (hours_difference <= 23) {
+                        } else if (min_difference <= 1440) {
                             timeList.add((weatherVO.getFcstTime()));
                             weatherVO.setTime(timeList);
                         }

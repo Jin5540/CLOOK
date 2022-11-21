@@ -102,41 +102,47 @@ public class CLOOKServiceImpl implements CLOOKService {
     @Override
     public List<UvVO> getUv(String staionName) throws IOException, ParseException {
         String result = staionName.substring(0, staionName.indexOf(" ") + 1);
-        //System.out.println(result);
+        // System.out.println(result);
 
-        //return UVRepsitory.getUV(result);
+        // return UVRepsitory.getUV(result);
 
         return UVRepsitory.getUV(mapper.getLocaionIndex(result));
     }
 
     @Override
     public SunVO getsun(String staionName) throws IOException, ParseException {
-        String[] array = staionName.split(" ");
 
-        // 출력
         String result1 = "false";
         String result2 = "false";
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
-        }
 
-        String lastdo = array[0].substring(array[0].length() - 1);
-        String lastChar = array[2].substring(array[2].length() - 1);
-        String lastgun = array[1].substring(array[1].length() - 1);
+        if (staionName.equals("이어도")) {
+            result1 = "서귀포";
+            
+        } else {
 
-        if(staionName.equals("이어도")){
-            result1="서귀포";
-        }
-        if(lastdo.equals("도")&lastChar.equals("구")){
-            result1=array[1];
-            result2=array[2];
-        }else if(lastdo.equals("시")&lastgun.equals("군")){
-            result1=array[0];
-            result2=array[1];
-        }else if(lastdo.equals("시")){
-            result1=array[0];
-        }else{
-            result1=array[1];
+            String[] array = staionName.split(" ");
+
+            // 출력
+
+            for (int i = 0; i < array.length; i++) {
+                System.out.println(array[i]);
+            }
+
+            String lastdo = array[0].substring(array[0].length() - 1);
+            String lastChar = array[2].substring(array[2].length() - 1);
+            String lastgun = array[1].substring(array[1].length() - 1);
+
+            if (lastdo.equals("도") & lastChar.equals("구")) {
+                result1 = array[1];
+                result2 = array[2];
+            } else if (lastdo.equals("시") & lastgun.equals("군")) {
+                result1 = array[0];
+                result2 = array[1];
+            } else if (lastdo.equals("시")) {
+                result1 = array[0];
+            } else {
+                result1 = array[1];
+            }
         }
 
         return SunRepsitory.getSun(mapper.getLocaion(result1, result2));

@@ -49,6 +49,7 @@ public class CLOOKController {
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
+        
         String result = "";
 
         if (req.getParameter("address") == null) {
@@ -87,6 +88,7 @@ public class CLOOKController {
         if (sessionlocation == null) {
             return clookService.getpartweather1(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
+            System.out.println(sessionlocation + ":::위치:::");
             return clookService.getpartweather1(clookService.gecodingnxny(sessionlocation));
         }
     }

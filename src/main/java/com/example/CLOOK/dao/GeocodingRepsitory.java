@@ -72,6 +72,7 @@ public interface GeocodingRepsitory {
                 br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
             } else {
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                System.out.println("에러");
             }
 
             String inputLine;
@@ -102,6 +103,87 @@ public interface GeocodingRepsitory {
                 addressList.add((String) temp.get("roadAddress"));
                 geocodingVO.setAddress(addressList);
             }
+
+            System.out.println("arr ::: "+arr);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return geocodingVO;
+    }
+
+    public static GeocodingVO getData2(String address) {
+
+        GeocodingVO geocodingVO = new GeocodingVO();
+
+        // 주소 입력 -> 위도, 경도 좌표 추출.
+        // BufferedReader io = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            // String address = io.readLine();
+            String addr = URLEncoder.encode(address, "UTF-8");
+
+            // Geocoding 개요에 나와있는 API URL 입력.
+            String apiURL = "http://api.vworld.kr/req/address";
+            String service = "address";
+            String request = "getcoord";
+            String version = "2.0";
+            String crs = "epsg:4326";
+            String geoaddress = addr;
+            String refine= "true";
+            String simple = "false";
+            String format = "JSON";
+            String type = "road";
+            String key="3184253A-C2B2-3AC5-B22B-187DAB8DEF7A";
+
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
+
+            // 요청 결과 확인. 정상 호출인 경우 200
+            int responseCode = con.getResponseCode();
+
+            BufferedReader br;
+
+            if (responseCode == 200) {
+                br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            } else {
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                System.out.println("에러");
+            }
+
+            String inputLine;
+
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            br.close();
+
+            List<String> addressList = new ArrayList<String>();
+
+            JSONTokener tokener = new JSONTokener(response.toString());
+            JSONObject object = new JSONObject(tokener);
+            JSONArray arr = object.getJSONArray("addresses");
+
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject temp = (JSONObject) arr.get(i);
+
+                double x = Double.valueOf(temp.get("x").toString()).doubleValue();
+                double y = Double.valueOf(temp.get("y").toString()).doubleValue();
+
+                geocodingVO.setLat(y);
+                geocodingVO.setLon(x);
+                
+                addressList.add((String) temp.get("roadAddress"));
+                geocodingVO.setAddress(addressList);
+            }
+
+            System.out.println("arr ::: "+arr);
 
         } catch (Exception e) {
             System.out.println(e);
