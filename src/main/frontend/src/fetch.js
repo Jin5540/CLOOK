@@ -135,8 +135,8 @@ const Fetch = () => {
         ))}
       </ul>
       <ul>
-        <li>{tms.tmn}</li>
-        <li>{tms.tmx}</li>
+        <li>최저 : {tms.tmn}</li>
+        <li>최고 : {tms.tmx}</li>
       </ul>
       <ul>
         {message.map((m) => (
@@ -149,43 +149,43 @@ const Fetch = () => {
         ))}
       </ul>
       <ul>
-        <li>{spt.icon}</li>
-        <li>{spt.t1h}</li>
-        <li>{spt.character}</li>
-        <li>{spt.background}</li>
+        <li>아이콘 : {spt.icon}</li>
+        <li>기온 : {spt.t1h}</li>
+        <li>캐릭터 : {spt.character}</li>
+        <li>배경 : {spt.background}</li>
       </ul>
       <ul>
         {clothes.map((c) => (
-          <li>{c.clothes1}
-          {c.clothes2}
+          <li>상의 1 :{c.clothes1}
+          || 상의 2 :{c.clothes2}
           {c.item}
-          {c.m}
+          시간 {c.m}
           </li>
           
         ))}
       </ul>
       <ul>
         {todays.map((t) => (
-          <li>{t.icon}
-          ||{t.tmp}
-          ||{t.pop}
-          ||{t.ftime}
+          <li>아이콘 :{t.icon}
+          ||기온 : {t.tmp}
+          ||강수확률 : {t.pop}
+          ||시간 : {t.ftime}
           </li>
           
         ))}
       </ul>
       <ul>
-          <li>{cards.vec}</li>
-          <li>{cards.wsd}</li>
-          <li>{cards.reh}</li>
-          <li>{cards.pcp}</li>
+          <li>풍향 : {cards.vec}</li>
+          <li>풍속: {cards.wsd}</li>
+          <li>습도 : {cards.reh}</li>
+          <li>강우량 : {cards.pcp}</li>
           
       
       </ul>
 
       <ul>
       {uvs.map((u) => (
-          <li>{u.h0}
+          <li>자외선 : {u.h0}
           </li>
           
         ))}
@@ -194,13 +194,13 @@ const Fetch = () => {
       </ul>
 
       <ul>
-          <li>{sun.sunrise}</li>
-          <li>{sun.sunset}</li>
+          <li>일출 : {sun.sunrise}</li>
+          <li>일몰 : {sun.sunset}</li>
       </ul>
 
       <ul>
-          <li>{air.pm10Grade1h}</li>
-          <li>{air.pm25Grade1h}</li>
+          <li>미세먼지 : {air.pm10Grade1h}</li>
+          <li>초미세먼지 : {air.pm25Grade1h}</li>
       </ul>
     </div>
   );
