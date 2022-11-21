@@ -959,6 +959,9 @@ public interface WeatherRepsitory {
                     test.setPty(weatherVO.getPty());
                     test.setPop(weatherVO.getPop());
 
+                    int sunrise = Integer.parseInt(sun.getSunrise());
+                    int sunset = sun.getSunset();
+
                     if (weatherVO.getPty() != null) {
                         if (weatherVO.getPty().equals("1") || weatherVO.getPty().equals("5")) {
                             test.setIcon("비");
@@ -969,14 +972,14 @@ public interface WeatherRepsitory {
                         } else {
                             if (weatherVO.getSky() != null) {
                                 if (weatherVO.getSky().equals("1")) {
-                                    if (600 <= fhh & 1900 >= fhh) {
+                                    if (sunrise <= fhh & sunset >= fhh) {
                                         test.setIcon("해");
                                     } else {
                                         test.setIcon("달");
                                     }
                                 }
                                 if (weatherVO.getSky().equals("3")) {
-                                    if (600 <= fhh & 1900 >= fhh) {
+                                    if (sunrise <= fhh & sunset >= fhh) {
                                         test.setIcon("해구름");
                                     } else {
                                         test.setIcon("달구름");
