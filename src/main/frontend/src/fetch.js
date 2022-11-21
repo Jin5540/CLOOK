@@ -199,8 +199,8 @@ const Fetch = () => {
       </ul>
 
       <ul>
-          <li>{air.pm25Value24}</li>
-          <li>{air.pm10Value24}</li>
+          <li>{air.pm10Grade1h}</li>
+          <li>{air.pm25Grade1h}</li>
       </ul>
     </div>
   );
