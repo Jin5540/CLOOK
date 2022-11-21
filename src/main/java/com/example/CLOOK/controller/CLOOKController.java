@@ -78,7 +78,7 @@ public class CLOOKController {
         }
     }
 
-    /* 상단 - TMX / TMN */
+    /* 상단 - TMX / TMN / 예보메세지 */
     @GetMapping(value = "/toptm", produces = "application/json; charset=UTF-8")
     public WeatherVO shortpartweather1(HttpServletRequest req)
             throws IOException, ParseException, java.text.ParseException {
@@ -88,12 +88,11 @@ public class CLOOKController {
         if (sessionlocation == null) {
             return clookService.getpartweather1(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
-            System.out.println(sessionlocation + ":::위치:::");
             return clookService.getpartweather1(clookService.gecodingnxny(sessionlocation));
         }
     }
 
-    /* 상단 - SKY / PTY / T1H */
+    /* 상단 - SKY / PTY / T1H / ICON / CHARACTER */
     @GetMapping(value = "/topspt", produces = "application/json; charset=UTF-8")
     public WeatherVO shortpartweather2(HttpServletRequest req)
             throws IOException, ParseException, java.text.ParseException {
@@ -110,7 +109,7 @@ public class CLOOKController {
         }
     }
 
-    /* 단기예보 */
+    /* 3시간단위 - 옷 */
     @GetMapping(value = "/clothes", produces = "application/json; charset=UTF-8")
     public List<WeatherVO> clothesweather(HttpServletRequest req, RedirectAttributes redirect)
             throws IOException, ParseException, java.text.ParseException {
@@ -128,7 +127,7 @@ public class CLOOKController {
 
     }
 
-    /* 단기예보 */
+    /* 1시간단위 - SKY / ICON / PTY / POP / T1H */
     @GetMapping(value = "/today", produces = "application/json; charset=UTF-8")
     public List<WeatherVO> todayweather(HttpServletRequest req, RedirectAttributes redirect)
             throws IOException, ParseException, java.text.ParseException {
