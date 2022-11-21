@@ -448,15 +448,14 @@ public interface WeatherRepsitory {
 
             int fcTime = Integer.parseInt(listweatherVO.get(j).getFcstTime());
             int ltmp = Integer.parseInt(listweatherVO.get(j).getTmp());
-            System.out.println("clothes:::" + listweatherVO.get(j).getFcstTime());
+            //System.out.println("clothes:::" + listweatherVO.get(j).getFcstTime());
 
             int hhhint = Integer.parseInt(hhh);
 
             if (listweatherVO.get(j).getTmp() != null & listweatherVO.get(j).getFcstTime() != null) {
-
+                //System.out.println("nowcount"+nowcount);
                 count++;
-                if(hhhint%300==0&nowcount<1&j<3){
-                    nowcount++;
+                if(hhhint%300==0&j<3){
                     weatherVO.setM("현재");
 
                     if (count <= 3) {
@@ -470,8 +469,8 @@ public interface WeatherRepsitory {
                         count = 0;
                         sum = 0;
                     }
-                }else if(hhhint%300==100&nowcount<1&j<3){
-                    nowcount++;
+                }else if(hhhint%300==100&&j<3){
+                    System.out.println("현재");
                     weatherVO.setM("현재");
                     if (count <= 2) {
                         sum = ltmp + sum;
@@ -485,12 +484,9 @@ public interface WeatherRepsitory {
                         count = 0;
                         sum = 0;
                     }
-                }else if(hhhint%300==200&nowcount<1&j<3){
-                    nowcount++;
+                }else if(hhhint%300==200&j<3){
                     weatherVO.setM("현재");
                     weatherVO.setTmpl(ltmp);
-
-                    System.out.println("여기서 현재 값");
 
                     listVO.add(weatherVO);
 
@@ -503,7 +499,9 @@ public interface WeatherRepsitory {
                     if (count == 3) {
                         retmp = sum / 3;
                         weatherVO.setTmpl(retmp);
-                        weatherVO.setM(listweatherVO.get(j+1).getFcstTime());
+                        int resultfctime1 =Integer.parseInt(listweatherVO.get(j).getFcstTime())+100;
+                        String resultfctime2= String.valueOf(resultfctime1);
+                        weatherVO.setM(resultfctime2);
 
                         listVO.add(weatherVO);
 
