@@ -1207,7 +1207,7 @@ public interface WeatherRepsitory {
 
     }
 
-    /* 상단 - TMX / TMN */
+    /* 상단 - TMX / TMN / 예보메세지 */
     public static WeatherVO getShortPartWeather1(GeocodingVO geocodingVO)
             throws IOException, ParseException, java.text.ParseException {
 

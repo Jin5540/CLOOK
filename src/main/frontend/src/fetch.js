@@ -13,15 +13,17 @@ const Fetch = () => {
   const [cards, setCards] = useState([]);
   const [uvs, setUvs] = useState([]);
   const [sun, setSun] = useState([]);
+  const [air, setAir] = useState([]);
 
   useEffect(() => {
-    fetch("/api/location?address=경기도 성남시 수정구 복정동", { method: "GET" })
+    fetch("/api/location?address=강원도 원주시 단계동", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setLocation(data);
         console.log(data);
       });
   }, []);
+
 
   useEffect(() => {
     fetch("/api/toptm", { method: "GET" })
@@ -103,14 +105,25 @@ const Fetch = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/api/air", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+      
+        setAir(data);
+        console.log(data);
+      });
+  }, []);
 
- // useEffect(() => {
- //   fetch("/api/search?saddress=충청남도 아산시", { method: "GET" })
- //     .then((res) => res.json())
- //     .then((data) => {
- //       //setAdresses(data);
-  //    });
-  //}, []);
+
+ /*useEffect(() => {
+    fetch("/api/search?saddress=충청남도 아산시", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        setAdresses(data);
+        console.log(data);
+      });
+  }, []);*/
 
   return (
     <div>
@@ -183,6 +196,11 @@ const Fetch = () => {
       <ul>
           <li>{sun.sunrise}</li>
           <li>{sun.sunset}</li>
+      </ul>
+
+      <ul>
+          <li>{air.pm25Value24}</li>
+          <li>{air.pm10Value24}</li>
       </ul>
     </div>
   );

@@ -93,7 +93,7 @@ public class CLOOKServiceImpl implements CLOOKService {
     }
 
     @Override
-    public List<AirVO> getair(String stationName) throws IOException, ParseException {
+    public AirVO getair(String stationName) throws IOException, ParseException {
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
         return AirRepsitory.getAir(stationName);
@@ -169,6 +169,47 @@ public class CLOOKServiceImpl implements CLOOKService {
     public WeatherVO getpartweather3(GeocodingVO gecoding)
             throws IOException, ParseException, java.text.ParseException {
         return WeatherRepsitory.getShortPartWeather6(gecoding);
+    }
+
+    @Override
+    public AirVO getTm(String stationName) throws IOException, ParseException {
+
+        String[] array = stationName.split(" ");
+        String a="";
+
+        // 출력
+
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(array[i]);
+        }
+
+        String lastChar1 = array[2].substring(array[2].length() - 1);
+        if(array.length>3){
+            String lastChar2 = array[3].substring(array[3].length() - 1);
+
+            if(lastChar2!=null){
+                if(lastChar2.equals("면")||lastChar2.equals("읍")||lastChar2.equals("동")){
+                    a = array[3];
+                }
+            }
+        }
+        
+
+        if(lastChar1!=null){
+            if(lastChar1.equals("면")||lastChar1.equals("읍")||lastChar1.equals("동")){
+                a = array[2];
+            }
+        }
+
+        System.out.println(a);
+
+        return AirRepsitory.getTm(a);
+    }
+
+    @Override
+    public String getStationName(AirVO air) throws IOException, ParseException {
+        
+        return AirRepsitory.getStationName(air);
     }
 
 }

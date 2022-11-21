@@ -160,10 +160,16 @@ public class CLOOKController {
     }
 
     @GetMapping(value = "/air", produces = "application/json; charset=UTF-8")
-    public List<AirVO> airAPI() throws IOException, ParseException {
-        System.out.println("controller:::------------------------------");
+    public AirVO airAPI(HttpServletRequest req, RedirectAttributes redirect) throws IOException, ParseException {
 
-        return clookService.getair(address2);
+        HttpSession session = req.getSession();
+
+        String sessionlocation = (String) session.getAttribute("location");
+        if (sessionlocation == null) {
+            return clookService.getair("중구");
+        }else{
+            return clookService.getair(clookService.getStationName(clookService.getTm(sessionlocation)));
+        }
     }
 
     @GetMapping(value = "/uv", produces = "application/json; charset=UTF-8")

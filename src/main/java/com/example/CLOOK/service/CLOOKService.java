@@ -22,8 +22,10 @@ public interface CLOOKService {
    public WeatherVO getpartweather1(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException;
    public WeatherVO getpartweather2(GeocodingVO gecoding, SunVO sun) throws IOException, ParseException, java.text.ParseException;
    public WeatherVO getpartweather3(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException;
-   public List<AirVO> getair(String stationName) throws IOException, ParseException;
+   public AirVO getair(String stationName) throws IOException, ParseException;
    public List<UvVO> getUv(String staionName) throws IOException, ParseException;
    public String getUv_copy() throws IOException, ParseException;
    public SunVO getsun(String result) throws IOException, ParseException;
+   public AirVO getTm(String stationName) throws IOException, ParseException;
+   public String getStationName(AirVO air) throws IOException, ParseException;
 }
