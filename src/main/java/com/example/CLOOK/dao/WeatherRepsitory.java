@@ -775,7 +775,7 @@ public interface WeatherRepsitory {
                 test.setTmp(weatherVO.getTmp());
                 test.setSky(weatherVO.getSky());
                 test.setPty(weatherVO.getPty());
-                test.setPop(weatherVO.getPop());
+                
 
                 int sunrise = Integer.parseInt(sun.getSunrise());
                 int sunset = sun.getSunset();
@@ -783,10 +783,13 @@ public interface WeatherRepsitory {
                 if (weatherVO.getPty() != null) {
                     if (weatherVO.getPty().equals("1") || weatherVO.getPty().equals("5")) {
                         test.setIcon("비");
+                        test.setPop(weatherVO.getPop());
                     } else if (weatherVO.getPty().equals("2") || weatherVO.getPty().equals("6")) {
                         test.setIcon("진눈깨비");
+                        test.setPop(weatherVO.getPop());
                     } else if (weatherVO.getPty().equals("3") || weatherVO.getPty().equals("7")) {
                         test.setIcon("눈");
+                        test.setPop(weatherVO.getPop());
                     } else {
                         if (weatherVO.getSky() != null) {
                             if (weatherVO.getSky().equals("1")) {
@@ -817,7 +820,7 @@ public interface WeatherRepsitory {
                 // System.out.println(test);
 
                 // test = vl;
-                if (category.equals("POP")) {
+                if (category.equals("PTY")) {
                     // System.out.println("HAHA!");
                     listweatherVO.add(test);
                     // System.out.println(test);
@@ -829,7 +832,7 @@ public interface WeatherRepsitory {
 
         }
 
-        if (listweatherVO.get(0).getPop() == null || listweatherVO.get(0).getIcon() == null
+        if (listweatherVO.get(0).getIcon() == null
                 || listweatherVO.get(0).getTmp() == null) {
 
             Calendar cal1 = Calendar.getInstance();
@@ -965,10 +968,13 @@ public interface WeatherRepsitory {
                     if (weatherVO.getPty() != null) {
                         if (weatherVO.getPty().equals("1") || weatherVO.getPty().equals("5")) {
                             test.setIcon("비");
+                            test.setPop(weatherVO.getPop());
                         } else if (weatherVO.getPty().equals("2") || weatherVO.getPty().equals("6")) {
                             test.setIcon("진눈깨비");
+                            test.setPop(weatherVO.getPop());
                         } else if (weatherVO.getPty().equals("3") || weatherVO.getPty().equals("7")) {
                             test.setIcon("눈");
+                            test.setPop(weatherVO.getPop());
                         } else {
                             if (weatherVO.getSky() != null) {
                                 if (weatherVO.getSky().equals("1")) {
@@ -999,7 +1005,7 @@ public interface WeatherRepsitory {
                     // System.out.println(test);
 
                     // test = vl;
-                    if (category.equals("POP")) {
+                    if (category.equals("PTY")) {
                         // System.out.println("HAHA!");
                         listweatherVO.add(test);
                         // System.out.println(test);
