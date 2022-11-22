@@ -16,7 +16,7 @@ const Fetch = () => {
   const [air, setAir] = useState([]);
 
   useEffect(() => {
-    fetch("/api/location?address=강원도 원주시 단계동", { method: "GET" })
+    fetch("/api/location?address=서울특별시 강남구 역삼동", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setLocation(data);
