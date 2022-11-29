@@ -1327,12 +1327,16 @@ public interface WeatherRepsitory {
         for (int i = 0; i < item.size(); i++) {
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
+            String fcstDate = (String) object.get("fcstDate");
+            
 
             // System.out.println(category);
             if (category.equals("TMN") && counttmn < 1) {
                 counttmn += 1;
                 String tmn = (String) object.get("fcstValue");
                 weatherVO.setTmn(tmn);
+                weatherVO.setFcstDate(fcstDate);
+                
             }
             if (category.equals("TMX") && counttmx < 1) {
                 counttmx += 1;
@@ -1351,14 +1355,12 @@ public interface WeatherRepsitory {
         for (int i = 0; i < item.size(); i++) {
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
-            String fcstDate = (String) object.get("fcstDate");
             String fcstTime = (String) object.get("fcstTime");
 
             if (category.equals("PTY")) {
                 String pty = (String) object.get("fcstValue");
-                weatherVO.setFcstDate(fcstDate);
-                weatherVO.setFcstTime(fcstTime);
                 weatherVO.setPty(pty);
+                weatherVO.setFcstTime(fcstTime);
 
                 String setdatetime = weatherVO.getFcstDate() + weatherVO.getFcstTime();
                 Date format1 = new SimpleDateFormat("yyyyMMddHHmm").parse(setdatetime);
