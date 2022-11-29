@@ -85,7 +85,7 @@ const Fetch = () => {
       });
   }, []);
 
-  useEffect(() => {
+ /* useEffect(() => {
     fetch("/api/uv", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
@@ -103,7 +103,7 @@ const Fetch = () => {
         setSun(data);
         console.log(data);
       });
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     fetch("/api/air", { method: "GET" })
@@ -201,6 +201,8 @@ const Fetch = () => {
       <ul>
           <li>미세먼지 : {air.pm10Grade1h}</li>
           <li>초미세먼지 : {air.pm25Grade1h}</li>
+          <li>측정소이름 : {air.stationName}</li>
+          <li>측정시간 : {air.dataTime}</li>
       </ul>
     </div>
   );

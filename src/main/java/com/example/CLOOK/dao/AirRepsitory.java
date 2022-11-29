@@ -262,6 +262,7 @@ public interface AirRepsitory {
         airVO.setDataTime(dataTime);
         airVO.setPm10Grade1h(pm10Grade1h);
         airVO.setPm25Grade1h(pm25Grade1h);
+        airVO.setStationName(stationName);
 
         //System.out.println("list VO ::: "+listairVO);
         return airVO;
