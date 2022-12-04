@@ -41,27 +41,30 @@ public interface GeocodingRepsitory {
 
     public static GeocodingVO getData(String address) {
 
-        GeocodingVO geocodingVO = new GeocodingVO();
+        /*GeocodingVO geocodingVO = new GeocodingVO();
 
         // 주소 입력 -> 위도, 경도 좌표 추출.
         // BufferedReader io = new BufferedReader(new InputStreamReader(System.in));
-        String clientId = "7kl71pnx4p";
-        String clientSecret = "A8vT5bFAcIuGkzIlrxbRhIi1XLut8Ga6NMyBa60M";
+        //String clientId = "7kl71pnx4p";
+        //String clientSecret = "A8vT5bFAcIuGkzIlrxbRhIi1XLut8Ga6NMyBa60M";
+
+        String restAPIKey = "0e460a2bbac829d7098cba2a3e967c7e";
 
         try {
             // String address = io.readLine();
             String addr = URLEncoder.encode(address, "UTF-8");
 
             // Geocoding 개요에 나와있는 API URL 입력.
-            String apiURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + addr; // JSON
+            String apiURL = "https://dapi.kakao.com/v2/local/search/address.json?query=" + addr; // JSON
 
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
 
             // Geocoding 개요에 나와있는 요청 헤더 입력.
-            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
-            con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+            //con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+            con.setRequestProperty("Authorization", "KakaoAK " + restAPIKey);
+            //con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
 
             // 요청 결과 확인. 정상 호출인 경우 200
             int responseCode = con.getResponseCode();
@@ -105,6 +108,86 @@ public interface GeocodingRepsitory {
             }
 
             System.out.println("arr ::: "+arr);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return geocodingVO;*/
+        
+        GeocodingVO geocodingVO = new GeocodingVO();
+
+        // 주소 입력 -> 위도, 경도 좌표 추출.
+        // BufferedReader io = new BufferedReader(new InputStreamReader(System.in));
+        //String clientId = "7kl71pnx4p";
+        //String clientSecret = "A8vT5bFAcIuGkzIlrxbRhIi1XLut8Ga6NMyBa60M";
+
+        String restAPIKey = "0e460a2bbac829d7098cba2a3e967c7e";
+
+        try {
+            // String address = io.readLine();
+            String addr = URLEncoder.encode(address, "UTF-8");
+
+            // Geocoding 개요에 나와있는 API URL 입력.
+            String apiURL = "https://dapi.kakao.com/v2/local/search/address.json?query=" + addr; // JSON
+
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
+            // Geocoding 개요에 나와있는 요청 헤더 입력.
+            //con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+            con.setRequestProperty("Authorization", "KakaoAK " + restAPIKey);
+            //con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+
+            // 요청 결과 확인. 정상 호출인 경우 200
+            int responseCode = con.getResponseCode();
+
+            BufferedReader br;
+
+            if (responseCode == 200) {
+                br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            } else {
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                System.out.println("에러");
+            }
+
+            String inputLine;
+
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            br.close();
+
+            List<String> addressList = new ArrayList<String>();
+
+            
+
+            //JSONTokener tokener = new JSONTokener(response.toString());
+            JSONObject object = new JSONObject(response.toString());
+            //JSONObject object2 = new JSONObject(object);
+            //JSONObject documents = new JSONObject(object);
+            JSONArray arr = object.getJSONArray("documents");
+
+            //System.out.println("나와라 ::: responese ::: "+arr);
+
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject temp = (JSONObject) arr.get(i);
+
+                double x = Double.valueOf(temp.get("x").toString()).doubleValue();
+                double y = Double.valueOf(temp.get("y").toString()).doubleValue();
+
+                geocodingVO.setLat(y);
+                geocodingVO.setLon(x);
+                
+                //addressList.add((String) temp.get("roadAddress"));
+                geocodingVO.setAddress(addressList);
+            }
+
+            System.out.println("geocodingVO ::: "+geocodingVO);
 
         } catch (Exception e) {
             System.out.println(e);

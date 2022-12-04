@@ -45,7 +45,7 @@ const Fetch = () => {
       });
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch("/api/topspt", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
@@ -125,7 +125,7 @@ const Fetch = () => {
       });
   }, []);*/
 
-  return (
+  /*return (
     <div>
       <ul>{location}</ul>
 
@@ -205,7 +205,7 @@ const Fetch = () => {
           <li>측정시간 : {air.dataTime}</li>
       </ul>
     </div>
-  );
-};
+  );*/
+}
 
 export default Fetch;
