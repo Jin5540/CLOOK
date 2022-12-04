@@ -37,47 +37,23 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-// @@@@@@@@@@@@@ 내용 추가 @@@@@@@@@@@@@@@@@@@@@
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-def webappDir = "$projectDir/src/main/frontend"
+def frontendDir = "$projectDir/frontend"
 
 sourceSets {
 	main {
 		resources {
-			srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
+			srcDirs = ["$projectDir/src/main/frontend"]
 		}
 	}
 }
 
 processResources {
-	dependsOn "copyWebApp"
-}
-
-
-task copyWebApp(type: Copy) {
-    dependsOn "buildReact"
-    from "$webappDir/build"
-    into "$projectDir/src/main/resources/static"
-}
-
-
-task buildReact(type: Exec) {
-	dependsOn "installReact"
-	workingDir "$webappDir"
-	inputs.dir "$webappDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "yarn.cmd", "run-script", "build"
-	} else {
-		commandLine "yarn", "run-script", "build"
-	}
+	dependsOn "copyReactBuildFiles"
 }
 
 task installReact(type: Exec) {
-	workingDir "$webappDir"
-	inputs.dir "$webappDir"
+	workingDir "$frontendDir"
+	inputs.dir "$frontendDir"
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
 		commandLine "yarn.cmd", "audit", "fix"
@@ -88,6 +64,20 @@ task installReact(type: Exec) {
 	}
 }
 
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-// @@@@@@@@@@@@@ 내용 추가 @@@@@@@@@@@@@@@@@@@@@
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+task buildReact(type: Exec) {
+	dependsOn "installReact"
+	workingDir "$frontendDir"
+	inputs.dir "$frontendDir"
+	group = BasePlugin.BUILD_GROUP
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "yarn.cmd", "run-script", "build"
+	} else {
+		commandLine "yarn", "run-script", "build"
+	}
+}
+
+task copyReactBuildFiles(type: Copy) {
+	dependsOn "buildReact"
+	from "$frontendDir/build"
+	into "$buildDir/resources/main/static"
+}
