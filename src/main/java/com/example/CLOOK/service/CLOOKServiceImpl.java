@@ -41,7 +41,7 @@ public class CLOOKServiceImpl implements CLOOKService {
 
         System.out.println("location_serviceImpl:::------------------------------");
 
-        return SearchRepsitory.getLocation(address);
+        return SearchRepsitory.searchData(address);
 
     }
 

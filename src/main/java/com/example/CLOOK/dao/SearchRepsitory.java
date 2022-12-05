@@ -1,178 +1,199 @@
 package com.example.CLOOK.dao;
 
-import org.springframework.stereotype.Repository;
-
-import com.example.CLOOK.domain.GeocodingVO;
-
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.CLOOK.domain.GeocodingVO;
+
+//import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import lombok.AllArgsConstructor;
+
+
 
 @Repository
 public interface SearchRepsitory {
 
-    public static List<String> getLocation(String address) throws IOException, ParseException {
+    public static List<String> searchData(String address) {
 
-        String apiUrl = "http://api.vworld.kr/req/search";
+        /*GeocodingVO geocodingVO = new GeocodingVO();
 
-        String service = "search";
-        String request = "search";
-        String version = "2.0";
-        String crs = "EPSG:900913";
-        String size = "1000";
-        String page = "1";
-        String query = address;
-        String type = "district";
-        String category = "L4";
-        String format = "json";
-        String errorformat = "json";
-        // 홈페이지에서 받은 키
-        String key = "3184253A-C2B2-3AC5-B22B-187DAB8DEF7A";
+        // 주소 입력 -> 위도, 경도 좌표 추출.
+        // BufferedReader io = new BufferedReader(new InputStreamReader(System.in));
+        //String clientId = "7kl71pnx4p";
+        //String clientSecret = "A8vT5bFAcIuGkzIlrxbRhIi1XLut8Ga6NMyBa60M";
 
-        StringBuilder urlBuilder = new StringBuilder(apiUrl);
-        urlBuilder.append("?" + URLEncoder.encode("service", "UTF-8") + "=" + service);
-        urlBuilder.append("&" + URLEncoder.encode("request", "UTF-8") + "=" + URLEncoder.encode(request, "UTF-8"));
+        String restAPIKey = "0e460a2bbac829d7098cba2a3e967c7e";
 
-        urlBuilder.append("&" + URLEncoder.encode("version", "UTF-8") + "="
-                + URLEncoder.encode(version, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("crs", "UTF-8") + "=" + URLEncoder.encode(crs, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("size", "UTF-8") + "="
-                + URLEncoder.encode(size, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("page", "UTF-8") + "="
-                + URLEncoder.encode(page, "UTF-8"));
+        try {
+            // String address = io.readLine();
+            String addr = URLEncoder.encode(address, "UTF-8");
 
-        urlBuilder.append("&" + URLEncoder.encode("query", "UTF-8") + "=" + URLEncoder.encode(query, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode(type, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("category", "UTF-8") + "=" + URLEncoder.encode(category, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode(format, "UTF-8"));
-        urlBuilder.append(
-                "&" + URLEncoder.encode("errorformat", "UTF-8") + "=" + URLEncoder.encode(errorformat, "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("key", "UTF-8") + "=" + URLEncoder.encode(key, "UTF-8"));
+            // Geocoding 개요에 나와있는 API URL 입력.
+            String apiURL = "https://dapi.kakao.com/v2/local/search/address.json?query=" + addr; // JSON
 
-        URL url = new URL(urlBuilder.toString());
-        // 어떻게 넘어가는지 확인하고 싶으면 아래 출력분 주석 해제
-        // System.out.println(url);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
 
-        BufferedReader rd;
-        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-        rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
-        } else {
-        rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
-        }
+            // Geocoding 개요에 나와있는 요청 헤더 입력.
+            //con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+            con.setRequestProperty("Authorization", "KakaoAK " + restAPIKey);
+            //con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
 
-        GeocodingVO geocodingVO = new GeocodingVO();
+            // 요청 결과 확인. 정상 호출인 경우 200
+            int responseCode = con.getResponseCode();
 
-        List<String> addressList = new ArrayList<String>();
+            BufferedReader br;
 
-        JSONParser parser = new JSONParser();
-        JSONObject object = (JSONObject) parser.parse(rd.readLine());
-        JSONObject response = (JSONObject) object.get("response");
-        String status = (String) response.get("status");
+            if (responseCode == 200) {
+                br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            } else {
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                System.out.println("에러");
+            }
 
-        String resultString;
+            String inputLine;
 
-        if(status.equals("NOT_FOUND"))
-        {
-            resultString="검색하신 지역을 찾을 수 없습니다"; //검색하신 지역을 찾을 수 없습니다.
-            addressList.add(resultString);
+            StringBuffer response = new StringBuffer();
 
-        }else if(status.equals("ERROR"))
-        {
-            resultString="서버 에러입니다. 관리자에게 문의해주시기 바랍니다";
-            addressList.add(resultString);
-        }else{
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
 
-            JSONObject result = (JSONObject) response.get("result");
-            JSONArray items = (JSONArray) result.get("items");
+            br.close();
 
-            for(int i=0; i<items.size();i++){
-                object = (JSONObject) items.get(i);
-                String title = (String) object.get("title");
-                //String resultlocation = title.substring(2,5);
-                //System.out.println(resultlocation);
+            List<String> addressList = new ArrayList<String>();
 
-                /*if(resultlocation.equals("특별시")){
-                    title = title.replaceFirst("특별시","시");
-                    System.out.print(resultlocation);
-                }else if(resultlocation=="특별자"){
-                    title.replaceFirst("특별자치시","시");
-                }else if(resultlocation=="광역시"){
-                    title.replaceFirst("광역시","시");
-                }
-                resultlocation = title.substring(0,3);
-                if(resultlocation=="충청남"){
-                    title.replaceFirst("충청남도","충남");
-                }else if(resultlocation=="충청북"){
-                    title.replaceFirst("충청북도","충북");
-                }else if(resultlocation=="경상남"){
-                    title.replaceFirst("경상남도","경남");
-                }else if(resultlocation=="경상북"){
-                    title.replaceFirst("경상북도","경북");
-                }else if(resultlocation=="전라남"){
-                    title.replaceFirst("전라남도","전남");
-                }else if(resultlocation=="전라북"){
-                    title.replaceFirst("전라북도","전북");
-                }*/
+            JSONTokener tokener = new JSONTokener(response.toString());
+            JSONObject object = new JSONObject(tokener);
+            JSONArray arr = object.getJSONArray("addresses");
+
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject temp = (JSONObject) arr.get(i);
+
+                double x = Double.valueOf(temp.get("x").toString()).doubleValue();
+                double y = Double.valueOf(temp.get("y").toString()).doubleValue();
+
+                geocodingVO.setLat(y);
+                geocodingVO.setLon(x);
                 
-                addressList.add(title);
+                addressList.add((String) temp.get("roadAddress"));
                 geocodingVO.setAddress(addressList);
             }
+
+            System.out.println("arr ::: "+arr);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return geocodingVO;*/
+        
+        GeocodingVO geocodingVO = new GeocodingVO();
+
+        // 주소 입력 -> 위도, 경도 좌표 추출.
+        // BufferedReader io = new BufferedReader(new InputStreamReader(System.in));
+        //String clientId = "7kl71pnx4p";
+        //String clientSecret = "A8vT5bFAcIuGkzIlrxbRhIi1XLut8Ga6NMyBa60M";
+
+        String restAPIKey = "0e460a2bbac829d7098cba2a3e967c7e";
+        List<String> addressList = new ArrayList<String>();
+        try {
+            // String address = io.readLine();
+            String addr = URLEncoder.encode(address, "UTF-8");
+
+            // Geocoding 개요에 나와있는 API URL 입력.
+            String apiURL = "https://dapi.kakao.com/v2/local/search/address.json?query=" + addr; // JSON
+
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
+            // Geocoding 개요에 나와있는 요청 헤더 입력.
+            //con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+            con.setRequestProperty("Authorization", "KakaoAK " + restAPIKey);
+            //con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+
+            // 요청 결과 확인. 정상 호출인 경우 200
+            int responseCode = con.getResponseCode();
+
+            BufferedReader br;
+
+            if (responseCode == 200) {
+                br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            } else {
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                System.out.println("에러");
+            }
+
+            String inputLine;
+
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            br.close();
+
             
+
+            
+
+            //JSONTokener tokener = new JSONTokener(response.toString());
+            JSONObject object = new JSONObject(response.toString());
+            //JSONObject object2 = new JSONObject(object);
+            //JSONObject documents = new JSONObject(object);
+            JSONArray arr = object.getJSONArray("documents");
+
+            //System.out.println("나와라 ::: responese ::: "+arr);
+
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject temp = (JSONObject) arr.get(i);
+
+                System.out.println("temp ::: "+temp);
+                String address_name = (String) temp.get("address_name");
+
+         
+                addressList.add(address_name);
+                geocodingVO.setAddress(addressList);
+            }
+
             return geocodingVO.getAddress();
 
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
         return addressList;
-
-
-
-        /*JSONObject searchPoiInfo = (JSONObject) object.get("searchPoiInfo");
-        JSONObject pois = (JSONObject) searchPoiInfo.get("pois");
-        JSONArray poiArr = (JSONArray) pois.get("poi");
-        for (int i = 0; i < poiArr.size(); i++) {
-            object = (JSONObject) poiArr.get(i);
-            String middleAddrName = (String) object.get("middleAddrName");
-            String roadName = (String) object.get("roadName");
-            String firstBuildNo = (String) object.get("firstBuildNo");
-
-            findDto.setMiddleAddrName(middleAddrName);
-            findDto.setRoadName(roadName);
-            findDto.setFirstBuildNo(firstBuildNo);
-        }*/
-
-        /*
-         * BufferedReader rd;
-         * if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-         * rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),
-         * "UTF-8"));
-         * } else {
-         * rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),
-         * "UTF-8"));
-         * }
-         * 
-         * StringBuilder sb = new StringBuilder();
-         * String line;
-         * while ((line = rd.readLine()) != null) {
-         * sb.append(line);
-         * }
-         * rd.close();
-         * conn.disconnect();
-         * String result = sb.toString();
-         */
-        
     }
 
 }

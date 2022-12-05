@@ -457,7 +457,7 @@ public interface WeatherRepsitory {
                 count++;
                 if(hhhint%300==0&j<3&nowcount<3){
                     nowcount++;
-                    weatherVO.setM("현재");
+                    weatherVO.setM("지금");
 
                     if (count <= 3) {
                         sum = ltmp + sum;
@@ -472,7 +472,7 @@ public interface WeatherRepsitory {
                     }
                 }else if(hhhint%300==100&&j<3&nowcount<2){
                     nowcount++;
-                    weatherVO.setM("현재");
+                    weatherVO.setM("지금");
                     if (count <= 2) {
                         sum = ltmp + sum;
                     }
@@ -487,7 +487,7 @@ public interface WeatherRepsitory {
                     }
                 }else if(hhhint%300==200&j<3&nowcount<1){
                     nowcount++;
-                    weatherVO.setM("현재");
+                    weatherVO.setM("지금");
                     weatherVO.setTmpl(ltmp);
 
                     listVO.add(weatherVO);
