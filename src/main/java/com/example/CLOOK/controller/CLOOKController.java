@@ -30,8 +30,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class CLOOKController {
 
-    private final String address2 = "대전광역시 대덕구 읍내동";
-
     @Autowired
     private CLOOKService clookService;
 

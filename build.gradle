@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.4'
 	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 	id 'java'
+	id 'war'
 }
 
 group = 'com.example'
@@ -12,6 +13,14 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+}
+
+bootWar {
+    enabled = true
+}
+
+bootJar {
+    launchScript ()
 }
 
 repositories {
@@ -37,47 +46,49 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-def frontendDir = "$projectDir/frontend"
+def reactAppDir = "$projectDir/src/main/frontend"
 
 sourceSets {
 	main {
 		resources {
-			srcDirs = ["$projectDir/src/main/frontend"]
+			srcDirs = ["$projectDir/src/main/resources"]
 		}
 	}
 }
 
 processResources {
-	dependsOn "copyReactBuildFiles"
+	dependsOn "copyReactFile"
 }
 
 task installReact(type: Exec) {
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
+	workingDir "$reactAppDir"
+	inputs.dir "$reactAppDir"
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "yarn.cmd", "audit", "fix"
-		commandLine 'yarn.cmd', 'install'
+		commandLine "npm.cmd", "audit", "fix"
+		commandLine 'npm.cmd', 'install'
 	} else {
-		commandLine "yarn", "audit", "fix"
-		commandLine 'yarn', 'install'
+		commandLine "npm", "audit", "fix"
+		commandLine 'npm', 'install'
 	}
 }
 
 task buildReact(type: Exec) {
 	dependsOn "installReact"
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
+	workingDir "$reactAppDir"
+	inputs.dir "$reactAppDir"
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "yarn.cmd", "run-script", "build"
+		commandLine "npm.cmd", "run-script", "build"
 	} else {
-		commandLine "yarn", "run-script", "build"
+		commandLine "npm", "run-script", "build"
 	}
 }
 
-task copyReactBuildFiles(type: Copy) {
+task copyReactFile(type: Copy) {
 	dependsOn "buildReact"
-	from "$frontendDir/build"
+	from "$reactAppDir/build"
 	into "$buildDir/resources/main/static"
 }
+
+
