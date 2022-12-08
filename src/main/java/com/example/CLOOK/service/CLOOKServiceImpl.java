@@ -129,18 +129,26 @@ public class CLOOKServiceImpl implements CLOOKService {
             }
 
             String lastdo = array[0].substring(array[0].length() - 1);
-            String lastChar = array[2].substring(array[2].length() - 1);
             String lastgun = array[1].substring(array[1].length() - 1);
+            String lastChar="";
+            if(array.length>2){
+                lastChar = array[2].substring(array[2].length() - 1);
+            }
+            
 
-            if (lastdo.equals("도") & lastChar.equals("구")) {
-                result1 = array[1];
-                result2 = array[2];
-            } else if (lastdo.equals("시") & lastgun.equals("군")) {
+            if(array[0].length()==2&&array[1].equals("강화군")){
                 result1 = array[0];
                 result2 = array[1];
-            } else if (lastdo.equals("시")) {
+            }else if(array[0].length()==2&&lastgun.equals("군")){
+                result1 = array[1];
+            }else if(array[0].length()==2&&lastgun.equals("구")){
                 result1 = array[0];
-            } else {
+            }else if(array[0].length()==2&&lastChar.equals("구")){
+                result1 = array[1];
+                result2 = array[2];
+            }else if(lastdo.equals("시")){
+                result1 = array[0];
+            }else{
                 result1 = array[1];
             }
         }
