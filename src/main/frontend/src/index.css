@@ -83,7 +83,7 @@ body {
 }
 
 #root {
-  @apply w-full max-w-[1440px] text-xl font-medium text-brand;
+  @apply w-[100vw] max-w-[1440px] text-xl font-medium text-brand;
 }
 
 code {

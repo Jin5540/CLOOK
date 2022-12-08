@@ -1,21 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getToptm, getTopspt } from "../api/weatherApi";
 
-export default function useWeather() {
-  const toptmQuery = useQuery(["toptm"], () => getToptm(), {
-    staleTime: 1000 * 60 * 60,
-    // enabled: locationQuery.isSuccess,
+export default function useWeather(location) {
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ["toptm", location],
+        queryFn: () => getToptm(),
+        staleTime: 1000 * 60 * 5,
+      },
+      {
+        queryKey: ["topspt", location],
+        queryFn: () => getTopspt(),
+        staleTime: 1000 * 60 * 5,
+      },
+    ],
   });
 
-  const topsptQuery = useQuery(["topspt"], () => getTopspt(), {
-    staleTime: 1000 * 60 * 60,
-    // enabled: locationQuery.isSuccess,
-  });
+  // console.log(results[0].data);
+  // console.log(results[1].data);
+  console.log("=======> useWeather.jsx");
 
-  // let isSuccessAll = toptmQuery.isSuccess && topsptQuery.isSuccess;
-  // let errorAll = toptmQuery.isError || topsptQuery.isError;
-  let isLoadingToptm = toptmQuery.isLoading;
-  let isLoadingTopspt = topsptQuery.isLoading;
-
-  return { toptmQuery, topsptQuery, isLoadingToptm, isLoadingTopspt };
+  return { toptm: results[0], topspt: results[1] };
 }

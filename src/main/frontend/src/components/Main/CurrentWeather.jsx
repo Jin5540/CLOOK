@@ -8,7 +8,7 @@ export default function CurrentWeather({ toptm, topspt }) {
 
   return (
     <div
-      className="flex w-full h-[400px] mt-6 mb-5"
+      className="flex w-full h-[400px] mt-6 mb-5 rounded-2xl"
       style={{
         backgroundImage: `url(${getWweatherImages(1, topspt.background)})`,
       }}
@@ -20,11 +20,11 @@ export default function CurrentWeather({ toptm, topspt }) {
             src={getWweatherImages(3, topspt.icon)}
             alt=""
           />
-          <span>{dateFormat(toptm.fcstDate)}</span>
+          <span className="text-shadow-4">{dateFormat(toptm.fcstDate)}</span>
         </div>
         <div className="flex items-center my-2 text-8xl font-normal">
-          <span>{topspt.t1h}</span>
-          <span>°C</span>
+          <span className="text-shadow-10">{topspt.t1h}</span>
+          <span className="text-shadow-10">°C</span>
         </div>
         <div className="flex items-center my-2 ml-3 text-lg font-medium">
           <div>

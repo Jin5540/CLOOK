@@ -1,16 +1,39 @@
 import React from "react";
 import Icon from "../Shared/Icon/Icon";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
-export default function Search({ setKeyword, refetch }) {
+export default function Search({ keyword, setKeyword, refetch }) {
+  const [input, setInput] = useState("");
+  const [inputCheck, setInputCheck] = useState(false);
+
   const handleChange = (e) => {
-    const keyword = e.target.value.trim();
-    if (keyword === "" && keyword === undefined) return;
-    setKeyword(keyword);
+    setInputCheck(false);
+
+    const value = e.target.value.trim();
+    if (value === "" && value === undefined) return;
+
+    setInput(value);
   };
 
   const handleClick = (e) => {
-    refetch();
+    if (!input) {
+      setInputCheck(true);
+      return;
+    }
+
+    const lastChar = input.slice(-1);
+    console.log("lastChar === " + lastChar);
+
+    if (lastChar === "읍" || lastChar === "면" || lastChar === "동") {
+      setKeyword(input);
+    }
+  };
+
+  const handleOnKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleClick();
+    }
   };
 
   return (
@@ -22,15 +45,23 @@ export default function Search({ setKeyword, refetch }) {
           </div>
           <input
             className="w-full h-full bg-sub-brand border-none outline-none placeholder:text-white"
-            id="searh"
             type="text"
             placeholder="예) 신사동"
+            value={input}
             onChange={handleChange}
+            onKeyPress={handleOnKeyPress}
           />
         </div>
         <div className="flex justify-between w-full my-3 text-blue-600">
-          <span>*00동을 입력해주세요.</span>
-          <span>*국내 도시만 서비스되고 있습니다.</span>
+          {!inputCheck && (
+            <>
+              <span>*00동을 입력해주세요.</span>
+              <span>*국내 도시만 서비스되고 있습니다.</span>
+            </>
+          )}
+          {inputCheck && (
+            <span className="text-red">*검색어를 다시 확인해주세요.</span>
+          )}
         </div>
       </div>
       <button
