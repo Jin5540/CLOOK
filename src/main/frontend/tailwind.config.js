@@ -51,6 +51,12 @@ module.exports = {
           "-webkit-box-shadow": theme("boxShadow.main"),
           "-moz-box-shadow": theme("boxShadow.main"),
         },
+        ".text-shadow-4": {
+          textShadow: "0px 4px 4px rgba(0, 51, 99, 0.2)",
+        },
+        ".text-shadow-10": {
+          textShadow: "0px 4px 10px rgba(0, 51, 99, 0.2)",
+        },
         ".modal-shadow": {
           boxShadow: "0px 0px 7px 2px rgb(219 234 254 / 75%)",
           "-webkit-box-shadow": "0px 0px 7px 2px rgb(219 234 254 / 75%)",

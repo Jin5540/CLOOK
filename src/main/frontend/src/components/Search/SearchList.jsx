@@ -1,11 +1,12 @@
 import React from "react";
+import { useLocationContext } from "../../contexts/LocationContext";
 import SearchListItem from "./SearchListItem";
 
-export default function SearchList({ onCloseModal, setLocation, data }) {
+export default function SearchList({ onCloseModal, data }) {
+  const { updateLocation } = useLocationContext();
+
   const handleClick = (e) => {
-    // e.target.classList.add("");
-    setLocation(e.target.innerText);
-    localStorage.setItem("location", e.target.innerText);
+    updateLocation(e.target.innerText);
     onCloseModal();
   };
 
