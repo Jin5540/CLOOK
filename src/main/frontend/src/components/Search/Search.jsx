@@ -6,27 +6,28 @@ import { useState } from "react";
 export default function Search({ keyword, setKeyword, refetch }) {
   const [input, setInput] = useState("");
   const [inputCheck, setInputCheck] = useState(false);
+  const [addrCheck, setAddrCheck] = useState(false);
 
   const handleChange = (e) => {
     setInputCheck(false);
 
-    const value = e.target.value.trim();
-    if (value === "" && value === undefined) return;
-
-    setInput(value);
+    setInput(e.target.value);
   };
 
   const handleClick = (e) => {
-    if (!input) {
+    if (!input.trim()) {
       setInputCheck(true);
+      setKeyword("");
       return;
     }
 
-    const lastChar = input.slice(-1);
-    console.log("lastChar === " + lastChar);
-
-    if (lastChar === "읍" || lastChar === "면" || lastChar === "동") {
+    // const lastChar = input.slice(-1);
+    // if (lastChar === "읍" || lastChar === "면" || lastChar === "동") {
+    if (input.includes("읍") || input.includes("면") || input.includes("동")) {
       setKeyword(input);
+      setAddrCheck(false);
+    } else {
+      setAddrCheck(true);
     }
   };
 
@@ -55,7 +56,9 @@ export default function Search({ keyword, setKeyword, refetch }) {
         <div className="flex justify-between w-full my-3 text-blue-600">
           {!inputCheck && (
             <>
-              <span>*00동을 입력해주세요.</span>
+              <span className={addrCheck ? "text-red" : "text-blue-600"}>
+                *00동을 입력해주세요.
+              </span>
               <span>*국내 도시만 서비스되고 있습니다.</span>
             </>
           )}

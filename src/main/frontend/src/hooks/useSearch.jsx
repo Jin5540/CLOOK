@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSearchList } from "../api/weatherApi";
+import { getSearchList } from "../api/api";
 
 export default function useSearch(keyword) {
   const searchQuery = useQuery(["search"], () => getSearchList(keyword), {

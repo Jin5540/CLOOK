@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import useLocation from "../hooks/useLocation";
+import React, { createContext, useContext, useState } from "react";
 
 const LocationContext = createContext();
 const locaStorageLocation = "충청남도 아산시 모종동";
 
 export const LocationProvider = ({ children }) => {
+  // const [apiFlag, setApiFlag] = useState(false);
   const [location, setLocation] = useState(
     localStorage.getItem("location")
       ? localStorage.getItem("location")
@@ -13,13 +13,20 @@ export const LocationProvider = ({ children }) => {
 
   const updateLocation = (address) => {
     if (!address) address = locaStorageLocation;
+
     setLocation(address);
     localStorage.setItem("location", address);
   };
-  console.log("context");
+
+  // const updateApiFlag = (value) => {
+  //   setApiFlag(value);
+  // };
 
   return (
-    <LocationContext.Provider value={{ location, updateLocation }}>
+    <LocationContext.Provider
+      // value={{ location, updateLocation, apiFlag, updateApiFlag }}
+      value={{ location, updateLocation }}
+    >
       {children}
     </LocationContext.Provider>
   );
