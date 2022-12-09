@@ -17,6 +17,7 @@ export default function Fetch() {
 
   useEffect(() => {
     fetch("/api/location?address=서울특별시 강남구 역삼동", { method: "GET" })
+      // fetch("/api/location?address=서울 강서구 화곡동", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setLocation(data);
@@ -89,16 +90,16 @@ export default function Fetch() {
       });
   }, []);
 
-  useEffect(() => {
-    fetch("/api/uv", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status == 200) {
-          setUvs(data);
-        }
-        console.log(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/uv", { method: "GET" })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data.status == 200) {
+  //         setUvs(data);
+  //       }
+  //       console.log(data);
+  //     });
+  // }, []);
 
   useEffect(() => {
     fetch("/api/sun", { method: "GET" })

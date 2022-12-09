@@ -5,7 +5,7 @@ import useLocation from "../../hooks/useLocation";
 import Card from "../Shared/Card/Card";
 import Icon from "../Shared/Icon/Icon";
 import ModalContent from "../Modal/ModalContent";
-import NotFound from "../Shared/NotFound/NotFound";
+import { useEffect } from "react";
 
 export default function Locationbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,10 +14,14 @@ export default function Locationbar() {
   const { locationQuery } = useLocation(location);
   const { isError, status, isSuccess } = locationQuery;
 
+  // useEffect(() => {
+  //   if (status === "success") {
+  //     updateApiFlag(true);
+  //   }
+  // }, [status]);
+
   return (
     <>
-      {/* {isError && <NotFound />} */}
-      {/* {!isError && isSuccess && ( */}
       {isSuccess && (
         <Card
           selected={isOpen && "selected"}

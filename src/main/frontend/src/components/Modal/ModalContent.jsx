@@ -10,19 +10,17 @@ export default function ModalContent({ onCloseModal }) {
   const { searchQuery } = useSearch(keyword);
   const { isError, refetch, data: dataList } = searchQuery;
 
-  console.log("=======> ModalContent.jsx");
-
   useEffect(() => {
     if (!keyword) return;
     refetch();
   }, [keyword]);
 
-  console.log(`isError: ${isError}`);
-
   return (
     <Modal onCloseModal={onCloseModal}>
       <Search keyword={keyword} setKeyword={setKeyword} refetch={refetch} />
-      {!isError && <SearchList onCloseModal={onCloseModal} data={dataList} />}
+      {!isError && keyword && (
+        <SearchList onCloseModal={onCloseModal} data={dataList} />
+      )}
     </Modal>
   );
 }

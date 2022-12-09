@@ -1,25 +1,33 @@
 import { useQueries } from "@tanstack/react-query";
-import { getToptm, getTopspt } from "../api/weatherApi";
+import { getApi } from "../api/api";
+import { useErrorHandler } from "react-error-boundary";
+import { useEffect, useState } from "react";
 
-export default function useWeather(location) {
-  const results = useQueries({
-    queries: [
-      {
-        queryKey: ["toptm", location],
-        queryFn: () => getToptm(),
-        staleTime: 1000 * 60 * 5,
-      },
-      {
-        queryKey: ["topspt", location],
-        queryFn: () => getTopspt(),
-        staleTime: 1000 * 60 * 5,
-      },
-    ],
+export default function useWeather(apis, location, params) {
+  const handleError = useErrorHandler();
+  const [error, setError] = useState(null);
+
+  const queryResults = useQueries({
+    queries: apis.map((api) => {
+      if (api) {
+        return {
+          queryKey: [api, location],
+          queryFn: () => getApi(api, params),
+          staleTime: 1000 * 60 * 5,
+          onError: (e) => {
+            setError(e);
+          },
+        };
+      }
+    }),
   });
 
-  // console.log(results[0].data);
-  // console.log(results[1].data);
+  useEffect(() => {
+    if (error) {
+      handleError(error);
+    }
+  }, [error]);
   console.log("=======> useWeather.jsx");
 
-  return { toptm: results[0], topspt: results[1] };
+  return queryResults;
 }
