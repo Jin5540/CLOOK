@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import useModalOutSideClick from "../../../hooks/useModalOutSideClick";
-import ModalContainerPortal from "../../../portal/ModalContainerPortal";
+import ModalContainerPortal from "../../../portal2/ModalContainerPortal";
 
 export default function Modal({ onCloseModal, children }) {
   const modalRef = useRef(null);
