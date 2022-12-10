@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 
 public interface UVRepsitory {
 
-    public static List<UvVO> getUV(String staionName)
+    public static UvVO getUV(String staionName)
             throws IOException, ParseException {
 
         Calendar cal = Calendar.getInstance();
@@ -129,19 +129,18 @@ public interface UVRepsitory {
         JSONObject items = (JSONObject) body.get("items");
         JSONArray item = (JSONArray) items.get("item");
         // JSONArray item = (JSONArray) items.get("item");
+        UvVO uvVO = new UvVO();
 
         // String status = (String) response.get("status");
         for (int i = 0; i < item.size(); i++) {
-            UvVO sunVO = new UvVO();
+            
             object = (JSONObject) item.get(i);
-            // String h0 = (String) object.get("h0");
-
-            // sunVO.setSun(time);
-
+            //String uv = (String) object.get("h0");
         }
-        listsunVO.addAll(item);
+        uvVO.setSun(item);
+        //listsunVO.addAll(item);
 
-        return listsunVO;
+        return uvVO;
 
     }
 

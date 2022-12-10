@@ -59,12 +59,12 @@ public class CLOOKServiceImpl implements CLOOKService {
     }
 
     @Override
-    public List<WeatherVO> getweatherclothes(GeocodingVO gecoding)
+    public List<WeatherVO> getweatherclothes(GeocodingVO gecoding, UvVO uv)
             throws IOException, ParseException, java.text.ParseException {
 
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
-        return WeatherRepsitory.getShortWeather4(gecoding);
+        return WeatherRepsitory.getShortWeather4(gecoding, uv);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class CLOOKServiceImpl implements CLOOKService {
     }
 
     @Override
-    public List<UvVO> getUv(String staionName) throws IOException, ParseException {
+    public UvVO getUv(String staionName) throws IOException, ParseException {
         String result = staionName.substring(0, staionName.indexOf(" ") + 1);
         // System.out.println(result);
 

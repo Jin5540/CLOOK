@@ -15,7 +15,7 @@ public interface CLOOKService {
    
    public List<String> location(String address) throws IOException, ParseException;
    public GeocodingVO gecodingnxny(String address);
-   public List<WeatherVO> getweatherclothes(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException;
+   public List<WeatherVO> getweatherclothes(GeocodingVO gecoding, UvVO uv) throws IOException, ParseException, java.text.ParseException;
    public List<WeatherVO> getweathertoday(GeocodingVO gecoding, SunVO sun) throws IOException, ParseException, java.text.ParseException;
    public JSONObject getweather2(GeocodingVO gecoding) throws IOException, ParseException;
    public String getweather3(GeocodingVO gecoding) throws IOException, ParseException;
@@ -23,7 +23,7 @@ public interface CLOOKService {
    public WeatherVO getpartweather2(GeocodingVO gecoding, SunVO sun) throws IOException, ParseException, java.text.ParseException;
    public WeatherVO getpartweather3(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException;
    public AirVO getair(String stationName) throws IOException, ParseException;
-   public List<UvVO> getUv(String staionName) throws IOException, ParseException;
+   public UvVO getUv(String staionName) throws IOException, ParseException;
    public String getUv_copy() throws IOException, ParseException;
    public SunVO getsun(String result) throws IOException, ParseException;
    public AirVO getTm(String stationName) throws IOException, ParseException;

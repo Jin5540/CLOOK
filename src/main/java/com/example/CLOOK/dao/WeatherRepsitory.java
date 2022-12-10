@@ -34,6 +34,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.SunVO;
+import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
 
 import java.util.stream.Collector;
@@ -261,7 +262,7 @@ public interface WeatherRepsitory {
 
     }
 
-    public static List<WeatherVO> getShortWeather4(GeocodingVO geocodingVO)
+    public static List<WeatherVO> getShortWeather4(GeocodingVO geocodingVO, UvVO uv)
             throws IOException, ParseException, java.text.ParseException {
         // 현재 시간
         LocalTime now = LocalTime.now();
@@ -426,7 +427,7 @@ public interface WeatherRepsitory {
 
                 } else if (category.equals("PTY")) {
                     String result = (String) object.get("fcstValue");
-                    if (result.equals("1") || result.equals("5")) {
+                    if (result.equals("1") || result.equals("5") || result.equals("2") || result.equals("6") || result.equals("3") || result.equals("7")) {
                         weatherVO.setPty(result);
                         weatherVO.setFcstTime(fcstTime);
                         weatherVO.setFcstDate(fcstDate);
@@ -519,7 +520,7 @@ public interface WeatherRepsitory {
         for (int j = 0; j < listVO.size(); j++) {
             WeatherVO weatherVO = new WeatherVO();
 
-            if (listVO.get(j).getTmpl() != 0) {
+            if (listVO.get(j).getTmpl() != null) {
                 int a = listVO.get(j).getTmpl();
                 String m = listVO.get(j).getM();
                 if (28 <= a) {
@@ -559,10 +560,19 @@ public interface WeatherRepsitory {
                     weatherVO.setClothes1("니트");
                     weatherVO.setClothes2("패딩");
 
+                } if(a < 6){
+                    weatherVO.setItem1("목도리");
+
                 }
                 weatherVO.setM(m);
                 clothesVO.add(weatherVO);
-            }
+            }if (listVO.get(j).getPty() != null) {
+                String b = listVO.get(j).getPty();
+                if (b.equals('1')||b.equals('2')||b.equals('3')||b.equals('5')||b.equals('6')||b.equals('7')) {
+                    weatherVO.setItem2("우산");
+                } 
+            clothesVO.add(weatherVO);
+        }
 
         }
 
