@@ -2,8 +2,10 @@ import React from "react";
 import Icon from "../Shared/Icon/Icon";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useLocationContext } from "../../contexts/LocationContext";
 
 export default function Search({ keyword, setKeyword, refetch }) {
+  const { updateSucc } = useLocationContext();
   const [input, setInput] = useState("");
   const [inputCheck, setInputCheck] = useState(false);
   const [addrCheck, setAddrCheck] = useState(false);
@@ -26,6 +28,7 @@ export default function Search({ keyword, setKeyword, refetch }) {
     if (input.includes("읍") || input.includes("면") || input.includes("동")) {
       setKeyword(input);
       setAddrCheck(false);
+      updateSucc(false);
     } else {
       setAddrCheck(true);
     }

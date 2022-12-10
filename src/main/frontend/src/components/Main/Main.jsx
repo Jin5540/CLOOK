@@ -1,4 +1,5 @@
 import React from "react";
+import Section from "../Shared/Section/Section";
 import { useLocationContext } from "../../contexts/LocationContext";
 import Skeleton from "../Shared/UI/Skeleton";
 import NotFound from "../Shared/Error/NotFound";
@@ -7,7 +8,7 @@ import Card from "../Shared/Card/Card";
 import Icon from "../Shared/Icon/Icon";
 import CurrentWeather from "./CurrentWeather";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import { timeFormat } from "../../util/timeFormat";
+import { sentenceFormat } from "../../util/sentenceFormat";
 
 export default function Main() {
   const { location } = useLocationContext();
@@ -25,7 +26,7 @@ export default function Main() {
       {isLoading && <Skeleton />}
       {isError && <NotFound />}
       {!isError && !isLoading && isSuccess && (
-        <section className="w-full bg-white mb-12">
+        <Section>
           {toptm && topspt && (
             <>
               <CurrentWeather toptm={toptm.data} topspt={topspt.data} />
@@ -36,7 +37,9 @@ export default function Main() {
                   </div>
                   <span className="text-2xl text-brand font-medium">
                     {toptm.data.time.map((item, index) => {
-                      return `${timeFormat(item)} ${toptm.data.message[index]}${
+                      return `${sentenceFormat(item)} ${
+                        toptm.data.message[index]
+                      }${
                         toptm.data.time.length - 1 === index
                           ? " 소식이 있어요."
                           : ", "
@@ -47,7 +50,7 @@ export default function Main() {
               )}
             </>
           )}
-        </section>
+        </Section>
       )}
     </>
   );
