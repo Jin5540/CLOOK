@@ -9,16 +9,17 @@ import { useEffect } from "react";
 
 export default function Locationbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { location } = useLocationContext();
+  const { location, updateSucc } = useLocationContext();
 
   const { locationQuery } = useLocation(location);
   const { isError, status, isSuccess } = locationQuery;
 
-  // useEffect(() => {
-  //   if (status === "success") {
-  //     updateApiFlag(true);
-  //   }
-  // }, [status]);
+  useEffect(() => {
+    console.log(status);
+    if (status === "success") {
+      updateSucc(true);
+    }
+  }, [status]);
 
   return (
     <>

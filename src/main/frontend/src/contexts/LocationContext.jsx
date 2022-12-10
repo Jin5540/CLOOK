@@ -4,12 +4,12 @@ const LocationContext = createContext();
 const locaStorageLocation = "충청남도 아산시 모종동";
 
 export const LocationProvider = ({ children }) => {
-  // const [apiFlag, setApiFlag] = useState(false);
   const [location, setLocation] = useState(
     localStorage.getItem("location")
       ? localStorage.getItem("location")
       : locaStorageLocation
   );
+  const [isSucc, setIsSucc] = useState(false);
 
   const updateLocation = (address) => {
     if (!address) address = locaStorageLocation;
@@ -18,14 +18,13 @@ export const LocationProvider = ({ children }) => {
     localStorage.setItem("location", address);
   };
 
-  // const updateApiFlag = (value) => {
-  //   setApiFlag(value);
-  // };
+  const updateSucc = (value) => {
+    setIsSucc(value);
+  };
 
   return (
     <LocationContext.Provider
-      // value={{ location, updateLocation, apiFlag, updateApiFlag }}
-      value={{ location, updateLocation }}
+      value={{ location, updateLocation, isSucc, updateSucc }}
     >
       {children}
     </LocationContext.Provider>
