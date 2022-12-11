@@ -13,6 +13,6 @@ public class Uv_location {
 
     private int id;
     private String location_index;
-    private String location;
+    private String uv_location;
     
 }

@@ -9,4 +9,14 @@ import lombok.Data;
 @Data
 public class UvVO {
     private List<String> sun;
+    private String h0;
+    private String h3;
+    private String h6;
+    private String h9;
+    private String h12;
+    private String h15;
+    private String h18;
+    private String h21;
+    private String h24;
+
 }

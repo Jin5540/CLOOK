@@ -135,9 +135,28 @@ public interface UVRepsitory {
         for (int i = 0; i < item.size(); i++) {
             
             object = (JSONObject) item.get(i);
-            //String uv = (String) object.get("h0");
+            String h0 = (String) object.get("h0");
+            String h3 = (String) object.get("h3");
+            String h6 = (String) object.get("h6");
+            String h9 = (String) object.get("h9");
+            String h12 = (String) object.get("h12");
+            String h15 = (String) object.get("h15");
+            String h18 = (String) object.get("h18");
+            String h21 = (String) object.get("h21");
+            String h24 = (String) object.get("h24");
+
+            uvVO.setH0(h0);
+            uvVO.setH3(h3);
+            uvVO.setH6(h6);
+            uvVO.setH9(h9);
+            uvVO.setH12(h12);
+            uvVO.setH15(h15);
+            uvVO.setH18(h18);
+            uvVO.setH21(h21);
+            uvVO.setH24(h24);
+
         }
-        uvVO.setSun(item);
+        
         //listsunVO.addAll(item);
 
         return uvVO;
