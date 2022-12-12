@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.CLOOK.mapper.ClookMapper">
+    <select id="getLocaionIndex" resultType="String">
+        SELECT location_index FROM uv_location WHERE location = '${result}'
+    </select>
+
+    <select id="getLocaion" resultType="String">
+        SELECT IF((SELECT CASE WHEN #{result2}="false" THEN true ELSE false END),(SELECT Column_3 FROM sun_location WHERE Column_1=#{result1} LIMIT 1),(SELECT Column_3 FROM sun_location WHERE Column_1=#{result1} AND Column_2=#{result2}  LIMIT 1));
+    </select>
+</mapper>
