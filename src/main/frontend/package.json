@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "config-overrides-path": "node_modules/react-app-rewired/config-overrides.js",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -67,8 +68,8 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
@@ -91,6 +92,7 @@
   },
   "devDependencies": {
     "eslint-config-react-app": "^7.0.1",
+    "react-app-rewired": "^2.2.1",
     "tailwindcss": "^3.2.4"
   },
   "proxy": "http://localhost:8888",
