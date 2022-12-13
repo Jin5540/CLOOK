@@ -30,6 +30,7 @@ public class WeatherVO {
     private String item1; //옷
     private String item2; //옷
     private String item3; //옷
+    private String item4; //옷
     private String background;
 
     private String icon; //icon
@@ -48,6 +49,16 @@ public class WeatherVO {
     private List<WeatherVO> weatherVoList;
 
     private WeatherVO weatherVoresult;
+
+    private String h0;
+    private String h3;
+    private String h6;
+    private String h9;
+    private String h12;
+    private String h15;
+    private String h18;
+    private String h21;
+    private String h24;
 
     public Object stream() {
         return null;

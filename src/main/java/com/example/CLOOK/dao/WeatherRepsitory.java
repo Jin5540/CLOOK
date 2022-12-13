@@ -264,6 +264,7 @@ public interface WeatherRepsitory {
 
     public static List<WeatherVO> getShortWeather4(GeocodingVO geocodingVO, UvVO uv)
             throws IOException, ParseException, java.text.ParseException {
+
         // 현재 시간
         LocalTime now = LocalTime.now();
         // 포맷 정의하기
@@ -427,7 +428,8 @@ public interface WeatherRepsitory {
 
                 } else if (category.equals("PTY")) {
                     String result = (String) object.get("fcstValue");
-                    if (result.equals("1") || result.equals("5") || result.equals("2") || result.equals("6") || result.equals("3") || result.equals("7")) {
+                    if (result.equals("1") || result.equals("5") || result.equals("2") || result.equals("6")
+                            || result.equals("3") || result.equals("7")) {
                         weatherVO.setPty(result);
                         weatherVO.setFcstTime(fcstTime);
                         weatherVO.setFcstDate(fcstDate);
@@ -444,21 +446,25 @@ public interface WeatherRepsitory {
         int retmp = 0;
         int nowcount = 0;
 
+        System.out.println("uv ::: " + uv);
+        int h = -1;
+
         for (int j = 0; j < listweatherVO.size(); j++) {
             WeatherVO weatherVO = new WeatherVO();
 
             int fcTime = Integer.parseInt(listweatherVO.get(j).getFcstTime());
             int ltmp = Integer.parseInt(listweatherVO.get(j).getTmp());
-            //System.out.println("clothes:::" + listweatherVO.get(j).getFcstTime());
+            // System.out.println("clothes:::" + listweatherVO.get(j).getFcstTime());
 
             int hhhint = Integer.parseInt(hhh);
 
             if (listweatherVO.get(j).getTmp() != null & listweatherVO.get(j).getFcstTime() != null) {
-
+                h++;
                 count++;
-                if(hhhint%300==0&j<3&nowcount<3){
+                if (hhhint % 300 == 0 & j < 3 & nowcount < 3) {
                     nowcount++;
                     weatherVO.setM("지금");
+                    System.out.println("3::" + h);
 
                     if (count <= 3) {
                         sum = ltmp + sum;
@@ -467,49 +473,72 @@ public interface WeatherRepsitory {
                         retmp = sum / 3;
                         weatherVO.setTmpl(retmp);
                         listVO.add(weatherVO);
+                        weatherVO.setH0(uv.getH0());
 
                         count = 0;
                         sum = 0;
                     }
-                }else if(hhhint%300==100&&j<3&nowcount<2){
+                } else if (hhhint % 300 == 100 && j < 3 & nowcount < 2) {
                     nowcount++;
                     weatherVO.setM("지금");
+                    System.out.println("2::" + h);
                     if (count <= 2) {
                         sum = ltmp + sum;
                     }
                     if (count == 2) {
                         retmp = sum / 2;
                         weatherVO.setTmpl(retmp);
+                        weatherVO.setH0(uv.getH0());
 
                         listVO.add(weatherVO);
 
                         count = 0;
                         sum = 0;
                     }
-                }else if(hhhint%300==200&j<3&nowcount<1){
+                } else if (hhhint % 300 == 200 & j < 3 & nowcount < 1) {
                     nowcount++;
                     weatherVO.setM("지금");
+                    System.out.println("1::" + h);
                     weatherVO.setTmpl(ltmp);
+                    weatherVO.setH0(uv.getH0());
 
                     listVO.add(weatherVO);
 
                     count = 0;
                     sum = 0;
-                }else {
+                } else {
                     if (count <= 3) {
                         sum = ltmp + sum;
                     }
                     if (count == 3) {
                         retmp = sum / 3;
                         weatherVO.setTmpl(retmp);
-                        int resultfctime1 =Integer.parseInt(listweatherVO.get(j).getFcstTime())+100;
-                        String resultfctime2= String.valueOf(resultfctime1);
+                        int resultfctime1 = Integer.parseInt(listweatherVO.get(j).getFcstTime()) + 100;
+                        String resultfctime2 = String.valueOf(resultfctime1);
                         weatherVO.setM(resultfctime2);
+
+                        if (h == 3) {
+                            weatherVO.setH3(uv.getH3());
+                        } else if (h == 6) {
+                            weatherVO.setH6(uv.getH6());
+                        } else if (h == 9) {
+                            weatherVO.setH9(uv.getH9());
+                        } else if (h == 12) {
+                            weatherVO.setH12(uv.getH12());
+                        } else if (h == 15) {
+                            weatherVO.setH15(uv.getH15());
+                        } else if (h == 18) {
+                            weatherVO.setH18(uv.getH18());
+                        } else if (h == 21) {
+                            weatherVO.setH21(uv.getH21());
+                        }
+                        System.out.println("HH ::" + weatherVO);
 
                         listVO.add(weatherVO);
 
                         count = 0;
                         sum = 0;
+                        System.out.println(h);
                     }
                 }
 
@@ -560,20 +589,95 @@ public interface WeatherRepsitory {
                     weatherVO.setClothes1("니트");
                     weatherVO.setClothes2("패딩");
 
-                } if(a < 6){
+                }
+                if (a < 6) {
                     weatherVO.setItem1("목도리");
 
                 }
                 weatherVO.setM(m);
                 clothesVO.add(weatherVO);
-            }if (listVO.get(j).getPty() != null) {
+            }
+            if (listVO.get(j).getPty() != null) {
                 String b = listVO.get(j).getPty();
-                if (b.equals('1')||b.equals('2')||b.equals('3')||b.equals('5')||b.equals('6')||b.equals('7')) {
+                if (b.equals('1') || b.equals('2') || b.equals('3') || b.equals('5') || b.equals('6')
+                        || b.equals('7')) {
                     weatherVO.setItem2("우산");
-                } 
-            clothesVO.add(weatherVO);
-        }
+                }
+                clothesVO.add(weatherVO);
+            }
+            System.out.println("j" + j + listVO.get(j));
+            if (listVO.get(j).getH0() != null) {
+                int h0 = Integer.parseInt(listVO.get(j).getH0());
+                if (h0 > 5) {
+                    weatherVO.setItem3("모자");
+                    weatherVO.setItem4("선글라스");
+                }
 
+                clothesVO.add(weatherVO);
+            }
+            if (listVO.get(j).getH3() != null) {
+                int h3 = Integer.parseInt(listVO.get(j).getH3());
+                if (h3 > 5) {
+                    weatherVO.setItem3("모자");
+                    weatherVO.setItem4("선글라스");
+                }
+
+                clothesVO.add(weatherVO);
+            }
+            if (listVO.get(j).getH6() != null) {
+                int h6 = Integer.parseInt(listVO.get(j).getH6());
+                if (h6 > 5) {
+                    weatherVO.setItem3("모자");
+                    weatherVO.setItem4("선글라스");
+                }
+
+                clothesVO.add(weatherVO);
+            }
+            if (listVO.get(j).getH9() != null) {
+                int h9 = Integer.parseInt(listVO.get(j).getH9());
+                if (h9 > 5) {
+                    weatherVO.setItem3("모자");
+                    weatherVO.setItem4("선글라스");
+                }
+
+                clothesVO.add(weatherVO);
+            }
+            if (listVO.get(j).getH12() != null) {
+                int h12 = Integer.parseInt(listVO.get(j).getH12());
+                if (h12 > 5) {
+                    weatherVO.setItem3("모자");
+                    weatherVO.setItem4("선글라스");
+                }
+
+                clothesVO.add(weatherVO);
+            }
+            if (listVO.get(j).getH15() != null) {
+                int h15 = Integer.parseInt(listVO.get(j).getH15());
+                if (h15 > 5) {
+                    weatherVO.setItem3("모자");
+                    weatherVO.setItem4("선글라스");
+                }
+
+                clothesVO.add(weatherVO);
+            }
+            if (listVO.get(j).getH18() != null) {
+                int h18 = Integer.parseInt(listVO.get(j).getH18());
+                if (h18 > 5) {
+                    weatherVO.setItem3("모자");
+                    weatherVO.setItem4("선글라스");
+                }
+
+                clothesVO.add(weatherVO);
+            }
+            if (listVO.get(j).getH21() != null) {
+                int h21 = Integer.parseInt(listVO.get(j).getH21());
+                if (h21 > 5) {
+                    weatherVO.setItem3("모자");
+                    weatherVO.setItem4("선글라스");
+                }
+
+                clothesVO.add(weatherVO);
+            }
         }
 
         return clothesVO;
