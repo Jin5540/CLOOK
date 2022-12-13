@@ -50,7 +50,7 @@ public class CLOOKServiceImpl implements CLOOKService {
 
         System.out.println("geocodingnxny_serviceImpl:::------------------------------");
 
-        GeocodingVO vo = GeocodingRepsitory.getData(address);
+        GeocodingVO vo = GeocodingRepsitory.getData2(address);
 
         System.out.println(vo);
 
