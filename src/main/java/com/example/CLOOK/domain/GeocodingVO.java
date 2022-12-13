@@ -16,6 +16,6 @@ public class GeocodingVO {
 
     private int mode = 0; // 0 (격자->위경도), 1 (위경도->격자)
 
-    private String result_status;
+    private String result_status; 
     
 }

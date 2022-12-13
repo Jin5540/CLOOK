@@ -156,7 +156,6 @@ public interface UVRepsitory {
             uvVO.setH24(h24);
 
         }
-        
         //listsunVO.addAll(item);
 
         return uvVO;

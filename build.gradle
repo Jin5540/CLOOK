@@ -1,8 +1,9 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.4'
-	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
-	id 'java'
-	id 'war'
+ id 'org.springframework.boot' version '2.7.4'
+ id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+ id 'java'
+ id 'war'
+    id "com.github.node-gradle.node" version "3.5.0"
 }
 
 group = 'com.example'
@@ -10,9 +11,9 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+ compileOnly {
+  extendsFrom annotationProcessor
+ }
 }
 
 bootWar {
@@ -24,86 +25,45 @@ bootJar {
 }
 
 repositories {
-	mavenCentral()
+ mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-	implementation 'org.json:json:20211205'
-	implementation 'org.apache.commons:commons-collections4:4.0'
-	implementation 'org.springframework.session:spring-session-core'
-	// MyBatis 라이브러리 의존성 추가
-	runtimeOnly 'mysql:mysql-connector-java:8.0.25'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+ implementation 'org.springframework.boot:spring-boot-starter-web'
+ compileOnly 'org.projectlombok:lombok'
+ developmentOnly 'org.springframework.boot:spring-boot-devtools'
+ annotationProcessor 'org.projectlombok:lombok'
+ testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+ implementation 'org.json:json:20211205'
+ implementation 'org.apache.commons:commons-collections4:4.0'
+ implementation 'org.springframework.session:spring-session-core'
+ // MyBatis 라이브러리 의존성 추가
+ runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+ implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+ useJUnitPlatform()
 }
 
-<<<<<<< HEAD
 def reactAppDir = "$projectDir/src/main/frontend"
-=======
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-// @@@@@@@@@@@@@ 내용 추가 @@@@@@@@@@@@@@@@@@@@@
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-def webappDir = "$projectDir/src/main/frontend"
->>>>>>> parent of 70e7ef4 (ㅇㅇ)
 
 sourceSets {
 	main {
 		resources {
-<<<<<<< HEAD
 			srcDirs = ["$projectDir/src/main/resources"]
-=======
-			srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
->>>>>>> parent of 70e7ef4 (ㅇㅇ)
 		}
 	}
 }
 
 processResources {
-<<<<<<< HEAD
 	dependsOn "copyReactFile"
 }
 
 task installReact(type: Exec) {
 	workingDir "$reactAppDir"
 	inputs.dir "$reactAppDir"
-=======
-	dependsOn "copyWebApp"
-}
-
-
-task copyWebApp(type: Copy) {
-    dependsOn "buildReact"
-    from "$webappDir/build"
-    into "$projectDir/src/main/resources/static"
-}
-
-
-task buildReact(type: Exec) {
-	dependsOn "installReact"
-	workingDir "$webappDir"
-	inputs.dir "$webappDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "yarn.cmd", "run-script", "build"
-	} else {
-		commandLine "yarn", "run-script", "build"
-	}
-}
-
-task installReact(type: Exec) {
-	workingDir "$webappDir"
-	inputs.dir "$webappDir"
->>>>>>> parent of 70e7ef4 (ㅇㅇ)
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
 		commandLine "npm.cmd", "audit", "fix"
@@ -114,7 +74,6 @@ task installReact(type: Exec) {
 	}
 }
 
-<<<<<<< HEAD
 task buildReact(type: Exec) {
 	dependsOn "installReact"
 	workingDir "$reactAppDir"
@@ -133,9 +92,10 @@ task copyReactFile(type: Copy) {
 	into "$buildDir/resources/main/static"
 }
 
-
-=======
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-// @@@@@@@@@@@@@ 내용 추가 @@@@@@@@@@@@@@@@@@@@@
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
->>>>>>> parent of 70e7ef4 (ㅇㅇ)
+    task frontEndBuild {
+        doLast {
+            installReact.execute()
+            buildReact.execute()
+            copyReactFile.execute()
+        }
+    }

@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class UvVO {
     private List<String> sun;
+
     private String h0;
     private String h3;
     private String h6;
@@ -18,5 +19,4 @@ public class UvVO {
     private String h18;
     private String h21;
     private String h24;
-
 }
