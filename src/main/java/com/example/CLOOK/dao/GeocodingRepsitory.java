@@ -205,7 +205,7 @@ public interface GeocodingRepsitory {
 
         try {
             // String address = io.readLine();
-            String addr = URLEncoder.encode(address, "UTF-8");
+            //String addr = URLEncoder.encode(address, "UTF-8");
 
             // Geocoding 개요에 나와있는 API URL 입력.
             String apiURL = "http://api.vworld.kr/req/address";
@@ -213,7 +213,7 @@ public interface GeocodingRepsitory {
             String request = "getcoord";
             String version = "2.0";
             String crs = "epsg:4326";
-            String geoaddress = addr;
+            String geoaddress = address;
             String refine= "true";
             String simple = "false";
             String format = "JSON";

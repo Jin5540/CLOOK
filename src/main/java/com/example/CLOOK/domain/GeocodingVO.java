@@ -15,5 +15,7 @@ public class GeocodingVO {
     private String yLon; // y좌표로 변환된 경도
 
     private int mode = 0; // 0 (격자->위경도), 1 (위경도->격자)
+
+    private String result_status;
     
 }
