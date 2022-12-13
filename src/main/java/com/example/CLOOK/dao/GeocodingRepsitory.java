@@ -1,19 +1,7 @@
 package com.example.CLOOK.dao;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import org.json.simple.JSONValue;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -23,23 +11,41 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.io.BufferedReader;
 import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import com.example.CLOOK.domain.GeocodingVO;
+import com.example.CLOOK.domain.SunVO;
+import com.example.CLOOK.domain.UvVO;
+import com.example.CLOOK.domain.WeatherVO;
 
-//import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import lombok.AllArgsConstructor;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.time.LocalDate;
 
 @Repository
 public interface GeocodingRepsitory {
 
-    public static GeocodingVO getData(String address) {
+    /*public static GeocodingVO getData(String address) {
 
         /*GeocodingVO geocodingVO = new GeocodingVO();
 
@@ -115,7 +121,7 @@ public interface GeocodingRepsitory {
 
         return geocodingVO;*/
         
-        GeocodingVO geocodingVO = new GeocodingVO();
+        /*GeocodingVO geocodingVO = new GeocodingVO();
 
         // 주소 입력 -> 위도, 경도 좌표 추출.
         // BufferedReader io = new BufferedReader(new InputStreamReader(System.in));
@@ -194,7 +200,7 @@ public interface GeocodingRepsitory {
         }
 
         return geocodingVO;
-    }
+    }*/
 
     public static GeocodingVO getData2(String address) {
 
@@ -205,7 +211,7 @@ public interface GeocodingRepsitory {
 
         try {
             // String address = io.readLine();
-            String addr = URLEncoder.encode(address, "UTF-8");
+            //String addr = URLEncoder.encode(address, "UTF-8");
 
             // Geocoding 개요에 나와있는 API URL 입력.
             String apiURL = "http://api.vworld.kr/req/address";
@@ -213,14 +219,31 @@ public interface GeocodingRepsitory {
             String request = "getcoord";
             String version = "2.0";
             String crs = "epsg:4326";
-            String geoaddress = addr;
+            String geoaddress = address;
             String refine= "true";
             String simple = "false";
             String format = "JSON";
             String type = "road";
             String key="3184253A-C2B2-3AC5-B22B-187DAB8DEF7A";
 
-            URL url = new URL(apiURL);
+            StringBuilder urlBuilder = new StringBuilder(apiURL);
+            urlBuilder.append("?" + URLEncoder.encode("service", "UTF-8") + "=" + service);
+            urlBuilder.append("&" + URLEncoder.encode("request", "UTF-8") + "=" + URLEncoder.encode(request, "UTF-8"));
+    
+            urlBuilder.append("&" + URLEncoder.encode("version", "UTF-8") + "="
+                    + URLEncoder.encode(version, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("crs", "UTF-8") + "=" + URLEncoder.encode(crs, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("address", "UTF-8") + "="
+                    + URLEncoder.encode(address, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("refine", "UTF-8") + "="
+                    + URLEncoder.encode(refine, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("simple", "UTF-8") + "=" + URLEncoder.encode(simple, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode(format, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode(type, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("key", "UTF-8") + "=" + URLEncoder.encode(key, "UTF-8"));
+
+            URL url = new URL(urlBuilder.toString());
+
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
 
@@ -237,7 +260,30 @@ public interface GeocodingRepsitory {
                 System.out.println("에러");
             }
 
-            String inputLine;
+            JSONParser parser = new JSONParser();
+            JSONObject object = (JSONObject) parser.parse(br.readLine());
+            JSONObject response = (JSONObject) object.get("response");
+            String status = (String) response.get("status");
+
+            if(status.equals("NOT_FOUND"))
+            {
+            geocodingVO.setResult_status("잘못 주소입니다. 관리자에게 문의해주시기 바랍니다");
+            
+            }else if(status.equals("ERROR"))
+            {
+                geocodingVO.setResult_status("서버 에러입니다. 관리자에게 문의해주시기 바랍니다");
+            }else if(status.equals("OK")){
+                JSONObject result = (JSONObject) response.get("result");
+                JSONObject point = (JSONObject) result.get("point");
+
+                double x = Double.valueOf(point.get("x").toString()).doubleValue();
+                double y = Double.valueOf(point.get("y").toString()).doubleValue();
+
+                geocodingVO.setLat(y);
+                geocodingVO.setLon(x);
+            }
+
+            /*String inputLine;
 
             StringBuffer response = new StringBuffer();
 
@@ -266,7 +312,9 @@ public interface GeocodingRepsitory {
                 geocodingVO.setAddress(addressList);
             }
 
-            System.out.println("arr ::: "+arr);
+            System.out.println("arr ::: "+arr);*/
+
+
 
         } catch (Exception e) {
             System.out.println(e);

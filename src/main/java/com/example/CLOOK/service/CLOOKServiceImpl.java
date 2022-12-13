@@ -17,6 +17,7 @@ import lombok.extern.log4j.Log4j;
 
 import com.example.CLOOK.dao.AirRepsitory;
 import com.example.CLOOK.dao.GeocodingRepsitory;
+import com.example.CLOOK.dao.GeocodingRepsitory2;
 import com.example.CLOOK.dao.WeatherRepsitory;
 import com.example.CLOOK.dao.SearchRepsitory;
 import com.example.CLOOK.dao.SunRepsitory;
@@ -50,7 +51,7 @@ public class CLOOKServiceImpl implements CLOOKService {
 
         System.out.println("geocodingnxny_serviceImpl:::------------------------------");
 
-        GeocodingVO vo = GeocodingRepsitory.getData(address);
+        GeocodingVO vo = GeocodingRepsitory2.getData(address);
 
         System.out.println(vo);
 
