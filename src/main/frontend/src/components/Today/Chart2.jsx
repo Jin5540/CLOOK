@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
 import {
-  AreaChart,
-  Area,
   XAxis,
   YAxis,
   ResponsiveContainer,
   LabelList,
   Line,
+  LineChart,
 } from "recharts";
 import { getWweatherImages } from "../../util/getWweatherImages";
 import { chartTimeFormat } from "../../util/timeFormat";
@@ -100,7 +99,7 @@ const CustomizedDot = (props) => {
   }
 };
 
-export default class Chart extends PureComponent {
+export default class Chart2 extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -121,7 +120,7 @@ export default class Chart extends PureComponent {
         <div className="absolute left-0 top-[26px] flex flex-col justify-center w-full h-[390px] overflow-y-hidden overflow-x-scroll">
           <div className="w-full h-full">
             <ResponsiveContainer width="100%" height="100%" minWidth={minWidth}>
-              <AreaChart
+              <LineChart
                 height={400}
                 data={data}
                 margin={{
@@ -152,20 +151,21 @@ export default class Chart extends PureComponent {
                   axisLine={false}
                   dataKey="tmp"
                   type="number"
-                  domain={["dataMin - 10", "dataMax + 10"]}
-                  // tick={false}
-                  tick={true}
-                  // tickLine={false}
-                  tickLine={true}
+                  domain={["dataMin", "dataMax + 10"]}
+                  tick={false}
+                  // tick={true}
+                  tickLine={false}
+                  // tickLine={true}
                   // allowDataOverflow={true}
                   // stackOffset="sign"
                   // mirror={true}
                 />
-                <Area
-                  // type="monotone"
+                <Line
+                  type="monotone"
                   dataKey="tmp"
                   dot={<CustomizedDot />}
-                  stroke="transparent"
+                  stroke="#93C5FD"
+                  strokeWidth={4}
                   fill="url(#colorTemp)"
                   isAnimationActive={false}
                   // style={{ margin: "10px" }}
@@ -185,8 +185,8 @@ export default class Chart extends PureComponent {
                     fill="#1E3A8A"
                     fontSize="20"
                   />
-                </Area>
-              </AreaChart>
+                </Line>
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </div>

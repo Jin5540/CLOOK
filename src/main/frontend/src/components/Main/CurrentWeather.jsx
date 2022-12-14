@@ -10,14 +10,14 @@ export default function CurrentWeather({ toptm, topspt }) {
     <div
       className="flex w-full h-[400px] mt-6 mb-5 rounded-2xl"
       style={{
-        backgroundImage: `url(${getWweatherImages(1, topspt.background)})`,
+        backgroundImage: `url(${getWweatherImages("bg", topspt.background)})`,
       }}
     >
       <div className="basis-1/2 flex flex-col justify-center items-center text-white">
         <div className="flex items-center my-2 mb-4 text-xl font-medium">
           <img
             className="w-10 h-9"
-            src={getWweatherImages(3, topspt.icon)}
+            src={getWweatherImages("icon", topspt.icon)}
             alt=""
           />
           <span className="text-shadow-4">{dateFormat(toptm.fcstDate)}</span>
@@ -38,7 +38,7 @@ export default function CurrentWeather({ toptm, topspt }) {
       <div className="basis-1/2 flex flex-col justify-center items-start">
         <img
           className="relative t-0 l-0 ml-5 animate-slow-bounce"
-          src={getWweatherImages(2, topspt.character)}
+          src={getWweatherImages("character", topspt.character)}
           alt=""
         />
       </div>

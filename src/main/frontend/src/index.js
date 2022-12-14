@@ -12,6 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      useErrorBoundary: true,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,

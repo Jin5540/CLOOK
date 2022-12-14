@@ -28,7 +28,7 @@ export default function Search({ keyword, setKeyword, refetch }) {
     if (input.includes("읍") || input.includes("면") || input.includes("동")) {
       setKeyword(input);
       setAddrCheck(false);
-      updateSucc(false);
+      // updateSucc(false);
     } else {
       setAddrCheck(true);
     }

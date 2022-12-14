@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { useEffect } from "react";
 
 const LocationContext = createContext();
 const locaStorageLocation = "충청남도 아산시 모종동";
@@ -21,6 +22,10 @@ export const LocationProvider = ({ children }) => {
   const updateSucc = (value) => {
     setIsSucc(value);
   };
+
+  useEffect(() => {
+    console.log(isSucc);
+  }, [isSucc]);
 
   return (
     <LocationContext.Provider

@@ -17,6 +17,7 @@ module.exports = {
         red: "#DC2626",
         green: "#16A34A",
         yellow: "#CA8A04",
+        black: "#111827",
       },
       fontSize: {
         "3xl": "1.75rem",

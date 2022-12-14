@@ -3,11 +3,12 @@ import { useLocationContext } from "../../contexts/LocationContext";
 import SearchListItem from "./SearchListItem";
 
 export default function SearchList({ onCloseModal, data }) {
-  const { updateLocation } = useLocationContext();
+  const { updateLocation, updateSucc } = useLocationContext();
 
   const handleClick = (e) => {
     updateLocation(e.target.innerText);
     onCloseModal();
+    updateSucc(false);
   };
 
   return (

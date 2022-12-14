@@ -18,9 +18,11 @@ import sunCloud from "../assets/imgs/icon/sunCloud.png";
 import character1 from "../assets/imgs/character/character1.png";
 
 export function getWweatherImages(type, value) {
+  if (!type || !value) return;
+
   let image = null;
 
-  if (type === 1) {
+  if (type === "bg") {
     switch (value) {
       // background
       case "구름없는낮":
@@ -48,7 +50,7 @@ export function getWweatherImages(type, value) {
         image = grayBackground;
         break;
     }
-  } else if (type === 2) {
+  } else if (type === "character") {
     // character
     switch (value) {
       // background
@@ -68,7 +70,7 @@ export function getWweatherImages(type, value) {
         image = character1;
         break;
     }
-  } else if (type === 3) {
+  } else if (type === "icon") {
     // icon
     switch (value) {
       case "해":
