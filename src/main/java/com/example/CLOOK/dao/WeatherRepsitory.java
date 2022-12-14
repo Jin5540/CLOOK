@@ -1549,34 +1549,51 @@ public interface WeatherRepsitory {
             throws IOException, ParseException, java.text.ParseException {
 
         Calendar cal = Calendar.getInstance();
+        Calendar cal3 = Calendar.getInstance();
         Date date = new Date();
         // 현재 날짜 구하기
         LocalDate nowDate = LocalDate.now();
-        // 포맷 정의
-        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
-        // 포맷 적용
-        String formatedNowDate = nowDate.format(formatterDate);
+       
 
         SimpleDateFormat hhtime = new SimpleDateFormat("HHmm");
 
         String htime = hhtime.format(cal.getTime());
-
-        int hh = Integer.parseInt(htime);
-
-        // 포맷변경 ( 년월일 시분초)
         SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
+        int hh = Integer.parseInt(htime);
+        String nowPartTime = sdformat.format(cal3.getTime());
+        // 포맷변경 ( 년월일 시분초)
+       
 
         // 1시간 전
         cal.setTime(date);
         cal.add(Calendar.HOUR, -1);
+         // 포맷 정의
+         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
+         // 포맷 적용
+        String formatedNowDate = nowDate.format(formatterDate);
         String shortPartTime = sdformat.format(cal.getTime());
-        System.out.println("1시간 전 : " + shortPartTime);
+        
+        System.out.println("지금 측정시간 : " + nowPartTime);
+        int shortdate = Integer.parseInt(shortPartTime);
+
+        int nowbigo= Integer.parseInt(nowPartTime);
+
+        System.out.println("비교 값"+nowbigo);
 
         String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
         String pageNo = "1";
         String numOfRows = "100000";
+        if(nowbigo>=0&&100>=nowbigo){
+            Calendar cal2 = Calendar.getInstance();
+            String format = "yyyy-MM-dd";
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            cal2.add(Calendar.DATE, -1); //날짜를 하루 뺀다.
+            String baseDate = sdf.format(cal2.getTime());
+
+            System.out.println(baseDate);
+        }
         String baseDate = formatedNowDate; // 조회하고싶은 날짜
         String baseTime = shortPartTime; // 조회하고싶은 시간
         String type = "JSON"; // 타입 xml, json 등등 ..
