@@ -417,7 +417,7 @@ public interface WeatherRepsitory {
             long hours_difference = (time_difference / (1000 * 60 * 60)) % 24;
             long min_difference = time_difference / 60000;
 
-            if (min_difference >= 0 & min_difference <= 1440) {
+            if (min_difference > 0 & min_difference <= 1440) {
 
                 if (category.equals("TMP")) {
                     String result = (String) object.get("fcstValue");
@@ -447,6 +447,8 @@ public interface WeatherRepsitory {
         int nowcount = 0;
 
         System.out.println("uv ::: " + uv);
+
+        System.out.println("size ::: " + listweatherVO.size());
         int h = -1;
 
         for (int j = 0; j < listweatherVO.size(); j++) {
@@ -594,90 +596,68 @@ public interface WeatherRepsitory {
                     weatherVO.setItem1("목도리");
 
                 }
+                if (listVO.get(j).getPty() != null) {
+                    String b = listVO.get(j).getPty();
+                    if (b.equals('1') || b.equals('2') || b.equals('3') || b.equals('5') || b.equals('6')
+                            || b.equals('7')) {
+                        weatherVO.setItem2("우산");
+                    }
+                }
+                if (listVO.get(j).getH0() != null) {
+                    int h0 = Integer.parseInt(listVO.get(j).getH0());
+                    if (h0 > 5) {
+                        weatherVO.setItem3("모자");
+                    }
+                }
+                if (listVO.get(j).getH3() != null) {
+                    int h3 = Integer.parseInt(listVO.get(j).getH3());
+                    if (h3 > 5) {
+                        weatherVO.setItem3("모자");
+                    }
+                }
+                if (listVO.get(j).getH6() != null) {
+                    int h6 = Integer.parseInt(listVO.get(j).getH6());
+                    if (h6 > 5) {
+                        weatherVO.setItem3("모자");
+                    }
+                }
+                if (listVO.get(j).getH9() != null) {
+                    int h9 = Integer.parseInt(listVO.get(j).getH9());
+                    if (h9 > 5) {
+                        weatherVO.setItem3("모자");
+                    }
+                }
+                if (listVO.get(j).getH12() != null) {
+                    int h12 = Integer.parseInt(listVO.get(j).getH12());
+                    if (h12 > 5) {
+                        weatherVO.setItem3("모자");
+    
+                    }
+                }
+                if (listVO.get(j).getH15() != null) {
+                    int h15 = Integer.parseInt(listVO.get(j).getH15());
+                    if (h15 > 5) {
+                        weatherVO.setItem3("모자");
+                    }
+                }
+                if (listVO.get(j).getH18() != null) {
+                    int h18 = Integer.parseInt(listVO.get(j).getH18());
+                    if (h18 > 5) {
+                        weatherVO.setItem3("모자");
+                    }
+                }
+                if (listVO.get(j).getH21() != null) {
+                    int h21 = Integer.parseInt(listVO.get(j).getH21());
+                    if (h21 > 5) {
+                        weatherVO.setItem3("모자");
+                    }
+                }
                 weatherVO.setM(m);
                 clothesVO.add(weatherVO);
             }
-            if (listVO.get(j).getPty() != null) {
-                String b = listVO.get(j).getPty();
-                if (b.equals('1') || b.equals('2') || b.equals('3') || b.equals('5') || b.equals('6')
-                        || b.equals('7')) {
-                    weatherVO.setItem2("우산");
-                }
-                clothesVO.add(weatherVO);
-            }
+
             System.out.println("j" + j + listVO.get(j));
-            if (listVO.get(j).getH0() != null) {
-                int h0 = Integer.parseInt(listVO.get(j).getH0());
-                if (h0 > 5) {
-                    weatherVO.setItem3("모자");
-                    weatherVO.setItem4("선글라스");
-                }
 
-                clothesVO.add(weatherVO);
-            }
-            if (listVO.get(j).getH3() != null) {
-                int h3 = Integer.parseInt(listVO.get(j).getH3());
-                if (h3 > 5) {
-                    weatherVO.setItem3("모자");
-                    weatherVO.setItem4("선글라스");
-                }
-
-                clothesVO.add(weatherVO);
-            }
-            if (listVO.get(j).getH6() != null) {
-                int h6 = Integer.parseInt(listVO.get(j).getH6());
-                if (h6 > 5) {
-                    weatherVO.setItem3("모자");
-                    weatherVO.setItem4("선글라스");
-                }
-
-                clothesVO.add(weatherVO);
-            }
-            if (listVO.get(j).getH9() != null) {
-                int h9 = Integer.parseInt(listVO.get(j).getH9());
-                if (h9 > 5) {
-                    weatherVO.setItem3("모자");
-                    weatherVO.setItem4("선글라스");
-                }
-
-                clothesVO.add(weatherVO);
-            }
-            if (listVO.get(j).getH12() != null) {
-                int h12 = Integer.parseInt(listVO.get(j).getH12());
-                if (h12 > 5) {
-                    weatherVO.setItem3("모자");
-                    weatherVO.setItem4("선글라스");
-                }
-
-                clothesVO.add(weatherVO);
-            }
-            if (listVO.get(j).getH15() != null) {
-                int h15 = Integer.parseInt(listVO.get(j).getH15());
-                if (h15 > 5) {
-                    weatherVO.setItem3("모자");
-                    weatherVO.setItem4("선글라스");
-                }
-
-                clothesVO.add(weatherVO);
-            }
-            if (listVO.get(j).getH18() != null) {
-                int h18 = Integer.parseInt(listVO.get(j).getH18());
-                if (h18 > 5) {
-                    weatherVO.setItem3("모자");
-                    weatherVO.setItem4("선글라스");
-                }
-
-                clothesVO.add(weatherVO);
-            }
-            if (listVO.get(j).getH21() != null) {
-                int h21 = Integer.parseInt(listVO.get(j).getH21());
-                if (h21 > 5) {
-                    weatherVO.setItem3("모자");
-                    weatherVO.setItem4("선글라스");
-                }
-
-                clothesVO.add(weatherVO);
-            }
         }
 
         return clothesVO;
@@ -856,7 +836,7 @@ public interface WeatherRepsitory {
             int formatedNowint = Integer.parseInt(formatedNow2);
             int currentdateint = Integer.parseInt(currentdate);
 
-            if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= 0 & min_difference <= 1440) {
+            if (hours_difference >= 0 & hours_difference <= 23 & min_difference > 0 & min_difference <= 1440) {
 
                 switch (category) {
                     case "TMP":
@@ -1041,7 +1021,7 @@ public interface WeatherRepsitory {
                 long hours_difference = (time_difference / (1000 * 60 * 60)) % 24;
                 long min_difference = time_difference / 60000;
 
-                if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= 0 & min_difference <= 1440) {
+                if (hours_difference >= 0 & hours_difference <= 23 & min_difference > 0 & min_difference <= 1440) {
 
                     switch (category) {
                         case "TMP":
