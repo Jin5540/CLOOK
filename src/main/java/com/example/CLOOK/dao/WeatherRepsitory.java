@@ -684,7 +684,7 @@ public interface WeatherRepsitory {
 
     }
 
-    public static List<WeatherVO> getShortWeather5(GeocodingVO geocodingVO, SunVO sun)
+    public static List<WeatherVO> getToday(GeocodingVO geocodingVO, SunVO sun)
             throws IOException, ParseException, java.text.ParseException {
         // 현재 시간
         LocalTime now = LocalTime.now();

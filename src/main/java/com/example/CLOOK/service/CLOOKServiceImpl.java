@@ -74,7 +74,7 @@ public class CLOOKServiceImpl implements CLOOKService {
 
         System.out.println("geocoding_serviceImpl:::------------------------------");
 
-        return WeatherRepsitory.getShortWeather5(gecoding, sun);
+        return WeatherRepsitory.getToday(gecoding, sun);
     }
 
     @Override
