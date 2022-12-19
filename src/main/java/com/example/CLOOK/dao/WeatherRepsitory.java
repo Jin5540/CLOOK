@@ -281,6 +281,7 @@ public interface WeatherRepsitory {
         System.out.println(nowformat);
 
         int formatnow = Integer.parseInt(formatedNow);
+        //int formatnow = 2400;
         // int formatnow = 02;
 
         DateFormat df = new SimpleDateFormat("yyyyMMdd");
