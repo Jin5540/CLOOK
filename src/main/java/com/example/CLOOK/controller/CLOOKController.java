@@ -1,6 +1,7 @@
 package com.example.CLOOK.controller;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +11,17 @@ import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.CLOOK.domain.AirVO;
+import com.example.CLOOK.domain.GoogleVO;
 import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
@@ -194,6 +199,11 @@ public class CLOOKController {
             return clookService.getsun(sessionlocation);
         }
 
+    }
+
+    @PostMapping(value = "/sheet", produces = "application/json; charset=UTF-8")
+    public void googleSheet(@RequestBody GoogleVO googleVO, Model model) throws IOException, GeneralSecurityException {
+        clookService.insertSheet(googleVO);
     }
 
 }

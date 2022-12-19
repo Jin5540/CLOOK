@@ -1,6 +1,7 @@
 package com.example.CLOOK.service;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+import com.example.CLOOK.dao.GoogleRepsitory;
 import com.example.CLOOK.dao.AirRepsitory;
 import com.example.CLOOK.dao.GeocodingRepsitory;
 import com.example.CLOOK.dao.GeocodingRepsitory2;
@@ -25,6 +27,7 @@ import com.example.CLOOK.dao.UVRepsitory;
 import com.example.CLOOK.dao.UVRepsitory_copy;
 import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.GeocodingVO;
+import com.example.CLOOK.domain.GoogleVO;
 import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
@@ -219,6 +222,13 @@ public class CLOOKServiceImpl implements CLOOKService {
     public String getStationName(AirVO air) throws IOException, ParseException {
         
         return AirRepsitory.getStationName(air);
+    }
+
+    @Override
+    public void insertSheet(GoogleVO googleVO) throws IOException, GeneralSecurityException {
+        
+        GoogleRepsitory.main(googleVO);
+        
     }
 
 }

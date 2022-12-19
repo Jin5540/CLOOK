@@ -1,6 +1,7 @@
 package com.example.CLOOK.service;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -28,4 +29,5 @@ public interface CLOOKService {
    public SunVO getsun(String result) throws IOException, ParseException;
    public AirVO getTm(String stationName) throws IOException, ParseException;
    public String getStationName(AirVO air) throws IOException, ParseException;
+   public void insertSheet(GoogleVO googleVO)throws IOException,GeneralSecurityException;
 }
