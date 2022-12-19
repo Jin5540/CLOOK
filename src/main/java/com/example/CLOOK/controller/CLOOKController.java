@@ -99,10 +99,10 @@ public class CLOOKController {
         String sessionlocation = (String) session.getAttribute("location");
 
         if (sessionlocation == null) {
-            return clookService.getpartweather2(clookService.gecodingnxny("서울특별시 중구 명동"),
+            return clookService.getTopspt(clookService.gecodingnxny("서울특별시 중구 명동"),
                     clookService.getsun("서울특별시 중구 명동"));
         } else {
-            return clookService.getpartweather2(clookService.gecodingnxny(sessionlocation),
+            return clookService.getTopspt(clookService.gecodingnxny(sessionlocation),
                     clookService.getsun(sessionlocation));
         }
     }

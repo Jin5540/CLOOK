@@ -304,7 +304,7 @@ public interface WeatherRepsitory {
         String numOfRows = "100000";
         String baseDate = "";
         // 조회하고싶은 날짜
-        if (formatnow <= 210 & formatnow >= 0) {
+        if (formatnow <= 210 & formatnow >= 0 || formatnow==2400) {
             baseDate = oneth;
         } else {
             baseDate = currentdate;
@@ -631,7 +631,7 @@ public interface WeatherRepsitory {
                     int h12 = Integer.parseInt(listVO.get(j).getH12());
                     if (h12 > 5) {
                         weatherVO.setItem3("모자");
-    
+
                     }
                 }
                 if (listVO.get(j).getH15() != null) {
@@ -869,7 +869,6 @@ public interface WeatherRepsitory {
                 test.setTmp(weatherVO.getTmp());
                 test.setSky(weatherVO.getSky());
                 test.setPty(weatherVO.getPty());
-                
 
                 int sunrise = Integer.parseInt(sun.getSunrise());
                 int sunset = sun.getSunset();
@@ -1422,7 +1421,6 @@ public interface WeatherRepsitory {
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
             String fcstDate = (String) object.get("fcstDate");
-            
 
             // System.out.println(category);
             if (category.equals("TMN") && counttmn < 1) {
@@ -1430,7 +1428,7 @@ public interface WeatherRepsitory {
                 String tmn = (String) object.get("fcstValue");
                 weatherVO.setTmn(tmn);
                 weatherVO.setFcstDate(fcstDate);
-                
+
             }
             if (category.equals("TMX") && counttmx < 1) {
                 counttmx += 1;
@@ -1525,7 +1523,7 @@ public interface WeatherRepsitory {
     }
 
     /* 상단 - SKY / PTY / T1H / ICON / CHARACTER */
-    public static WeatherVO getShortPartWeather2(GeocodingVO geocodingVO, SunVO sun)
+    public static WeatherVO getTopspt(GeocodingVO geocodingVO, SunVO sun)
             throws IOException, ParseException, java.text.ParseException {
 
         Calendar cal = Calendar.getInstance();
@@ -1533,7 +1531,6 @@ public interface WeatherRepsitory {
         Date date = new Date();
         // 현재 날짜 구하기
         LocalDate nowDate = LocalDate.now();
-       
 
         SimpleDateFormat hhtime = new SimpleDateFormat("HHmm");
 
@@ -1542,34 +1539,33 @@ public interface WeatherRepsitory {
         int hh = Integer.parseInt(htime);
         String nowPartTime = sdformat.format(cal3.getTime());
         // 포맷변경 ( 년월일 시분초)
-       
 
         // 1시간 전
         cal.setTime(date);
         cal.add(Calendar.HOUR, -1);
-         // 포맷 정의
-         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
-         // 포맷 적용
+        // 포맷 정의
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
         String formatedNowDate = nowDate.format(formatterDate);
         String shortPartTime = sdformat.format(cal.getTime());
-        
+
         System.out.println("지금 측정시간 : " + nowPartTime);
         int shortdate = Integer.parseInt(shortPartTime);
 
-        int nowbigo= Integer.parseInt(nowPartTime);
+        int nowbigo = Integer.parseInt(nowPartTime);
 
-        System.out.println("비교 값"+nowbigo);
+        System.out.println("비교 값" + nowbigo);
 
         String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
         String pageNo = "1";
         String numOfRows = "100000";
-        if(nowbigo>=0&&100>=nowbigo){
+        if (nowbigo >= 0 && 100 >= nowbigo || nowbigo == 2400) {
             Calendar cal2 = Calendar.getInstance();
             String format = "yyyy-MM-dd";
             SimpleDateFormat sdf = new SimpleDateFormat(format);
-            cal2.add(Calendar.DATE, -1); //날짜를 하루 뺀다.
+            cal2.add(Calendar.DATE, -1); // 날짜를 하루 뺀다.
             String baseDate = sdf.format(cal2.getTime());
 
             System.out.println(baseDate);
@@ -1754,51 +1750,56 @@ public interface WeatherRepsitory {
 
     }
 
-    /* 상단 - TMX / TMN */
+    /* CARD - TMX / TMN */
     public static WeatherVO getShortPartWeather6(GeocodingVO geocodingVO)
             throws IOException, ParseException, java.text.ParseException {
 
-        // 현재 시간
-        LocalTime now = LocalTime.now();
-        // 포맷 정의하기
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-        // 포맷 적용하기
-        String formatedNow = now.format(formatter);
-        // 포맷 적용된 현재 시간 출력
+                Calendar cal = Calendar.getInstance();
+        Calendar cal3 = Calendar.getInstance();
+        Date date = new Date();
+        // 현재 날짜 구하기
+        LocalDate nowDate = LocalDate.now();
 
-        int formatnow = Integer.parseInt(formatedNow);
-        // int formatnow = 02;
+        SimpleDateFormat hhtime = new SimpleDateFormat("HHmm");
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat nowformatter = new SimpleDateFormat("yyyyMMddHHmm");
-        String nowformat = nowformatter.format(calendar.getTime());
+        String htime = hhtime.format(cal.getTime());
+        SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
+        int hh = Integer.parseInt(htime);
+        String nowPartTime = sdformat.format(cal3.getTime());
+        // 포맷변경 ( 년월일 시분초)
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        DateFormat df = new SimpleDateFormat("yyyyMMdd");
-        String currentdate = df.format(cal.getTime());
+        // 1시간 전
+        cal.setTime(date);
+        cal.add(Calendar.HOUR, -1);
+        // 포맷 정의
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
+        String formatedNowDate = nowDate.format(formatterDate);
+        String shortPartTime = sdformat.format(cal.getTime());
 
-        cal.add(Calendar.DATE, -1);
-        String oneth = df.format(cal.getTime());
+        System.out.println("지금 측정시간 : " + nowPartTime);
+        int shortdate = Integer.parseInt(shortPartTime);
 
-        String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+        int nowbigo = Integer.parseInt(nowPartTime);
+
+        System.out.println("비교 값" + nowbigo);
+
+        String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
         // 홈페이지에서 받은 키
         String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
         String pageNo = "1";
         String numOfRows = "100000";
-        String baseDate = "";
-        // 조회하고싶은 날짜
-        if (formatnow >= 0 & formatnow <= 210) {
-            baseDate = oneth;
-        } else {
-            baseDate = currentdate;
+        if (nowbigo >= 0 && 100 >= nowbigo || nowbigo == 2400) {
+            Calendar cal2 = Calendar.getInstance();
+            String format = "yyyy-MM-dd";
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            cal2.add(Calendar.DATE, -1); // 날짜를 하루 뺀다.
+            String baseDate = sdf.format(cal2.getTime());
+
+            System.out.println(baseDate);
         }
-        String baseTime = "";
-        if (formatnow >= 0 & formatnow <= 210) {
-            baseTime = "2300";
-        } else {
-            baseTime = "0200";
-        }
+        String baseDate = formatedNowDate; // 조회하고싶은 날짜
+        String baseTime = shortPartTime; // 조회하고싶은 시간
         String type = "JSON"; // 타입 xml, json 등등 ..
         String nx = geocodingVO.getXLat();
         String ny = geocodingVO.getYLon();
@@ -1848,14 +1849,16 @@ public interface WeatherRepsitory {
         for (int i = 0; i < item.size(); i++) {
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
-
+            
             // System.out.println(category);
-            if (category.equals("REH") && count1 < 2) {
+            if (category.equals("REH") && count1 < 1) {
                 count1 += 1;
                 String reh = (String) object.get("fcstValue");
+                String fcstTime = (String) object.get("fcstTime");
                 weatherVO.setReh(reh);
+                weatherVO.setFcstTime(fcstTime);
             }
-            if (category.equals("VEC") && count2 < 2) {
+            if (category.equals("VEC") && count2 < 1) {
                 count2 += 1;
                 int vec = Integer.parseInt((String) object.get("fcstValue"));
                 String resultvec = "";
@@ -1878,15 +1881,15 @@ public interface WeatherRepsitory {
                 }
                 weatherVO.setVec(resultvec);
             }
-            if (category.equals("WSD") && count3 < 2) {
+            if (category.equals("WSD") && count3 < 1) {
                 count3 += 1;
                 String wsd = (String) object.get("fcstValue");
                 weatherVO.setWsd(wsd);
             }
-            if (category.equals("PCP") && count4 < 2) {
+            if (category.equals("RN1") && count4 < 1) {
                 count4 += 1;
-                String pcp = (String) object.get("fcstValue");
-                weatherVO.setPcp(pcp);
+                String rn1 = (String) object.get("fcstValue");
+                weatherVO.setRn1(rn1);
             }
         }
 
