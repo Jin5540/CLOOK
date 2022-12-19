@@ -31,7 +31,6 @@ public class WeatherVO {
     private String item1; //옷
     private String item2; //옷
     private String item3; //옷
-    private String item4; //옷
     private String background;
 
     private String icon; //icon
