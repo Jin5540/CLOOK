@@ -18,6 +18,8 @@ export function getApi(api, params) {
       return getTopspt();
     case "today":
       return getToday();
+    case "clothes":
+      return getClothes();
     default:
       return null;
   }
@@ -54,4 +56,8 @@ export const getTopspt = async () => {
 
 export const getToday = async () => {
   return httpClient.get("today").then((res) => res.data);
+};
+
+export const getClothes = async () => {
+  return httpClient.get("clothes").then((res) => res.data);
 };

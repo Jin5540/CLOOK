@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 
 const LocationContext = createContext();
-const locaStorageLocation = "충청남도 아산시 모종동";
+const locaStorageLocation = "서울특별시 중구 명동";
 
 export const LocationProvider = ({ children }) => {
   const [location, setLocation] = useState(
@@ -9,7 +9,6 @@ export const LocationProvider = ({ children }) => {
       ? localStorage.getItem("location")
       : locaStorageLocation
   );
-  const [isSucc, setIsSucc] = useState(false);
 
   const updateLocation = (address) => {
     if (!address) address = locaStorageLocation;
@@ -18,14 +17,8 @@ export const LocationProvider = ({ children }) => {
     localStorage.setItem("location", address);
   };
 
-  const updateSucc = (value) => {
-    setIsSucc(value);
-  };
-
   return (
-    <LocationContext.Provider
-      value={{ location, updateLocation, isSucc, updateSucc }}
-    >
+    <LocationContext.Provider value={{ location, updateLocation }}>
       {children}
     </LocationContext.Provider>
   );
