@@ -1,14 +1,14 @@
 import React from "react";
 import Section from "../Shared/Section/Section";
 import { useLocationContext } from "../../contexts/LocationContext";
-import Skeleton from "../Shared/UI/Skeleton";
+import MainSkeleton from "../Shared/UI/MainSkeleton";
 import NotFound from "../Shared/Error/NotFound";
 import useWeather from "../../hooks/useWeather";
 import Card from "../Shared/Card/Card";
 import Icon from "../Shared/Icon/Icon";
 import CurrentWeather from "./CurrentWeather";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import { sentenceFormat } from "../../util/sentenceFormat";
+import * as formatUtil from "../../util/formatUtil";
 
 export default function Main() {
   const { location } = useLocationContext();
@@ -23,7 +23,7 @@ export default function Main() {
 
   return (
     <>
-      {isLoading && <Skeleton />}
+      {isLoading && <MainSkeleton />}
       {isError && <NotFound />}
       {!isError && !isLoading && isSuccess && (
         <Section>
@@ -37,7 +37,7 @@ export default function Main() {
                   </div>
                   <span className="text-2xl text-brand font-medium">
                     {toptm.data.time.map((item, index) => {
-                      return `${sentenceFormat(item)} ${
+                      return `${formatUtil.sentenceFormat(item)} ${
                         toptm.data.message[index]
                       }${
                         toptm.data.time.length - 1 === index

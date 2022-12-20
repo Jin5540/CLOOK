@@ -1,196 +1,191 @@
-import React, { PureComponent } from "react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  LabelList,
-  Line,
-} from "recharts";
-import { getWweatherImages } from "../../util/getWweatherImages";
-import { chartTimeFormat } from "../../util/timeFormat";
+import React from "react";
+import { ResponsiveLine } from "@nivo/line";
+// import { Line } from "@nivo/line";
+import * as chartUtil from "../../util/chartUtil";
+import { getWeatherImages } from "../../util/getWeatherImages";
 
-const time = [
-  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-  22, 23,
-];
+// Nivo 차트
+export default function Chart({
+  data,
+  popArray,
+  iconArray,
+  max,
+  min,
+  standardHour,
+}) {
+  const minBottom = min > 0 ? 0 : min - 3;
+  const maxTop = max + 10;
+  // console.log(minBottom, maxTop);
 
-const currentTime = 1;
-const currentTimeIndex = time.indexOf(currentTime);
+  const CustomPointLabel = (props) => {
+    return `${props.y}˚`;
+  };
 
-const CustomizedAxisTick = ({ props, data }) => {
-  const { x, y, payload, index } = props;
-  const element = data[index];
-  // console.dir(props);
+  const CustomSymbol = (props) => {
+    const x = props.datum.x;
+
+    let circle = null;
+    if (x === standardHour) {
+      circle = (
+        <g>
+          <circle
+            r={6}
+            strokeWidth={3}
+            stroke="#1E3A8A"
+            fill="#FFFFFF"
+            fillOpacity={1}
+          />
+        </g>
+      );
+    } else {
+      circle = (
+        <g>
+          <circle
+            r={6}
+            strokeWidth={3}
+            stroke="#93C5FD"
+            fill="#FFFFFF"
+            fillOpacity={1}
+          />
+        </g>
+      );
+    }
+
+    return circle;
+  };
+
+  const CustomTick = (props) => {
+    const { value, x, y } = props;
+
+    const chartData = data[0].data;
+    let idx = -1;
+    chartData.map((item, index) => {
+      if (item.x === value) {
+        idx = index;
+      }
+    });
+
+    const pop = popArray[idx];
+    const icon = iconArray[idx];
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text
+          x={0}
+          y={-2}
+          textAnchor="middle"
+          stroke="#1E3A8A"
+          fill="#1E3A8A"
+          style={{
+            fontFamily: "Pretendard",
+            fontSize: "20px",
+            lineHeight: "150%",
+            fontWeight: "300",
+          }}
+        >
+          {/* {chartUtil.chartTimeFormat2(value, standardHour)} */}
+          {chartUtil.chartTimeFormat(value)}
+        </text>
+        <image
+          xlinkHref={getWeatherImages("icon", icon)}
+          // xlinkHref={Sun}
+          x={-20}
+          y={5}
+          textAnchor="middle"
+          width="40px"
+        />
+        <text
+          x={0}
+          y={70}
+          textAnchor="middle"
+          stroke="#2563EB"
+          fill="#2563EB"
+          style={{
+            fontFamily: "Pretendard",
+            fontSize: "20px",
+            lineHeight: "150%",
+            fontWeight: "300",
+          }}
+        >
+          {pop === 0 ? "" : `${pop}%`}
+        </text>
+      </g>
+    );
+  };
 
   return (
-    <g transform={`translate(${x},${y})`}>
-      <text
-        x={0}
-        y={-2}
-        textAnchor="middle"
-        stroke="#1E3A8A"
-        fill="#1E3A8A"
-        style={{
-          fontFamily: "Pretendard",
-          fontSize: "20px",
-          // fontWeight: "600",
-          lineHeight: "150%",
-          fontWeight: "300",
+    <div className="w-[2200px] h-full">
+      <svg className="absolute">
+        <defs>
+          {/* <linearGradient id="someGradientId" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stopColor="#d9d9d9" stopOpacity={0.79} />
+            <stop offset="50%" stopColor="#BFDBFE" stopOpacity={1} />
+          </linearGradient> */}
+          <linearGradient id="someGradientId" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="25%" stopColor="#BFDBFE" stopOpacity={1} />
+            <stop offset="100%" stopColor="#d9d9d9" stopOpacity={0.79} />
+          </linearGradient>
+        </defs>
+      </svg>
+      <ResponsiveLine
+        theme={{
+          fontSize: 20,
         }}
-      >
-        {chartTimeFormat(payload.value)}
-      </text>
-      <image
-        xlinkHref={getWweatherImages("icon", data[index].icon)}
-        x={-20}
-        y={5}
-        textAnchor="middle"
-        // height="36px"
-        width="40px"
+        // width="2200"
+        data={data}
+        margin={{
+          top: 40,
+          right: 50,
+          bottom: 10,
+          left: 50,
+        }}
+        lineWidth={2}
+        xScale={{
+          type: "point",
+        }}
+        yScale={{
+          type: "linear",
+          min: minBottom,
+          max: maxTop,
+          stacked: true,
+          reverse: false,
+        }}
+        stacked={true}
+        curve="linear"
+        axisRight={null}
+        axisBottom={null}
+        axisTop={{
+          orient: "top",
+          tickSize: 0,
+          tickPadding: 5,
+          tickRotation: 0,
+          renderTick: CustomTick,
+        }}
+        axisLeft={null}
+        // axisLeft={{
+        //   orient: "left",
+        //   tickSize: 0,
+        //   tickRotation: 0,
+        // }}
+        enablePointLabel={true} // 점 위에 값 나오는 것.
+        pointLabel={CustomPointLabel}
+        pointLabelYOffset={-12} // 점 위에 값 y 위치 조정
+        pointSize={10}
+        pointColor="white"
+        pointBorderWidth={3}
+        pointBorderColor="#93C5FD"
+        pointSymbol={CustomSymbol}
+        enableArea={true}
+        areaBaselineValue={minBottom} // 0 라인 바꾸는거
+        areaOpacity={0.3}
+        colors={["url(#someGradientId)"]}
+        borderColor="#ff0000"
+        useMesh={false}
+        animate={false}
+        enableGridX={false}
+        enableGridY={false}
+        isInteractive={false}
       />
-      <text
-        x={0}
-        y={70}
-        textAnchor="middle"
-        stroke="#2563EB"
-        fill="#2563EB"
-        style={{
-          fontFamily: "Pretendard",
-          fontSize: "20px",
-          // fontWeight: "600",
-          lineHeight: "150%",
-          fontWeight: "300",
-        }}
-      >
-        {/* {`${payload.value}%`} */}
-        {data[index].pop === "0" ? "" : `${data[index].pop}%`}
-      </text>
-    </g>
+    </div>
   );
-};
-
-const CustomizedDot = (props) => {
-  const { cx, cy, index } = props;
-  // console.dir(props);
-
-  if (index === currentTimeIndex) {
-    return (
-      <circle
-        cx={cx}
-        cy={cy}
-        r={6}
-        stroke="#1E3A8A"
-        strokeWidth={3}
-        fill="white"
-      />
-    );
-  } else {
-    return (
-      <circle
-        cx={cx}
-        cy={cy}
-        r={6}
-        stroke="#93C5FD"
-        strokeWidth={3}
-        fill="white"
-      />
-    );
-  }
-};
-
-export default class Chart extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: props.data,
-      minWidth: props.minWidth,
-    };
-  }
-
-  render() {
-    const {
-      state: { data, minWidth },
-    } = this;
-    // console.log(data);
-
-    return (
-      <div className="relative w-full h-[441px] mx-4">
-        <div className="absolute left-0 top-[26px] flex flex-col justify-center w-full h-[390px] overflow-y-hidden overflow-x-scroll">
-          <div className="w-full h-full">
-            <ResponsiveContainer width="100%" height="100%" minWidth={minWidth}>
-              <AreaChart
-                height={400}
-                data={data}
-                margin={{
-                  top: 0,
-                  right: 0,
-                  left: -25,
-                  bottom: 20,
-                }}
-              >
-                <defs>
-                  <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#BFDBFE" stopOpacity={1} />
-                    <stop offset="100%" stopColor="#d9d9d9" stopOpacity={0.1} />
-                  </linearGradient>
-                </defs>
-                <XAxis
-                  axisLine={false}
-                  dataKey="ftime"
-                  tick={(props) => (
-                    <CustomizedAxisTick props={props} data={data} />
-                  )}
-                  tickLine={false}
-                  orientation="top"
-                  minTickGap="10"
-                  padding={{ right: 10 }}
-                />
-                <YAxis
-                  axisLine={false}
-                  dataKey="tmp"
-                  type="number"
-                  domain={["dataMin - 10", "dataMax + 10"]}
-                  // tick={false}
-                  tick={true}
-                  // tickLine={false}
-                  tickLine={true}
-                  // allowDataOverflow={true}
-                  // stackOffset="sign"
-                  // mirror={true}
-                />
-                <Area
-                  // type="monotone"
-                  dataKey="tmp"
-                  dot={<CustomizedDot />}
-                  stroke="transparent"
-                  fill="url(#colorTemp)"
-                  isAnimationActive={false}
-                  // style={{ margin: "10px" }}
-                  // label={CustomizedLabel}
-                >
-                  <LabelList
-                    dataKey={(props) => {
-                      const value = props.tmp;
-                      if (value < -10 || 10 > value) {
-                        return `${value}˚`;
-                      } else {
-                        return `${value}˚`;
-                      }
-                    }}
-                    position="top"
-                    offset={10}
-                    fill="#1E3A8A"
-                    fontSize="20"
-                  />
-                </Area>
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-    );
-  }
 }

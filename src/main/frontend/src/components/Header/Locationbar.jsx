@@ -4,7 +4,6 @@ import { useLocationContext } from "../../contexts/LocationContext";
 import Card from "../Shared/Card/Card";
 import Icon from "../Shared/Icon/Icon";
 import ModalContent from "../Modal/ModalContent";
-import { useEffect } from "react";
 
 export default function Locationbar() {
   const [isOpen, setIsOpen] = useState(false);

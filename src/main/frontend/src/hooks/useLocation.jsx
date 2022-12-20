@@ -7,8 +7,6 @@ export default function useLocation(location) {
     () => setLocation(location),
     {
       staleTime: 0,
-      // staleTime: 1000 * 60 * 5,
-      // staleTime: Infinity,
     }
   );
 
