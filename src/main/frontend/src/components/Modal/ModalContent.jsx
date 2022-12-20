@@ -17,9 +17,9 @@ export default function ModalContent({ onCloseModal }) {
 
   return (
     <Modal onCloseModal={onCloseModal}>
-      <Search keyword={keyword} setKeyword={setKeyword} refetch={refetch} />
+      <Search setKeyword={setKeyword} />
       {!isError && keyword && (
-        <SearchList onCloseModal={onCloseModal} data={dataList} />
+        <SearchList onCloseModal={onCloseModal} dataList={dataList} />
       )}
     </Modal>
   );
