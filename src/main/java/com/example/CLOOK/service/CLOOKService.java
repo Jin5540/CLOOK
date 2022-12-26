@@ -1,6 +1,7 @@
 package com.example.CLOOK.service;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -20,7 +21,7 @@ public interface CLOOKService {
    public JSONObject getweather2(GeocodingVO gecoding) throws IOException, ParseException;
    public String getweather3(GeocodingVO gecoding) throws IOException, ParseException;
    public WeatherVO getpartweather1(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException;
-   public WeatherVO getpartweather2(GeocodingVO gecoding, SunVO sun) throws IOException, ParseException, java.text.ParseException;
+   public WeatherVO getTopspt(GeocodingVO gecoding, SunVO sun) throws IOException, ParseException, java.text.ParseException;
    public WeatherVO getpartweather3(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException;
    public AirVO getair(String stationName) throws IOException, ParseException;
    public UvVO getUv(String staionName) throws IOException, ParseException;
@@ -28,4 +29,5 @@ public interface CLOOKService {
    public SunVO getsun(String result) throws IOException, ParseException;
    public AirVO getTm(String stationName) throws IOException, ParseException;
    public String getStationName(AirVO air) throws IOException, ParseException;
+   public void insertSheet(GoogleVO googleVO)throws IOException,GeneralSecurityException;
 }

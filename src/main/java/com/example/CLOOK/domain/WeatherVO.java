@@ -23,6 +23,7 @@ public class WeatherVO {
     private String sno; //신적설
     private String tmp; //1시간 기온
     private String wsd; //풍속
+    private String rn1; //1시간 강수량
     
     private Integer tmpl; //1시간 기온 평균
     private String clothes1; //옷
@@ -30,7 +31,6 @@ public class WeatherVO {
     private String item1; //옷
     private String item2; //옷
     private String item3; //옷
-    private String item4; //옷
     private String background;
 
     private String icon; //icon

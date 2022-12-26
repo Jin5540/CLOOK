@@ -1,6 +1,7 @@
 package com.example.CLOOK.controller;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +11,17 @@ import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.CLOOK.domain.AirVO;
+import com.example.CLOOK.domain.GoogleVO;
 import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.UvVO;
 import com.example.CLOOK.domain.WeatherVO;
@@ -52,8 +57,8 @@ public class CLOOKController {
 
         if (req.getParameter("address") == null) {
             if (sessionlocation == null) {
-                session.setAttribute("location", "서울 중구 명동");
-                result = "서울 중구 명동";
+                session.setAttribute("location", "서울특별시 중구 명동");
+                result = "서울특별시 중구 명동";
                 return JSONObject.quote(result);
             } else {
                 result = sessionlocation;
@@ -84,7 +89,7 @@ public class CLOOKController {
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getpartweather1(clookService.gecodingnxny("서울 중구 명동"));
+            return clookService.getpartweather1(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
             return clookService.getpartweather1(clookService.gecodingnxny(sessionlocation));
         }
@@ -99,10 +104,10 @@ public class CLOOKController {
         String sessionlocation = (String) session.getAttribute("location");
 
         if (sessionlocation == null) {
-            return clookService.getpartweather2(clookService.gecodingnxny("서울 중구 명동"),
-                    clookService.getsun("서울 중구 명동"));
+            return clookService.getTopspt(clookService.gecodingnxny("서울특별시 중구 명동"),
+                    clookService.getsun("서울특별시 중구 명동"));
         } else {
-            return clookService.getpartweather2(clookService.gecodingnxny(sessionlocation),
+            return clookService.getTopspt(clookService.gecodingnxny(sessionlocation),
                     clookService.getsun(sessionlocation));
         }
     }
@@ -118,8 +123,8 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getweatherclothes(clookService.gecodingnxny("서울 중구 명동"),
-            clookService.getUv("서울 중구 명동"));
+            return clookService.getweatherclothes(clookService.gecodingnxny("서울특별시 중구 명동"),
+            clookService.getUv("서울특별시 중구 명동"));
         } else {
             return clookService.getweatherclothes(clookService.gecodingnxny(sessionlocation),
             clookService.getUv(sessionlocation)
@@ -137,8 +142,8 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getweathertoday(clookService.gecodingnxny("서울 중구 명동"),
-                    clookService.getsun("서울 중구 명동"));
+            return clookService.getweathertoday(clookService.gecodingnxny("서울특별시 중구 명동"),
+                    clookService.getsun("서울특별시 중구 명동"));
         } else {
             return clookService.getweathertoday(clookService.gecodingnxny(sessionlocation),
                     clookService.getsun(sessionlocation));
@@ -154,7 +159,7 @@ public class CLOOKController {
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getpartweather3(clookService.gecodingnxny("서울 중구 명동"));
+            return clookService.getpartweather3(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
             return clookService.getpartweather3(clookService.gecodingnxny(sessionlocation));
         }
@@ -178,7 +183,7 @@ public class CLOOKController {
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getUv("서울 중구 명동");
+            return clookService.getUv("서울특별시 중구 명동");
         } else {
             return clookService.getUv(sessionlocation);
         }
@@ -189,11 +194,16 @@ public class CLOOKController {
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getsun("서울 중구 명동");
+            return clookService.getsun("서울특별시 중구 명동");
         } else {
             return clookService.getsun(sessionlocation);
         }
 
+    }
+
+    @PostMapping(value = "/sheet", produces = "application/json; charset=UTF-8")
+    public void googleSheet(@RequestBody GoogleVO googleVO, Model model) throws IOException, GeneralSecurityException {
+        clookService.insertSheet(googleVO);
     }
 
 }
