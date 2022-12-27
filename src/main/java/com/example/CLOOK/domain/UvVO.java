@@ -20,5 +20,7 @@ public class UvVO {
     private String h21;
     private String h24;
 
+    private String time;
+
     private String hmsg;
 }

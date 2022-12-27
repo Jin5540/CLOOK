@@ -145,6 +145,8 @@ public interface UVRepsitory {
             String h21 = (String) object.get("h21");
             String h24 = (String) object.get("h24");
 
+            String date = (String) object.get("date");
+
             uvVO.setH0(h0);
             uvVO.setH3(h3);
             uvVO.setH6(h6);
@@ -154,6 +156,7 @@ public interface UVRepsitory {
             uvVO.setH18(h18);
             uvVO.setH21(h21);
             uvVO.setH24(h24);
+            uvVO.setTime(date);
 
         }
         //listsunVO.addAll(item);

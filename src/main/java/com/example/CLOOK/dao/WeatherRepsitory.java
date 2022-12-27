@@ -1529,9 +1529,11 @@ public interface WeatherRepsitory {
         String resultMsg = "";
         int count = 0;
         int sum = 0;
+        Calendar cal3 = Calendar.getInstance();
+
         while (true) {
             Calendar cal = Calendar.getInstance();
-            Calendar cal3 = Calendar.getInstance();
+            
             Date date = new Date();
             // 현재 날짜 구하기
             LocalDate nowDate = LocalDate.now();
@@ -1541,13 +1543,18 @@ public interface WeatherRepsitory {
             String htime = hhtime.format(cal.getTime());
             SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
             int hh = Integer.parseInt(htime);
-            String nowPartTime = sdformat.format(cal3.getTime());
+           
             // 포맷변경 ( 년월일 시분초)
 
             // 1시간 전
-            cal.setTime(date);
-            cal.add(Calendar.HOUR, -1);
-            cal.add(Calendar.MINUTE, sum);
+            cal3.setTime(date);
+            cal3.add(Calendar.HOUR, -1);
+            String nowPartTime1 = sdformat.format(cal3.getTime());
+
+            System.out.println("한시간 뺀 시간 : " + nowPartTime1);
+            cal3.add(Calendar.MINUTE, sum);
+
+            String nowPartTime = sdformat.format(cal3.getTime());
             // 포맷 정의
             DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
             // 포맷 적용
@@ -1559,14 +1566,14 @@ public interface WeatherRepsitory {
 
             int nowbigo = Integer.parseInt(nowPartTime);
 
-            System.out.println("비교 값" + nowbigo);
+            System.out.println("비교 값" + hh);
 
             String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
             // 홈페이지에서 받은 키
             String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
             String pageNo = "1";
             String numOfRows = "100000";
-            if (nowbigo >= 0 && 100 >= nowbigo || nowbigo == 2400) {
+            if (hh >= 0 && 30 >= hh || hh == 2400) {
                 Calendar cal2 = Calendar.getInstance();
                 String format = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -1749,7 +1756,7 @@ public interface WeatherRepsitory {
 
     }
 
-    /* CARD - TMX / TMN */
+    /* CARD - VEC / WSD / RN1 */
     public static WeatherVO getShortPartWeather6(GeocodingVO geocodingVO)
             throws IOException, ParseException, java.text.ParseException {
         String resultMsg = "";
@@ -1771,9 +1778,9 @@ public interface WeatherRepsitory {
             // 포맷변경 ( 년월일 시분초)
 
             // 1시간 전
-            cal.setTime(date);
-            cal.add(Calendar.HOUR, -1);
-            cal.add(Calendar.MINUTE, sum);
+            cal3.setTime(date);
+            cal3.add(Calendar.HOUR, -1);
+            cal3.add(Calendar.MINUTE, sum);
             // 포맷 정의
             DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
             // 포맷 적용
@@ -1785,14 +1792,14 @@ public interface WeatherRepsitory {
 
             int nowbigo = Integer.parseInt(nowPartTime);
 
-            System.out.println("비교 값" + nowbigo);
+            System.out.println("비교 값" + hh);
 
             String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
             // 홈페이지에서 받은 키
             String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
             String pageNo = "1";
             String numOfRows = "100000";
-            if (nowbigo >= 0 && 100 >= nowbigo || nowbigo == 2400) {
+            if (hh >= 0 && 30 >= hh || hh == 2400) {
                 Calendar cal2 = Calendar.getInstance();
                 String format = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(format);
