@@ -155,20 +155,6 @@ public interface UVRepsitory {
             uvVO.setH21(h21);
             uvVO.setH24(h24);
 
-            int hint = Integer.parseInt(uvVO.getH0());
-
-            if(hint>=0&&hint<=2){
-                uvVO.setHmsg("낮음");
-            }else if(hint>=3&&hint<=5){
-                uvVO.setHmsg("보통");
-            }else if(hint>=6&&hint<=7){
-                uvVO.setHmsg("높음");
-            }else if(hint>=8&&hint<=10){
-                uvVO.setHmsg("매우높음");
-            }else if(hint>=11){
-                uvVO.setHmsg("위험");
-            }
-
         }
         //listsunVO.addAll(item);
 
