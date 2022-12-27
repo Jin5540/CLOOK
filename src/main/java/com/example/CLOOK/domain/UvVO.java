@@ -19,4 +19,6 @@ public class UvVO {
     private String h18;
     private String h21;
     private String h24;
+
+    private String hmsg;
 }
