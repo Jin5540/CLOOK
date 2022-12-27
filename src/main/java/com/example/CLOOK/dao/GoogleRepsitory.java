@@ -33,9 +33,9 @@ import java.util.Calendar;
 @Repository
 public class GoogleRepsitory {
     private static Sheets sheetsService;
-    private static final String APPLICATION_NAME = "CLOOK";
+    private static final String APPLICATION_NAME = "Clook_v1.0_nps";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String SPREADSEET_ID = "189yBBjNj4wg7x8xk3jmoiKVxHgN-rsDwshncr4ubtFU";
+    private static final String SPREADSEET_ID = "1sphagJ36y1td5fYkzhvS9FJin0ByGfqzi5fCZgRn0h8";
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
