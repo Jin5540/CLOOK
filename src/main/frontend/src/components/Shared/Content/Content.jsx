@@ -16,12 +16,9 @@ export default function Content() {
   const { locationQuery } = useLocation(location);
   const { status, isLoading } = locationQuery;
 
-<<<<<<< HEAD
   // const status = "success";
   // const isLoading = false;
 
-=======
->>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
   return (
     <div className="flex flex-col items-center w-full mt-[119px]">
       {isLoading && (
