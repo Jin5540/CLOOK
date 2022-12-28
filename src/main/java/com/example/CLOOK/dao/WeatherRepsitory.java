@@ -1529,12 +1529,19 @@ public interface WeatherRepsitory {
         String resultMsg = "";
         int count = 0;
         int sum = 0;
+<<<<<<< HEAD
         
+=======
+>>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
 
         while (true) {
             Calendar cal = Calendar.getInstance();
             Calendar cal3 = Calendar.getInstance();
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             Date date = new Date();
             // 현재 날짜 구하기
             LocalDate nowDate = LocalDate.now();
@@ -1553,7 +1560,11 @@ public interface WeatherRepsitory {
             String nowPartTime1 = sdformat.format(cal3.getTime());
 
             System.out.println("한시간 뺀 시간 : " + nowPartTime1);
+<<<<<<< HEAD
             cal3.add(Calendar.MINUTE, sum);
+=======
+            cal3.add(Calendar.MINUTE, -sum);
+>>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
 
             String nowPartTime = sdformat.format(cal3.getTime());
             // 포맷 정의
@@ -1775,13 +1786,25 @@ public interface WeatherRepsitory {
             String htime = hhtime.format(cal.getTime());
             SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
             int hh = Integer.parseInt(htime);
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             // 포맷변경 ( 년월일 시분초)
 
             // 1시간 전
             cal3.setTime(date);
+<<<<<<< HEAD
             cal3.add(Calendar.HOUR, -1);
             cal3.add(Calendar.MINUTE, sum);
+=======
+
+            cal3.add(Calendar.HOUR, -1);
+            String nowPartTime22 = sdformat.format(cal3.getTime());
+            System.out.println(nowPartTime22);
+            cal3.add(Calendar.MINUTE, -sum);
+>>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             String nowPartTime = sdformat.format(cal3.getTime());
             // 포맷 정의
             DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -1876,6 +1899,11 @@ public interface WeatherRepsitory {
             WeatherVO weatherVO = new WeatherVO();
 
             JSONParser parser = new JSONParser();
+<<<<<<< HEAD
+=======
+            // System.out.println("rd:::"+rd.readLine());
+
+>>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             JSONObject object = (JSONObject) parser.parse(rd.readLine());
             JSONObject response = (JSONObject) object.get("response");
             JSONObject header = (JSONObject) response.get("header");
@@ -1938,7 +1966,13 @@ public interface WeatherRepsitory {
                     }
                 }
                 return weatherVO;
+<<<<<<< HEAD
             }
+=======
+
+            }
+
+>>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             count++;
             sum = count * 30;
         }
