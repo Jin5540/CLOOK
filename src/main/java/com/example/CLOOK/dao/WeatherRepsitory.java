@@ -1529,10 +1529,11 @@ public interface WeatherRepsitory {
         String resultMsg = "";
         int count = 0;
         int sum = 0;
-        Calendar cal3 = Calendar.getInstance();
+        
 
         while (true) {
             Calendar cal = Calendar.getInstance();
+            Calendar cal3 = Calendar.getInstance();
             
             Date date = new Date();
             // 현재 날짜 구하기
@@ -1543,7 +1544,7 @@ public interface WeatherRepsitory {
             String htime = hhtime.format(cal.getTime());
             SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
             int hh = Integer.parseInt(htime);
-           
+
             // 포맷변경 ( 년월일 시분초)
 
             // 1시간 전
