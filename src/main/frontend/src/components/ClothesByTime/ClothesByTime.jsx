@@ -2,33 +2,31 @@ import React from "react";
 import { useLocationContext } from "../../contexts/LocationContext";
 import useWeather from "../../hooks/useWeather";
 import Section from "../Shared/Section/Section";
-import TodaySkeleton from "../Shared/UI/TodaySkeleton";
 import XScrollContainer from "../Shared/ScrollConteiner/XScrollContainer";
-import Card from "./Card";
-import CardItem from "./CardItem";
-import fakeData from "./clothesData.json";
+import Title from "../Shared/Title/Title";
+import CardList from "./CardList";
+import ClothesByTimeSkeleton from "../Shared/UI/ClothesByTimeSkeleton";
+import fakeClothes from "../../json/clothes.json";
 
 export default function ClothesByTime() {
-  // const { location } = useLocationContext();
-  // const queryResults = useWeather(["clothes"], location, "");
-  // const { isLoading, status, data } = queryResults[0];
+  const { location } = useLocationContext();
+  const queryResults = useWeather(["clothes"], location, "");
+  const { isLoading, status, data: clothes } = queryResults[0];
 
-  const data = fakeData;
-  const isLoading = false;
-  const status = "success";
+  // const clothes = fakeClothes;
+  // const isLoading = false;
+  // const status = "success";
 
   return (
     <Section>
-      {isLoading && <TodaySkeleton />}
+      {isLoading && <ClothesByTimeSkeleton />}
       {!isLoading && status === "success" && (
         <>
-          <span className="inline-block text-4xl leading-[150%] font-bold text-black mb-10">
-            시간대별 옷차림
-          </span>
-          <div className=" w-full h-[315px] px-3">
+          <Title title="시간대별 옷차림" />
+          <div className="w-full h-[315px] px-3">
             <XScrollContainer styles="pr-3">
-              {data.map((item, index) => (
-                <Card key={index} item={item} />
+              {clothes.map((item, index) => (
+                <CardList key={index} item={item} />
               ))}
             </XScrollContainer>
           </div>

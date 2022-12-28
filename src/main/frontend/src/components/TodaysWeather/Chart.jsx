@@ -59,7 +59,7 @@ export default function Chart({
 
     const chartData = data[0].data;
     let idx = -1;
-    chartData.map((item, index) => {
+    chartData.forEach((item, index) => {
       if (item.x === value) {
         idx = index;
       }
@@ -83,16 +83,14 @@ export default function Chart({
             fontWeight: "300",
           }}
         >
-          {/* {chartUtil.chartTimeFormat2(value, standardHour)} */}
           {chartUtil.chartTimeFormat(value)}
         </text>
         <image
           xlinkHref={getWeatherImages("icon", icon)}
-          // xlinkHref={Sun}
-          x={-20}
+          x={icon === "해" ? -23 : -20}
           y={5}
           textAnchor="middle"
-          width="40px"
+          width={icon === "해" ? "45px" : "40px"}
         />
         <text
           x={0}
@@ -107,7 +105,7 @@ export default function Chart({
             fontWeight: "300",
           }}
         >
-          {pop === 0 ? "" : `${pop}%`}
+          {pop > -1 ? `${pop}%` : ""}
         </text>
       </g>
     );
