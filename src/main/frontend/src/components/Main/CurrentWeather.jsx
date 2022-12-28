@@ -28,18 +28,18 @@ export default function CurrentWeather({ toptm, topspt }) {
           <span className="text-shadow-10">{topspt.t1h}</span>
           <span className="text-shadow-10">°C</span>
         </div>
-        <div className="flex items-center my-2 ml-3 text-lg font-medium">
+        <div className="flex items-center my-2 text-lg font-medium">
           <div>
-            최저<span className="ml-1">{toptm.tmn}</span>°C
+            최저<span className="ml-1">{Number(toptm.tmn)}</span>°C
           </div>
-          <div>
-            최고<span className="ml-1">{toptm.tmx}</span>°C
+          <div className="ml-5">
+            최고<span className="ml-1">{Number(toptm.tmx)}</span>°C
           </div>
         </div>
       </div>
       <div className="basis-1/2 flex flex-col justify-center items-start">
         <img
-          className="relative t-0 l-0 ml-5 animate-slow-bounce"
+          className="relative t-0 l-0 ml-5 h-[18.75rem] animate-slow-bounce"
           src={getWeatherImages("character", topspt.character)}
           alt=""
         />

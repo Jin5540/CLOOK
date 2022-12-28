@@ -1,5 +1,11 @@
 import React from "react";
 
-export default function Section({ children }) {
-  return <section className="w-full bg-white mb-14 p-3">{children}</section>;
+export default function Section({ styles, children }) {
+  return (
+    <section
+      className={`w-full max-w-[992px] bg-white px-1 mb-14 ${styles && styles}`}
+    >
+      {children}
+    </section>
+  );
 }

@@ -2,7 +2,7 @@
 export function sentenceFormat(value) {
   if (!value) return;
 
-  const hour = Number(value.slice(0, 2));
+  const hour = Number(value) / 100;
 
   if (hour === 0) {
     return "현재 ";

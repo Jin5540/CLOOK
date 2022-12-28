@@ -11,7 +11,7 @@ export default function SearchList({ onCloseModal, dataList }) {
   };
 
   return (
-    <ul className="flex flex-col items-start w-full h-[26.125rem] px-2 py-2 overflow-auto">
+    <ul className="flex flex-col items-start w-full max-h-[26.125rem] px-2 py-2 overflow-auto">
       {dataList &&
         dataList.map((item, index) => (
           <SearchListItem key={index} item={item} handleClick={handleClick} />

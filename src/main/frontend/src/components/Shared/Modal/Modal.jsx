@@ -2,13 +2,14 @@ import React, { useEffect, useRef } from "react";
 import useModalOutSideClick from "../../../hooks/useModalOutSideClick";
 import ModalContainerPortal from "../../../portal/ModalContainerPortal";
 
-export default function Modal({ onCloseModal, children }) {
+export default function Modal({ onCloseModal, modalType, children }) {
   const modalRef = useRef(null);
 
   const handleClose = () => {
     if (onCloseModal === undefined || onCloseModal === null) return;
     onCloseModal();
   };
+
   useModalOutSideClick(modalRef, handleClose);
 
   useEffect(() => {
@@ -19,13 +20,16 @@ export default function Modal({ onCloseModal, children }) {
 
   return (
     <ModalContainerPortal>
-      <div className="modal-overlay">
-        <div className="modal-wrapper modal-shadow">
-          <div className="modal-inner" ref={modalRef}>
-            <div className="modal-content">{children}</div>
+      {!modalType && (
+        <div className="modal-overlay">
+          <div className="modal-wrapper-top modal-shadow">
+            <div className="modal-inner" ref={modalRef}>
+              <div className="modal-content">{children}</div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {modalType && children}
     </ModalContainerPortal>
   );
 }
