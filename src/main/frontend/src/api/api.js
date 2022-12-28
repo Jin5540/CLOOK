@@ -20,12 +20,22 @@ export function getApi(api, params) {
       return getToday();
     case "clothes":
       return getClothes();
+    case "card":
+      return getCard();
+    case "uv":
+      return getUv();
+    case "sun":
+      return getSun();
+    case "air":
+      return getAir();
+    case "survey":
+      return addSurvey(params);
     default:
       return null;
   }
 }
 
-export const setLocation = async (address) => {
+const setLocation = async (address) => {
   if (address === undefined) return;
   return httpClient
     .get("location", {
@@ -36,7 +46,7 @@ export const setLocation = async (address) => {
     .then((res) => res.data);
 };
 
-export const getSearchList = async (keyword) => {
+const getSearchList = async (keyword) => {
   return httpClient
     .get("search", {
       params: {
@@ -46,18 +56,44 @@ export const getSearchList = async (keyword) => {
     .then((res) => res.data);
 };
 
-export const getToptm = async () => {
+const getToptm = async () => {
   return httpClient.get("toptm").then((res) => res.data);
 };
 
-export const getTopspt = async () => {
+const getTopspt = async () => {
   return httpClient.get("topspt").then((res) => res.data);
 };
 
-export const getToday = async () => {
+const getToday = async () => {
   return httpClient.get("today").then((res) => res.data);
 };
 
-export const getClothes = async () => {
+const getClothes = async () => {
   return httpClient.get("clothes").then((res) => res.data);
+};
+
+const getCard = async () => {
+  return httpClient.get("card").then((res) => res.data);
+};
+
+const getUv = async () => {
+  return httpClient.get("uv").then((res) => res.data);
+};
+
+const getSun = async () => {
+  return httpClient.get("sun").then((res) => res.data);
+};
+
+const getAir = async () => {
+  return httpClient.get("air").then((res) => res.data);
+};
+
+const addSurvey = async (params) => {
+  return httpClient
+    .post("sheet", {
+      params: {
+        params,
+      },
+    })
+    .then((res) => res.data);
 };

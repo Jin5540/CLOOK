@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 
 export function dateFormat(value) {
+  if (!value) return;
+
   const date = dayjs(value);
   const dayOfTheWeek = ["일", "월", "화", "수", "목", "금", "토"];
   const week = `(${dayOfTheWeek[date.format("d")]})`;
@@ -26,6 +28,6 @@ export function clothesTime(value) {
 
   const endHour = hour > 12 ? hour - 12 : hour;
 
-  if (0 <= hour && hour < 13) return `오전 ${startHour} ~ ${endHour}시`;
+  if (0 <= hour && hour < 13) return `오전 ${startHour}~${endHour}시`;
   else return `오후 ${startHour}~${endHour}시`;
 }

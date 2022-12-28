@@ -27,7 +27,7 @@ export default function ChartContainer({ data }) {
   const nextHour = dateUtil.currentHour() + 1;
 
   return (
-    <div className="w-full h-full py-6">
+    <div className="w-full h-full">
       <XScrollContainer>
         <Chart
           data={chartData}

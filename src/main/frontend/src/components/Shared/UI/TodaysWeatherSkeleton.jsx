@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function TodaySkeleton() {
+export default function TodaysWeatherSkeleton() {
   return (
     <div
       role="status"

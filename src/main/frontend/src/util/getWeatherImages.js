@@ -22,6 +22,13 @@ import characterHot from "../assets/imgs/character/characterHot.png";
 import characterRain from "../assets/imgs/character/characterRain.png";
 import characterSnow from "../assets/imgs/character/characterSnow.png";
 
+import pm from "../assets/imgs/todaysCard/pm.png";
+import uv from "../assets/imgs/todaysCard/uv.png";
+import wind from "../assets/imgs/todaysCard/wind.png";
+import humidity from "../assets/imgs/todaysCard/humidity.png";
+import umbrella from "../assets/imgs/todaysCard/umbrella.png";
+import suns from "../assets/imgs/todaysCard/sun.png";
+
 export function getWeatherImages(type, value) {
   if (!type || !value) return;
 
@@ -109,7 +116,30 @@ export function getWeatherImages(type, value) {
         image = moonCloud;
         break;
       default:
-        image = sun;
+        image = "";
+        break;
+    }
+  } else if (type === "cardIcon") {
+    switch (value) {
+      case "미세먼지":
+        image = pm;
+        break;
+      case "자외선":
+        image = uv;
+        break;
+      case "바람":
+        image = wind;
+        break;
+      case "습도":
+        image = humidity;
+        break;
+      case "강수량":
+        image = umbrella;
+        break;
+      case "일출/일몰":
+        image = suns;
+        break;
+      default:
         break;
     }
   }

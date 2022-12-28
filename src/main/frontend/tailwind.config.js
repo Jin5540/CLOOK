@@ -52,12 +52,6 @@ module.exports = {
           "-webkit-box-shadow": theme("boxShadow.main"),
           "-moz-box-shadow": theme("boxShadow.main"),
         },
-        ".text-shadow-4": {
-          textShadow: "0px 4px 4px rgba(0, 51, 99, 0.2)",
-        },
-        ".text-shadow-10": {
-          textShadow: "0px 4px 10px rgba(0, 51, 99, 0.2)",
-        },
         ".modal-shadow": {
           boxShadow: "0px 0px 7px 2px rgb(219 234 254 / 75%)",
           "-webkit-box-shadow": "0px 0px 7px 2px rgb(219 234 254 / 75%)",
@@ -73,11 +67,25 @@ module.exports = {
           backgroundColor: "rgba(0, 0, 0, 0.55)",
           zIndex: "999",
         },
-        ".modal-wrapper": {
+        ".modal-wrapper-top": {
           position: "fixed",
           top: "6.5rem",
           left: "50%",
           transform: "translateX(-50%)",
+          width: "80%",
+          height: "auto",
+          maxWidth: "49.3125rem",
+          borderRadius: theme("borderRadius.default"),
+          backgroundColor: "transparent",
+          overflow: "auto",
+          outline: "0",
+          zIndex: "1000",
+        },
+        ".modal-wrapper-middle": {
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
           width: "80%",
           height: "auto",
           maxWidth: "49.3125rem",
@@ -94,7 +102,7 @@ module.exports = {
           alignItems: "center",
           backgroundColor: theme("colors.white"),
           borderRadius: theme("borderRadius.default"),
-          padding: "28px 48px",
+          padding: "28px 48px 22px 48px",
         },
         ".modal-content": {
           display: "flex",

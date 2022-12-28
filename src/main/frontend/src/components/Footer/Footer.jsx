@@ -2,13 +2,14 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="flex flex-row justify-center items-center w-full h-[6.25rem] mt-auto bg-brand">
-      <img src="/images/logo_white.png" alt="" />
-      <div className="text-base font-normal text-white">
-        <span>Team.noname</span>
-        <span className="mx-5">email@gmail.com</span>
-        <span>국내 날씨 정보 - 기상청 / 미세먼지 - 한국 환경공단</span>
-      </div>
+    <footer className="flex flex-row justify-center items-center gap-8 w-full h-[100px] py-[2.375rem] text-base font-medium leading-[1.375rem] text-white bg-brand">
+      <img src="/images/logo_white.png" alt="logo" />
+      <span>V1.0</span>
+      <span>Team. Clook</span>
+      <span>team.clook@gmail.com</span>
+      <span>날씨: 기상청</span>
+      <span>대기: 한국환경공단(에어코리아)</span>
+      <span>지역: 카카오</span>
     </footer>
   );
 }
