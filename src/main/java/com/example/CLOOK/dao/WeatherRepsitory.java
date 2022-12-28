@@ -1583,7 +1583,7 @@ public interface WeatherRepsitory {
                 System.out.println(baseDate);
             }
             String baseDate = formatedNowDate; // 조회하고싶은 날짜
-            String baseTime = shortPartTime; // 조회하고싶은 시간
+            String baseTime = nowPartTime; // 조회하고싶은 시간
             String type = "JSON"; // 타입 xml, json 등등 ..
             String nx = geocodingVO.getXLat(); // 위도
             String ny = geocodingVO.getYLon();
@@ -1774,13 +1774,14 @@ public interface WeatherRepsitory {
             String htime = hhtime.format(cal.getTime());
             SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
             int hh = Integer.parseInt(htime);
-            String nowPartTime = sdformat.format(cal3.getTime());
+            
             // 포맷변경 ( 년월일 시분초)
 
             // 1시간 전
             cal3.setTime(date);
             cal3.add(Calendar.HOUR, -1);
             cal3.add(Calendar.MINUTE, sum);
+            String nowPartTime = sdformat.format(cal3.getTime());
             // 포맷 정의
             DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
             // 포맷 적용
@@ -1809,7 +1810,7 @@ public interface WeatherRepsitory {
                 System.out.println(baseDate);
             }
             String baseDate = formatedNowDate; // 조회하고싶은 날짜
-            String baseTime = shortPartTime; // 조회하고싶은 시간
+            String baseTime = nowPartTime; // 조회하고싶은 시간
             String type = "JSON"; // 타입 xml, json 등등 ..
             String nx = geocodingVO.getXLat(); // 위도
             String ny = geocodingVO.getYLon();
@@ -1879,6 +1880,7 @@ public interface WeatherRepsitory {
             JSONObject header = (JSONObject) response.get("header");
 
             resultMsg = (String) header.get("resultMsg");
+
             if (resultMsg.equals("NORMAL_SERVICE")) {
                 JSONObject body = (JSONObject) response.get("body");
                 JSONObject items = (JSONObject) body.get("items");
