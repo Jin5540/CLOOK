@@ -41,7 +41,7 @@ public class CLOOKServiceImpl implements CLOOKService {
     private ClookMapper mapper;
 
     @Override
-    public List<String> location(String address) throws IOException, ParseException {
+    public GeocodingVO location(String address) throws IOException, ParseException {
 
         System.out.println("location_serviceImpl:::------------------------------");
 
@@ -184,7 +184,7 @@ public class CLOOKServiceImpl implements CLOOKService {
     }
 
     @Override
-    public AirVO getTm(String stationName) throws IOException, ParseException {
+    public AirVO getTm(String stationName, String region) throws IOException, ParseException {
 
         String[] array = stationName.split(" ");
         String a="";
@@ -196,25 +196,8 @@ public class CLOOKServiceImpl implements CLOOKService {
             System.out.println(array[i]);
         }
 
-        String lastChar1 = array[2].substring(array[2].length() - 1);
-        if(array.length>3){
-            String lastChar2 = array[3].substring(array[3].length() - 1);
-
-            if(lastChar2!=null){
-                if(lastChar2.equals("면")||lastChar2.equals("읍")||lastChar2.equals("동")||lastChar2.equals("가")){
-                    a = array[3];
-                    b= array[0];
-                }
-            }
-        }
-        
-
-        if(lastChar1!=null){
-            if(lastChar1.equals("면")||lastChar1.equals("읍")||lastChar1.equals("동")||lastChar1.equals("가")){
-                a = array[2];
-                b= array[0];
-            }
-        }
+        a=region;
+        b=array[0];
 
         System.out.println(a);
         System.out.println(b);

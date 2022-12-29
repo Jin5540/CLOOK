@@ -265,11 +265,11 @@ public interface AirRepsitory {
         String dataTime = (String) object.get("dataTime");
         String pm10Grade1h = (String) object.get("pm10Grade1h");
         String pm25Grade1h = (String) object.get("pm25Grade1h");
-        String pm25Flag = (String) object.get("pm25Flag");
+        //String pm25Flag = (String) object.get("pm25Flag");
 
         
         airVO.setDataTime(dataTime);
-        if(pm25Flag.equals("통신장애")){
+        if(pm25Grade1h==null){
             airVO.setPm10Grade1h("오류");
             airVO.setPm25Grade1h("오류");
         }else{

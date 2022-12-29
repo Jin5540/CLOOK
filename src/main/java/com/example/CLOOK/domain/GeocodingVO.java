@@ -7,6 +7,7 @@ import lombok.Data;
 public class GeocodingVO {
 
     private List<String> address;
+    private List<String> regionarr;
 
     private double lat; // gps로 반환받은 위도
     private double lon; // gps로 반환받은 경도

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.CLOOK.domain.AirVO;
+import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.GoogleVO;
 import com.example.CLOOK.domain.SunVO;
 import com.example.CLOOK.domain.UvVO;
@@ -40,7 +41,7 @@ public class CLOOKController {
 
     /* 위치정보 */
     @GetMapping(value = "/search", produces = "application/json; charset=UTF-8")
-    public List<String> searchAPI(@RequestParam(value = "saddress") String saddress)
+    public GeocodingVO searchAPI(@RequestParam(value = "saddress") String saddress)
             throws IOException, ParseException {
 
         return clookService.location(saddress);
@@ -52,12 +53,14 @@ public class CLOOKController {
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
-        
+        String sessionregion = (String) session.getAttribute("region");
+
         String result = "";
 
-        if (req.getParameter("address") == null) {
-            if (sessionlocation == null) {
+        if (req.getParameter("address") == null && req.getParameter("region") == null) {
+            if (sessionlocation == null && sessionregion == null) {
                 session.setAttribute("location", "서울특별시 중구 명동");
+                session.setAttribute("region", "명동");
                 result = "서울특별시 중구 명동";
                 return JSONObject.quote(result);
             } else {
@@ -66,15 +69,17 @@ public class CLOOKController {
             }
         } else {
             String address = req.getParameter("address");
-            if (sessionlocation == null) {
+            String region = req.getParameter("region");
+            if (sessionlocation == null && sessionregion == null) {
                 session.setAttribute("location", address);
+                session.setAttribute("region", region);
                 result = address;
                 System.out.println(result);
                 return JSONObject.quote(result);
             } else {
                 session.removeAttribute("location");
                 session.setAttribute("location", address);
-
+                session.setAttribute("region", region);
                 result = address;
                 return JSONObject.quote(result);
             }
@@ -124,11 +129,10 @@ public class CLOOKController {
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
             return clookService.getweatherclothes(clookService.gecodingnxny("서울특별시 중구 명동"),
-            clookService.getUv("서울특별시 중구 명동"));
+                    clookService.getUv("서울특별시 중구 명동"));
         } else {
             return clookService.getweatherclothes(clookService.gecodingnxny(sessionlocation),
-            clookService.getUv(sessionlocation)
-            );
+                    clookService.getUv(sessionlocation));
         }
 
     }
@@ -171,10 +175,16 @@ public class CLOOKController {
         HttpSession session = req.getSession();
 
         String sessionlocation = (String) session.getAttribute("location");
-        if (sessionlocation == null) {
-            return clookService.getair("중구");
-        }else{
-            return clookService.getair(clookService.getStationName(clookService.getTm(sessionlocation)));
+        String sessionregion = (String) session.getAttribute("region");
+        if (sessionlocation == null && sessionregion == null) {
+            return clookService.getair(clookService.getStationName(clookService.getTm("서울특별시 중구 명동", "명동")));
+        }
+        else if (sessionlocation != null && sessionregion == null) {
+            return clookService.getair(clookService.getStationName(clookService.getTm("서울특별시 중구 명동", "명동")));
+        } else if (sessionlocation == null && sessionregion != null) {
+            return clookService.getair(clookService.getStationName(clookService.getTm("서울특별시 중구 명동", "명동")));
+        }else {
+            return clookService.getair(clookService.getStationName(clookService.getTm(sessionlocation, sessionregion)));
         }
     }
 

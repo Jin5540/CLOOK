@@ -14,7 +14,7 @@ import com.example.CLOOK.domain.*;
 
 public interface CLOOKService {
    
-   public List<String> location(String address) throws IOException, ParseException;
+   public GeocodingVO location(String address) throws IOException, ParseException;
    public GeocodingVO gecodingnxny(String address);
    public List<WeatherVO> getweatherclothes(GeocodingVO gecoding, UvVO uv) throws IOException, ParseException, java.text.ParseException;
    public List<WeatherVO> getweathertoday(GeocodingVO gecoding, SunVO sun) throws IOException, ParseException, java.text.ParseException;
@@ -27,7 +27,7 @@ public interface CLOOKService {
    public UvVO getUv(String staionName) throws IOException, ParseException;
    public String getUv_copy() throws IOException, ParseException;
    public SunVO getsun(String result) throws IOException, ParseException;
-   public AirVO getTm(String stationName) throws IOException, ParseException;
+   public AirVO getTm(String stationName, String region) throws IOException, ParseException;
    public String getStationName(AirVO air) throws IOException, ParseException;
    public void insertSheet(GoogleVO googleVO)throws IOException,GeneralSecurityException;
 }
