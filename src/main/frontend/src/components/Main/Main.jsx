@@ -12,18 +12,17 @@ import fakeToptm from "../../json/toptm.json";
 import fakeTopspt from "../../json/topspt.json";
 
 export default function Main() {
-  // const { location } = useLocationContext();
-  // const queryResults = useWeather(["toptm", "topspt"], location, "");
-  // const toptm = queryResults[0].data;
-  // const topspt = queryResults[1].data;
+  const { location } = useLocationContext();
+  const queryResults = useWeather(["toptm", "topspt"], location, "");
+  const toptm = queryResults[0].data;
+  const topspt = queryResults[1].data;
+  const isLoading = queryResults?.some((query) => query.isLoading);
+  const isSuccess = queryResults.every((query) => query.status === "success");
 
-  // const isLoading = queryResults?.some((query) => query.isLoading);
-  // const isSuccess = queryResults.every((query) => query.status === "success");
-
-  const toptm = fakeToptm;
-  const topspt = fakeTopspt;
-  const isLoading = false;
-  const isSuccess = true;
+  // const toptm = fakeToptm;
+  // const topspt = fakeTopspt;
+  // const isLoading = false;
+  // const isSuccess = true;
 
   return (
     <>
