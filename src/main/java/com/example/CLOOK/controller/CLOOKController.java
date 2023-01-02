@@ -122,8 +122,6 @@ public class CLOOKController {
     public List<WeatherVO> clothesweather(HttpServletRequest req, RedirectAttributes redirect)
             throws IOException, ParseException, java.text.ParseException {
 
-        System.out.println("controller:::------------------------------");
-
         HttpSession session = req.getSession();
 
         String sessionlocation = (String) session.getAttribute("location");

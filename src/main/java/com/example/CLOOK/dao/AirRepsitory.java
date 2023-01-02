@@ -59,14 +59,7 @@ public interface AirRepsitory {
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("umdName", "UTF-8") + "=" + URLEncoder.encode(stationName, "UTF-8"));
 
-        // urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" +
-        // URLEncoder.encode("UTF-8")); //경도
-        // urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" +
-        // URLEncoder.encode(ny, "UTF-8")); //위도
-
         URL url = new URL(urlBuilder.toString());
-        // 어떻게 넘어가는지 확인하고 싶으면 아래 출력분 주석 해제
-        // System.out.println(url);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
@@ -77,18 +70,6 @@ public interface AirRepsitory {
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
-        /*
-         * StringBuilder sb = new StringBuilder();
-         * String line;
-         * while ((line = rd.readLine()) != null) {
-         * sb.append(line);
-         * }
-         * rd.close();
-         * conn.disconnect();
-         * String result = sb.toString();
-         * 
-         * return result;
-         */
 
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(rd.readLine());
@@ -139,14 +120,8 @@ public interface AirRepsitory {
                 + URLEncoder.encode(tmX, "UTF-8"));
         urlBuilder.append("&" + URLEncoder.encode("tmY", "UTF-8") + "=" + URLEncoder.encode(tmY, "UTF-8"));
 
-        // urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" +
-        // URLEncoder.encode("UTF-8")); //경도
-        // urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" +
-        // URLEncoder.encode(ny, "UTF-8")); //위도
-
         URL url = new URL(urlBuilder.toString());
-        // 어떻게 넘어가는지 확인하고 싶으면 아래 출력분 주석 해제
-        // System.out.println(url);
+
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
@@ -157,18 +132,6 @@ public interface AirRepsitory {
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
-        /*
-         * StringBuilder sb = new StringBuilder();
-         * String line;
-         * while ((line = rd.readLine()) != null) {
-         * sb.append(line);
-         * }
-         * rd.close();
-         * conn.disconnect();
-         * String result = sb.toString();
-         * 
-         * return result;
-         */
 
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(rd.readLine());
@@ -233,18 +196,6 @@ public interface AirRepsitory {
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
-        /*
-         * StringBuilder sb = new StringBuilder();
-         * String line;
-         * while ((line = rd.readLine()) != null) {
-         * sb.append(line);
-         * }
-         * rd.close();
-         * conn.disconnect();
-         * String result = sb.toString();
-         * 
-         * return result;
-         */
 
         List<AirVO> listairVO = new ArrayList<AirVO>();
 
