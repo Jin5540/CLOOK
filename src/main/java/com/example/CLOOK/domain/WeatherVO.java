@@ -42,6 +42,7 @@ public class WeatherVO {
     private int fTime;
 
     private List<String> time;
+    private List<String> date;
     private List<String> message;
 
     private String m;

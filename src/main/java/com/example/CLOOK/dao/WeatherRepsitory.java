@@ -1439,6 +1439,7 @@ public interface WeatherRepsitory {
         }
 
         List<String> timeList = new ArrayList<String>();
+        List<String> dateList = new ArrayList<String>();
         List<String> messageList = new ArrayList<String>();
 
         int countgr = 0;
@@ -1468,9 +1469,11 @@ public interface WeatherRepsitory {
 
                     if ((pty.equals("1") || pty.equals("5")) & countgr < 1) {
                         System.out.println("count" + countgr);
+                        dateList.add(weatherVO.getFcstDate());
                         messageList.add("비");
                         countgr += 1;
                         weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
                         if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
@@ -1479,9 +1482,11 @@ public interface WeatherRepsitory {
                             weatherVO.setTime(timeList);
                         }
                     } else if ((pty.equals("2") || pty.equals("6")) & countgrs < 1) {
+                        dateList.add(weatherVO.getFcstDate());
                         messageList.add("진눈깨비");
                         countgrs += 1;
                         weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
                         if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
@@ -1490,9 +1495,11 @@ public interface WeatherRepsitory {
                             weatherVO.setTime(timeList);
                         }
                     } else if ((pty.equals("3") || pty.equals("7")) & counts < 1) {
+                        dateList.add(weatherVO.getFcstDate());
                         messageList.add("눈");
                         counts += 1;
                         weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
                         if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
