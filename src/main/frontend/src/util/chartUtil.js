@@ -93,16 +93,6 @@ export function getMaxMin(obj, key) {
   return { max, min };
 }
 
-export function chartTimeFormat(hour) {
-  if (!hour && hour !== 0) return;
-
-  if (0 <= hour && hour < 12) {
-    return `오전 ${hour} 시`;
-  } else {
-    return `오후 ${hour > 12 ? hour - 12 : hour} 시`;
-  }
-}
-
 export function chartTimeFormat2(hour, firstHour) {
   if ((!hour && hour !== 0) || (!firstHour && firstHour !== 0)) return;
 

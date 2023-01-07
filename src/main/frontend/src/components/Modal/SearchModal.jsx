@@ -6,10 +6,11 @@ import Modal from "../Shared/Modal/Modal";
 import useSearch from "../../hooks/useSearch";
 import ErrorImage from "../../assets/imgs/error/error1.png";
 
-export default function SearchModal({ onCloseModal }) {
+export default function SearchModal({ onCloseModal, bgType, position }) {
   const [keyword, setKeyword] = useState("");
   const { searchQuery } = useSearch(keyword);
   const { isError, refetch, data: dataList } = searchQuery;
+  const dataLength = dataList?.address?.length;
 
   useEffect(() => {
     if (!keyword) return;
@@ -17,17 +18,18 @@ export default function SearchModal({ onCloseModal }) {
   }, [keyword]);
 
   return (
-    <Modal onCloseModal={onCloseModal}>
-      <Search
-        setKeyword={setKeyword}
-        noData={keyword && dataList?.length === 0}
-      />
-      {keyword && dataList?.length > 0 && (
+    <Modal onCloseModal={onCloseModal} bgType={bgType} position={position}>
+      <Search setKeyword={setKeyword} helpVisible={keyword ? true : false} />
+      {keyword && dataLength > 0 && (
         <SearchList onCloseModal={onCloseModal} dataList={dataList} />
       )}
-      {keyword && dataList?.length === 0 && (
+      {keyword && !dataLength && (
         <div className="flex flex-col items-center w-full mt-3 mb-16">
-          <img className="max-w-[280px]" src={ErrorImage} alt="" />
+          <img
+            className="w-[280px] h-[280px] max-w-[280px]"
+            src={ErrorImage}
+            alt=""
+          />
           <span className="text-[2.25rem] font-semibold leading-[140%] text-brand">
             ERROR!
           </span>

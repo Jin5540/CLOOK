@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { useQueries } from "@tanstack/react-query";
 import { getApi } from "../api/api";
 import { useErrorHandler } from "react-error-boundary";
-import { useEffect, useState } from "react";
+import { useLocationContext } from "../contexts/LocationContext";
 
-export default function useWeather(apis, location, params) {
+export default function useWeather(apis, params) {
+  const { location } = useLocationContext();
   const handleError = useErrorHandler();
   const [error, setError] = useState(null);
 

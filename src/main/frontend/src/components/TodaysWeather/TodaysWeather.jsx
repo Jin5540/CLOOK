@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useLocationContext } from "../../contexts/LocationContext";
 import useWeather from "../../hooks/useWeather";
 import Title from "../Shared/Title/Title";
 import Section from "../Shared/Section/Section";
@@ -11,8 +10,7 @@ import fakeToday from "../../json/today.json";
 
 export default function TodaysWeather() {
   const [isOpen, setIsOpen] = useState(false);
-  const { location } = useLocationContext();
-  const queryResults = useWeather(["today"], location, "");
+  const queryResults = useWeather(["today"], "");
   const { isLoading, status, data: today } = queryResults[0];
 
   // const today = fakeToday;
@@ -36,7 +34,10 @@ export default function TodaysWeather() {
           {isOpen && (
             <DataGuideModal
               onCloseModal={() => setIsOpen(false)}
-              modalType="custom"
+              custom="true"
+              bgType={false}
+              position="middle"
+              styles="w-auto"
             />
           )}
           <Card styles="flex items-center justify-center h-[27.563rem] p-6">
