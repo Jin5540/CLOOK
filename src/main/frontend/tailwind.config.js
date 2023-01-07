@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         white: "#FCFDFF",
         brand: "#1E3A8A",
+        "brand-dark": "#00155c",
         "sub-brand": "#DBEAFE",
         "blue-200": "#BFDBFE",
         "blue-600": "#2563EB",
@@ -62,8 +63,8 @@ module.exports = {
           top: "0",
           left: "0",
           display: "flex",
-          width: "100%",
-          height: "100%",
+          width: "100vw",
+          height: "100vh",
           backgroundColor: "rgba(0, 0, 0, 0.55)",
           zIndex: "999",
         },
@@ -100,9 +101,8 @@ module.exports = {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: theme("colors.white"),
+          backgroundColor: "transparent",
           borderRadius: theme("borderRadius.default"),
-          padding: "28px 48px 22px 48px",
         },
         ".modal-content": {
           display: "flex",
@@ -111,6 +111,8 @@ module.exports = {
           alignItems: "stretch",
           width: "100%",
           height: "100%",
+          padding: "28px 48px 22px 48px",
+          backgroundColor: theme("colors.white"),
         },
       };
 

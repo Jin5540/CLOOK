@@ -35,12 +35,12 @@ export function getApi(api, params) {
   }
 }
 
-const setLocation = async (address) => {
-  if (address === undefined) return;
+const setLocation = async (params) => {
+  if (params === undefined) return;
   return httpClient
     .get("location", {
       params: {
-        address: address,
+        params,
       },
     })
     .then((res) => res.data);

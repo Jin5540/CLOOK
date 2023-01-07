@@ -1,52 +1,55 @@
 import React from "react";
-import NotFound from "./NotFound";
+import Footer from "../../Footer/Footer";
+import ErrorImage from "../../../assets/imgs/error/error1.png";
+import Button from "../Button/Button";
 
 export default function Error({ error, resetErrorBoundary }) {
   console.log(error);
-  const status = error.response?.status;
-  const message = error.message && error.message;
+  const status = error?.response?.status;
+  const message = error?.message && error?.message;
+
+  const handleClick = () => {
+    localStorage.setItem("location", "서울특별시 중구 명동");
+    localStorage.setItem("region", "명동");
+    window.location.reload();
+  };
 
   return (
-    <div>
-      {/* {console.dir(error)} */}
-      {/* <button onClick={resetErrorBoundary}>Try again</button> */}
-      <h1>{message}</h1>
-      {status === 400 && (
-        <div>
-          400 에러
+    <div className="flex flex-col items-center justify-between w-full h-screen">
+      <div className="w-full h-[4.375rem] pt-[2.188rem] pl-[3.75rem]">
+        <img
+          onClick={handleClick}
+          className="cursor-pointer"
+          src="/images/logo.png"
+          alt="Logo"
+        />
+      </div>
+      <div className="flex flex-col items-center w-full text-brand ">
+        <img
+          className="w-[280px] h-[280px] mb-1"
+          src={ErrorImage}
+          alt="Error Image"
+        />
+        <span className="text-[4rem] font-bold leading-[4.75rem] mb-5">
+          Error!
+        </span>
+        <span className="text-xl font-medium leading-6 mb-10">
+          죄송해요. 서비스에 문제가 생겼어요.
           <br />
-          잘못된 요청 - Client Error!
-        </div>
-      )}
-      {status === 404 && (
-        <div>
-          404 에러
-          <br />
-          페이지를 찾을 수 없습니다.
-        </div>
-      )}
-      {status === 405 && (
-        <div>
-          405 에러
-          <br />
-          Method not allowed - Client Error!
-        </div>
-      )}
-      {status === 415 && (
-        <div>
-          415 에러
-          <br />
-          잘못된 형식으로 요청 서버 승인 거부 - Client Error!
-        </div>
-      )}
-      {status === 500 && <NotFound />}
-      {status === 505 && (
-        <div>
-          505 에러
-          <br />
-          HTTP Version Not Supported!
-        </div>
-      )}
+          빠른 시간 내에 다시 돌아올게요.
+        </span>
+
+        <Button
+          text="메인으로 이동"
+          onClick={handleClick}
+          styles="text-xl font-semibold mb-10"
+          selected="text-white bg-brand"
+          hover="hover:bg-brand-dark"
+        />
+      </div>
+      <div className="w-full">
+        <Footer />
+      </div>
     </div>
   );
 }

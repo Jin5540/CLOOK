@@ -20,7 +20,13 @@ export default function Locationbar() {
         <div className="text-xl font-semibold">{location}</div>
         <Icon icon={faAngleDown} size="1.125rem" />
       </Card>
-      {isOpen && <SearchModal onCloseModal={() => setIsOpen(false)} />}
+      {isOpen && (
+        <SearchModal
+          onCloseModal={() => setIsOpen(false)}
+          bgType="true"
+          position="top"
+        />
+      )}
     </>
   );
 }

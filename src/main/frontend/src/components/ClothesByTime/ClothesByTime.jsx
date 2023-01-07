@@ -1,5 +1,4 @@
 import React from "react";
-import { useLocationContext } from "../../contexts/LocationContext";
 import useWeather from "../../hooks/useWeather";
 import Section from "../Shared/Section/Section";
 import XScrollContainer from "../Shared/ScrollConteiner/XScrollContainer";
@@ -9,8 +8,7 @@ import ClothesByTimeSkeleton from "../Shared/UI/ClothesByTimeSkeleton";
 import fakeClothes from "../../json/clothes.json";
 
 export default function ClothesByTime() {
-  const { location } = useLocationContext();
-  const queryResults = useWeather(["clothes"], location, "");
+  const queryResults = useWeather(["clothes"], "");
   const { isLoading, status, data: clothes } = queryResults[0];
 
   // const clothes = fakeClothes;

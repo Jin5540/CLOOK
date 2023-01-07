@@ -3,9 +3,6 @@ import { getWeatherImages } from "../../util/getWeatherImages";
 import * as dateUtil from "../../util/dateUtil";
 
 export default function CurrentWeather({ toptm, topspt }) {
-  //pty, tmn, tmx, tmpl, fcstDate, fcstTime, ftime;
-  //sky, t1h, tmpl, background, icon, character, fcstTime, ftime;
-
   return (
     <div
       className="flex w-full h-[400px] mt-6 mb-5 rounded-2xl"

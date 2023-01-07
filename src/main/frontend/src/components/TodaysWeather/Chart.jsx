@@ -1,6 +1,7 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 // import { Line } from "@nivo/line";
+import * as dateUtil from "../../util/dateUtil";
 import * as chartUtil from "../../util/chartUtil";
 import { getWeatherImages } from "../../util/getWeatherImages";
 
@@ -83,7 +84,7 @@ export default function Chart({
             fontWeight: "300",
           }}
         >
-          {chartUtil.chartTimeFormat(value)}
+          {dateUtil.TimeFormat(value)}
         </text>
         <image
           xlinkHref={getWeatherImages("icon", icon)}
@@ -105,7 +106,7 @@ export default function Chart({
             fontWeight: "300",
           }}
         >
-          {pop > -1 ? `${pop}%` : ""}
+          {pop > 0 ? `${pop}%` : ""}
         </text>
       </g>
     );
