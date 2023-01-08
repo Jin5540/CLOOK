@@ -16,18 +16,17 @@ export default function SurveyModal({
   const [opinionCardShow, setOpinionCardShow] = useState(false);
   const [msgCardShow, setMsgCardShow] = useState(false);
 
-  const { mutate: addSurvey, isSuccess } = useSurvey();
+  const { mutate: addSurvey } = useSurvey();
 
   const handleSubmit = () => {
-    addSurvey(JSON.stringify(data), {
+    addSurvey(data, {
       onSuccess: () => {
-        console.log("SurveyModal 성공!!");
         setOpinionCardShow(false);
         setMsgCardShow(true);
       },
       onError: (e) => {
         console.log(
-          `에러코드: ${e.response.status} / params: { num: ${data.num}, comment: ${data.comment} }`
+          `Suvey Error: ${e.response.status} / params: { num: ${data.num}, comment: ${data.comment} }`
         );
         setOpinionCardShow(false);
         setMsgCardShow(true);

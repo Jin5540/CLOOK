@@ -36,11 +36,12 @@ export function getApi(api, params) {
 }
 
 const setLocation = async (params) => {
-  if (params === undefined) return;
+  if (!params?.address || !params?.region) return;
   return httpClient
     .get("location", {
       params: {
-        params,
+        address: params.address,
+        region: params.region,
       },
     })
     .then((res) => res.data);
@@ -89,10 +90,11 @@ const getAir = async () => {
 };
 
 const addSurvey = async (params) => {
+  if (params === undefined) return;
   return httpClient
-    .post("sheet", {
-      params: {
-        params,
+    .post("sheet", JSON.stringify(params), {
+      headers: {
+        "Content-Type": "application/json",
       },
     })
     .then((res) => res.data);
