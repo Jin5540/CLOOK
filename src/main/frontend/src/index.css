@@ -83,7 +83,7 @@ body {
 }
 
 #root {
-  @apply w-full max-w-[90rem] text-brand overflow-hidden bg-white;
+  @apply w-full text-brand overflow-hidden;
 }
 
 #modal-root {

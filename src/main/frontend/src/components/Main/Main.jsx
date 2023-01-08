@@ -1,6 +1,5 @@
 import React from "react";
 import Section from "../Shared/Section/Section";
-import { useLocationContext } from "../../contexts/LocationContext";
 import MainSkeleton from "../Shared/UI/MainSkeleton";
 import useWeather from "../../hooks/useWeather";
 import Card from "../Shared/Card/Card";
@@ -12,12 +11,12 @@ import fakeToptm from "../../json/toptm.json";
 import fakeTopspt from "../../json/topspt.json";
 
 export default function Main() {
-  const { location } = useLocationContext();
-  const queryResults = useWeather(["toptm", "topspt"], location, "");
-  const toptm = queryResults[0].data;
-  const topspt = queryResults[1].data;
+  const queryResults = useWeather(["toptm", "topspt"], "");
+  const toptm = queryResults[0]?.data;
+  const topspt = queryResults[1]?.data;
+
   const isLoading = queryResults?.some((query) => query.isLoading);
-  const isSuccess = queryResults.every((query) => query.status === "success");
+  const isSuccess = queryResults?.every((query) => query.status === "success");
 
   // const toptm = fakeToptm;
   // const topspt = fakeTopspt;
@@ -26,8 +25,7 @@ export default function Main() {
 
   return (
     <>
-      {/* <MainSkeleton /> */}
-      {isLoading && <MainSkeleton />}
+      {(isLoading || !isSuccess) && <MainSkeleton />}
       {!isLoading && isSuccess && (
         <Section>
           {toptm && topspt && (
@@ -35,21 +33,16 @@ export default function Main() {
               <CurrentWeather toptm={toptm} topspt={topspt} />
               {toptm.hasOwnProperty("time") &&
                 toptm.hasOwnProperty("message") && (
-                  <Card styles="relative flex items-center justify-center w-full h-20">
+                  <Card styles="relative flex items-center justify-center w-full h-20 pl-[106px]">
                     <div className="absolute top-1/2 left-10 -translate-y-2/4">
                       <Icon icon={faBell} size={26} />
                     </div>
-                    <span className="text-2xl text-brand font-medium">
-                      {toptm.time.map((item, index) => {
-                        return `${formatUtil.sentenceFormat(item)} ${
-                          toptm.message[index]
-                        }${
-                          toptm.time.length - 1 === index
-                            ? " 소식이 있어요."
-                            : ", "
-                        }`;
-                      })}
-                    </span>
+                    <div className="absolute top-0 left-0 flex items-center w-full h-full">
+                      <span className="w-full text-2xl text-brand font-medium ml-[106px] pr-6">
+                        {/* 3시간내 비, 내일 오전 11시에 눈 소식이 있어요. */}
+                        {formatUtil.sentenceFormat(toptm)}
+                      </span>
+                    </div>
                   </Card>
                 )}
             </>

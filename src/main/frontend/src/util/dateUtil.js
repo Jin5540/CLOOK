@@ -16,6 +16,18 @@ export function currentHour() {
   return now.hour();
 }
 
+export function TimeFormat(hour) {
+  if (!hour && hour !== 0) return;
+
+  if (0 <= hour && hour < 12) {
+    return `오전 ${hour}시`;
+  } else if (12 <= hour && hour < 24) {
+    return `오후 ${hour > 12 ? hour - 12 : hour}시`;
+  } else {
+    return null;
+  }
+}
+
 export function clothesTime(value) {
   if (!value) return;
 
