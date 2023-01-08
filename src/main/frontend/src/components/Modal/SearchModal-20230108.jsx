@@ -20,8 +20,25 @@ export default function SearchModal({ onCloseModal, bgType, position }) {
   return (
     <Modal onCloseModal={onCloseModal} bgType={bgType} position={position}>
       <Search setKeyword={setKeyword} helpVisible={keyword ? true : false} />
-      {keyword && dataList && (
+      {keyword && dataLength > 0 && (
         <SearchList onCloseModal={onCloseModal} dataList={dataList} />
+      )}
+      {keyword && !dataLength && (
+        <div className="flex flex-col items-center w-full mt-3 mb-16">
+          <img
+            className="w-[280px] h-[280px] max-w-[280px]"
+            src={ErrorImage}
+            alt=""
+          />
+          <span className="text-[2.25rem] font-semibold leading-[140%] text-brand">
+            ERROR!
+          </span>
+          <span className="text-xl font-medium leading-[140%] text-blue-600 text-center">
+            요청하신 내용을 찾을 수 없습니다.
+            <br />
+            검색어를 다시 확인해주세요.
+          </span>
+        </div>
       )}
     </Modal>
   );
