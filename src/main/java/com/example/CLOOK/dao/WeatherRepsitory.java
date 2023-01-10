@@ -1439,6 +1439,7 @@ public interface WeatherRepsitory {
         }
 
         List<String> timeList = new ArrayList<String>();
+        List<String> dateList = new ArrayList<String>();
         List<String> messageList = new ArrayList<String>();
 
         int countgr = 0;
@@ -1468,9 +1469,11 @@ public interface WeatherRepsitory {
 
                     if ((pty.equals("1") || pty.equals("5")) & countgr < 1) {
                         System.out.println("count" + countgr);
+                        dateList.add(weatherVO.getFcstDate());
                         messageList.add("비");
                         countgr += 1;
                         weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
                         if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
@@ -1479,9 +1482,11 @@ public interface WeatherRepsitory {
                             weatherVO.setTime(timeList);
                         }
                     } else if ((pty.equals("2") || pty.equals("6")) & countgrs < 1) {
+                        dateList.add(weatherVO.getFcstDate());
                         messageList.add("진눈깨비");
                         countgrs += 1;
                         weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
                         if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
@@ -1490,9 +1495,11 @@ public interface WeatherRepsitory {
                             weatherVO.setTime(timeList);
                         }
                     } else if ((pty.equals("3") || pty.equals("7")) & counts < 1) {
+                        dateList.add(weatherVO.getFcstDate());
                         messageList.add("눈");
                         counts += 1;
                         weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
                         if (min_difference <= 180) {
                             timeList.add("3시간 이내");
                             weatherVO.setTime(timeList);
@@ -1529,19 +1536,10 @@ public interface WeatherRepsitory {
         String resultMsg = "";
         int count = 0;
         int sum = 0;
-<<<<<<< HEAD
-        
-=======
->>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
 
         while (true) {
             Calendar cal = Calendar.getInstance();
             Calendar cal3 = Calendar.getInstance();
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             Date date = new Date();
             // 현재 날짜 구하기
             LocalDate nowDate = LocalDate.now();
@@ -1560,11 +1558,7 @@ public interface WeatherRepsitory {
             String nowPartTime1 = sdformat.format(cal3.getTime());
 
             System.out.println("한시간 뺀 시간 : " + nowPartTime1);
-<<<<<<< HEAD
-            cal3.add(Calendar.MINUTE, sum);
-=======
             cal3.add(Calendar.MINUTE, -sum);
->>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
 
             String nowPartTime = sdformat.format(cal3.getTime());
             // 포맷 정의
@@ -1665,6 +1659,7 @@ public interface WeatherRepsitory {
             JSONObject header = (JSONObject) response.get("header");
 
             resultMsg = (String) header.get("resultMsg");
+            System.out.println("resultMsg:::"+resultMsg);
             if (resultMsg.equals("NORMAL_SERVICE")) {
                 JSONObject body = (JSONObject) response.get("body");
                 JSONObject items = (JSONObject) body.get("items");
@@ -1786,25 +1781,15 @@ public interface WeatherRepsitory {
             String htime = hhtime.format(cal.getTime());
             SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
             int hh = Integer.parseInt(htime);
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             // 포맷변경 ( 년월일 시분초)
 
             // 1시간 전
             cal3.setTime(date);
-<<<<<<< HEAD
-            cal3.add(Calendar.HOUR, -1);
-            cal3.add(Calendar.MINUTE, sum);
-=======
 
             cal3.add(Calendar.HOUR, -1);
             String nowPartTime22 = sdformat.format(cal3.getTime());
             System.out.println(nowPartTime22);
             cal3.add(Calendar.MINUTE, -sum);
->>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             String nowPartTime = sdformat.format(cal3.getTime());
             // 포맷 정의
             DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -1899,16 +1884,15 @@ public interface WeatherRepsitory {
             WeatherVO weatherVO = new WeatherVO();
 
             JSONParser parser = new JSONParser();
-<<<<<<< HEAD
-=======
             // System.out.println("rd:::"+rd.readLine());
 
->>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             JSONObject object = (JSONObject) parser.parse(rd.readLine());
             JSONObject response = (JSONObject) object.get("response");
             JSONObject header = (JSONObject) response.get("header");
 
             resultMsg = (String) header.get("resultMsg");
+
+            System.out.println("resultMsg:::"+resultMsg);
 
             if (resultMsg.equals("NORMAL_SERVICE")) {
                 JSONObject body = (JSONObject) response.get("body");
@@ -1966,13 +1950,9 @@ public interface WeatherRepsitory {
                     }
                 }
                 return weatherVO;
-<<<<<<< HEAD
-            }
-=======
 
             }
 
->>>>>>> c1313fe95e3a011c1cc259a5be4bf8715da834fc
             count++;
             sum = count * 30;
         }

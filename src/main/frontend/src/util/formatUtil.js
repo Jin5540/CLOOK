@@ -1,14 +1,56 @@
-// Main.jsx 1 sentence card format
-export function sentenceFormat(value) {
-  if (!value) return;
+import * as dateUtil from "./dateUtil";
 
-  const hour = Number(value) / 100;
+// Main.jsx - One sentence card format
+export function sentenceFormat(data) {
+  if (!data) return;
 
-  if (hour === 0) {
-    return "현재 ";
-  } else {
-    return `${hour}시간 뒤에 `;
-  }
+  data.fcstDate = "20230107";
+  data.time = ["3시간 이내", "1200", "1400", "0000"];
+  // data.time = ["0800", "1200", "0000", "0100"];
+  data.date = ["20230107", "20230107", "20230107", "20230108"];
+  // data.date = ["20230107", "20230107", "20230108", "20230108"];
+  data.message = ["진눈깨비", "눈", "눈", "비"];
+  // data.message = ["비", "눈", "비", "진눈깨비"];
+  // 3시간내 비, 내일 오전 11시에 눈 소식이 있어요.
+
+  const date = data?.date;
+  const time = data?.time;
+  const message = data?.message;
+  const currentDate = Number(data?.fcstDate);
+  const currentTime = dateUtil.currentHour();
+
+  let result = "";
+  let passIndex = -1;
+
+  time.forEach((hour, index) => {
+    if (!date || !time || !message || !currentDate || !currentTime) return;
+
+    if (passIndex === index) return;
+
+    let sentence = "";
+
+    if (hour === "3시간 이내") {
+      sentence += "3시간 내 ";
+    } else {
+      if (currentDate < Number(date[index])) sentence += "내일 ";
+
+      sentence += `${dateUtil.TimeFormat(Number(hour) / 100)} `;
+    }
+
+    sentence += message[index];
+    if (index === time.length - 1) sentence += " 소식이 있어요.";
+    else sentence += ", ";
+
+    if (index < time.length - 1 && message[index] === message[index + 1]) {
+      passIndex = index + 1;
+    }
+
+    result += sentence;
+  });
+
+  console.log(result);
+
+  return result;
 }
 
 // Change the name of a "state or city"

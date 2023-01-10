@@ -1,11 +1,10 @@
+import React from "react";
 import { useQueries } from "@tanstack/react-query";
 import { getApi } from "../api/api";
-import { useErrorHandler } from "react-error-boundary";
-import { useEffect, useState } from "react";
+import { useLocationContext } from "../contexts/LocationContext";
 
-export default function useWeather(apis, location, params) {
-  const handleError = useErrorHandler();
-  const [error, setError] = useState(null);
+export default function useWeather(apis, params) {
+  const { location } = useLocationContext();
 
   const queryResults = useQueries({
     queries: apis.map((api) => {
@@ -14,19 +13,12 @@ export default function useWeather(apis, location, params) {
           queryKey: [api, location],
           queryFn: () => getApi(api, params),
           staleTime: 1000 * 60 * 5,
-          onError: (e) => {
-            setError(e);
-          },
+          useErrorBoundary: true,
         };
       }
     }),
   });
 
-  useEffect(() => {
-    if (error) {
-      handleError(error);
-    }
-  }, [error]);
   console.log("=======> useWeather.jsx");
 
   return queryResults;

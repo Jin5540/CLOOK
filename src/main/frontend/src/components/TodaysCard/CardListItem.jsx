@@ -70,13 +70,11 @@ export default function CardListItem({
         {stationName && (
           <>
             <span className="text-[#2563EB]">측정소: {stationName}</span>
-            <span className="text-[#9CA3AF]">{time}시 업데이트</span>
+            <span className="text-[#9CA3AF]">{time}</span>
           </>
         )}
         {!stationName && time && (
-          <span className="w-full pr-0 text-[#9CA3AF] text-end">
-            {time}시 업데이트
-          </span>
+          <span className="w-full pr-0 text-[#9CA3AF] text-end">{time}</span>
         )}
         {!stationName && !time && <div className="h-2"></div>}
       </div>

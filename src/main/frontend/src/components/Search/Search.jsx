@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 
-export default function Search({ setKeyword, noData }) {
+export default function Search({ setKeyword, helpMsgVisible }) {
   const [input, setInput] = useState("");
   const [inputCheck, setInputCheck] = useState(false);
   const [addrCheck, setAddrCheck] = useState(false);
@@ -39,6 +39,7 @@ export default function Search({ setKeyword, noData }) {
       setKeyword(input);
       setAddrCheck(false);
     } else {
+      setKeyword("");
       setAddrCheck(true);
     }
   };
@@ -50,7 +51,7 @@ export default function Search({ setKeyword, noData }) {
   };
 
   return (
-    <>
+    <div>
       <div className="flex flex-row justify-between py-2 text-xl font-medium text-brand bg-white">
         <div className="flex w-full max-w-[31rem]">
           <div className="flex items-center w-full h-[3.75rem] px-2 bg-sub-brand rounded-default">
@@ -76,7 +77,7 @@ export default function Search({ setKeyword, noData }) {
           검색
         </button>
       </div>
-      {!noData && (
+      {(!helpMsgVisible || (helpMsgVisible && addrCheck)) && (
         <div className="flex flex-col w-full text-xl leading-[140%] font-medium mt-3 text-blue-600">
           {!inputCheck && (
             <>
@@ -86,11 +87,11 @@ export default function Search({ setKeyword, noData }) {
               <span>*국내 도시만 서비스되고 있습니다.</span>
             </>
           )}
-          {inputCheck && (
+          {!input && inputCheck && (
             <span className="text-red">*검색어를 다시 확인해주세요.</span>
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }

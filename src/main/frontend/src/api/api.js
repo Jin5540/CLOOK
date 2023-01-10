@@ -35,18 +35,20 @@ export function getApi(api, params) {
   }
 }
 
-const setLocation = async (address) => {
-  if (address === undefined) return;
+const setLocation = async (params) => {
+  if (!params?.address || !params?.region) return;
   return httpClient
     .get("location", {
       params: {
-        address: address,
+        address: params.address,
+        region: params.region,
       },
     })
     .then((res) => res.data);
 };
 
 const getSearchList = async (keyword) => {
+  if (!keyword) return;
   return httpClient
     .get("search", {
       params: {
@@ -89,10 +91,11 @@ const getAir = async () => {
 };
 
 const addSurvey = async (params) => {
+  if (params === undefined) return;
   return httpClient
-    .post("sheet", {
-      params: {
-        params,
+    .post("sheet", JSON.stringify(params), {
+      headers: {
+        "Content-Type": "application/json",
       },
     })
     .then((res) => res.data);

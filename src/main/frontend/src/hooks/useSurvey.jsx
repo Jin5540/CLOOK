@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useErrorHandler } from "react-error-boundary";
+import React from "react";
+import { useMutation } from "@tanstack/react-query";
 import { getApi } from "../api/api";
 
 export default function useSurvey() {
-  const queryClient = useQueryClient();
-  const handleError = useErrorHandler();
-  const [error, setError] = useState(null);
-
   const addSurvey = useMutation((params) => getApi("survey", params), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("survey");
-    },
-    onError: (e) => {
-      setError(e);
-    },
+    useErrorBoundary: false,
+    onError: (e) =>
+      console.error(
+        `useSurvey Error! code: ${e.response?.status} / message: ${e.response?.statusText}`
+      ),
   });
 
-  useEffect(() => {
-    if (error) {
-      handleError(error);
-    }
-  }, [error]);
   console.log("=======> useSurvey.jsx");
 
-  return { addSurvey };
+  return addSurvey;
 }

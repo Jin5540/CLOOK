@@ -52,18 +52,6 @@ export function changeColor(value) {
   else return;
 }
 
-export function getUvUpdateTime(currentHour) {
-  if (0 <= currentHour && currentHour < 3) return "3";
-  else if (3 <= currentHour && currentHour < 6) return "6";
-  else if (6 <= currentHour && currentHour < 9) return "9";
-  else if (9 <= currentHour && currentHour < 12) return "12";
-  else if (12 <= currentHour && currentHour < 15) return "15";
-  else if (15 <= currentHour && currentHour < 18) return "18";
-  else if (18 <= currentHour && currentHour < 21) return "21";
-  else if (21 <= currentHour && currentHour < 24) return "0";
-  else return "";
-}
-
 export function pmTimeFormat(date) {
   if (!date) return;
 
@@ -83,11 +71,32 @@ export function sunsTimeFormat(time) {
   return `${hour < 12 ? "오전" : "오후"} ${hour}:${minute}`;
 }
 
-export function compoundCardData(card, uv, air, sun, currentHour) {
-  // const uvUpdateTime = getUvUpdateTime(currentHour);
-  let uvTime = uv?.time;
-  uvTime = uvTime.slice(uvTime?.length - 2, uvTime?.length);
+export function timeFormat(type, date) {
+  if (!date) return;
 
+  let time = "";
+
+  if (type === "pm") {
+    const word = date.split(" ");
+    const hour = Number(word[1].slice(0, 2));
+    time = `${hour}시 업데이트`;
+    //
+  } else if (type === "uv") {
+    const hour = Number(date.slice(date?.length - 2));
+    time = `${hour}시 업데이트`;
+    //
+  } else {
+    const hour = Number(date.slice(0, 2));
+    const minute = Number(date.slice(2));
+
+    time = `${hour}시 ${minute > 0 ? minute + "분 " : ""}업데이트`;
+  }
+
+  return time;
+}
+
+export function compoundCardData(card, uv, air, sun) {
+  const updateTime = timeFormat("", card?.fcstTime);
   const data = [
     {
       type: 1,
@@ -99,7 +108,7 @@ export function compoundCardData(card, uv, air, sun, currentHour) {
       color1: changeColor(air?.pm10Grade1h),
       color2: changeColor(air?.pm25Grade1h),
       stationName: air?.stationName,
-      time: pmTimeFormat(air?.dataTime) + 1,
+      time: timeFormat("pm", air?.dataTime),
     },
     {
       type: 2,
@@ -107,8 +116,7 @@ export function compoundCardData(card, uv, air, sun, currentHour) {
       text1: getUvFormat(uv?.h0),
       value1: `${uv?.h0}mm`,
       color1: changeColor(getUvFormat(uv?.h0)),
-      // time: uvUpdateTime,
-      time: uvTime,
+      time: timeFormat("uv", uv?.time),
     },
     {
       type: 2,
@@ -116,19 +124,19 @@ export function compoundCardData(card, uv, air, sun, currentHour) {
       text1: getWindFormat(card?.wsd),
       value1: `${card?.vec} - ${card?.wsd}m/s`,
       color1: changeColor(getWindFormat(card?.wsd)),
-      time: currentHour + 1,
+      time: updateTime,
     },
     {
       type: 3,
       title: "습도",
       value1: `${card?.reh}%`,
-      time: currentHour + 1,
+      time: updateTime,
     },
     {
       type: 3,
       title: "강수량",
-      value1: card?.pcp,
-      time: currentHour + 1,
+      value1: card?.rn1,
+      time: updateTime,
     },
     {
       type: 1,
