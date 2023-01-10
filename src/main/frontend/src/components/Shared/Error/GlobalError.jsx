@@ -7,8 +7,8 @@ import { useLocationContext } from "../../../contexts/LocationContext";
 export default function GlobalError({ error, resetErrorBoundary }) {
   console.log("===> Global Error");
 
-  const status = error?.response?.data?.status;
-  const errorMsg = error?.response?.data?.error;
+  const status = error?.response?.status;
+  const errorMsg = error?.response?.statusText;
 
   const { updateLocation } = useLocationContext();
   const handleReset = () => {

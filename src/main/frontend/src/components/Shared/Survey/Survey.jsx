@@ -9,8 +9,8 @@ export default function Survey() {
 
   return (
     <>
-      <div className="absolute bottom-0 w-full max-w-[78rem]">
-        <div className="fixed bottom-[60px] flex flex-col items-end w-full max-w-[78rem] pointer-events-none">
+      <div className="absolute bottom-0 w-full max-w-[79rem]">
+        <div className="fixed bottom-[60px] flex flex-col items-end w-full max-w-[79rem] pointer-events-none">
           <button
             className="flex justify-center items-center w-[100px] h-[100px] mt-5 mr-4 bg-brand rounded-full cursor-pointer pointer-events-auto global-shadow"
             onClick={() => setIsOpen(true)}

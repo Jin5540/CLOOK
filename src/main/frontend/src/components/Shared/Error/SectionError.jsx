@@ -7,8 +7,8 @@ import Section from "../Section/Section";
 export default function ApiError({ error, resetErrorBoundary }) {
   console.log("===> Section Error");
 
-  const status = error?.response?.data?.status;
-  const errorMsg = error?.response?.data?.error;
+  const status = error?.response?.status;
+  const errorMsg = error?.response?.statusText;
   const type = error?.config?.url;
 
   const { updateLocation } = useLocationContext();
