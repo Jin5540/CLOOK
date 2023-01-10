@@ -4,7 +4,6 @@ import SurveyCard from "../Survey/SurveyCard";
 
 export default function ScoreCard({
   onCloseModal,
-  // data,
   setData,
   setScoreCardShow,
   setOpinionCardShow,

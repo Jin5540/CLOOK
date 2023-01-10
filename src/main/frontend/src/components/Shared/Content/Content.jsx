@@ -8,31 +8,42 @@ import MainSkeleton from "../UI/MainSkeleton";
 import ClothesByTimeSkeleton from "../UI/ClothesByTimeSkeleton";
 import TodaysWeatherSkeleton from "../UI/TodaysWeatherSkeleton";
 import TodaysCardSkeleton from "../UI/TodaysCardSkeleton";
-import Fetch from "../../../Fetch";
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import SectionError from "../Error/SectionError";
 
 export default function Content() {
   const { locationQuery } = useLocation();
-  const { status, isLoading } = locationQuery;
+  const { isLoading, status } = locationQuery;
+
+  const { reset } = useQueryErrorResetBoundary();
 
   return (
     <div className="flex flex-col items-center w-full max-w-[62.125rem] mt-[119px]">
       {isLoading && (
-        <div>
+        <>
           <MainSkeleton />
           <ClothesByTimeSkeleton />
           <TodaysWeatherSkeleton />
           <TodaysCardSkeleton />
-        </div>
-      )}
-      {status === "success" && (
-        <>
-          <Main />
-          <ClothesByTime />
-          <TodaysWeather />
-          <TodaysCard />
         </>
       )}
-      {/* <Fetch /> */}
+      {!isLoading && (
+        <>
+          <ErrorBoundary onReset={reset} FallbackComponent={SectionError}>
+            <Main />
+          </ErrorBoundary>
+          <ErrorBoundary onReset={reset} FallbackComponent={SectionError}>
+            <ClothesByTime />
+          </ErrorBoundary>
+          <ErrorBoundary onReset={reset} FallbackComponent={SectionError}>
+            <TodaysWeather />
+          </ErrorBoundary>
+          <ErrorBoundary onReset={reset} FallbackComponent={SectionError}>
+            <TodaysCard />
+          </ErrorBoundary>
+        </>
+      )}
     </div>
   );
 }

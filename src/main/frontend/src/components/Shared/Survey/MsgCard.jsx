@@ -11,14 +11,14 @@ export default function MsgCard({ onCloseModal, msgCardShow, setMsgCardShow }) {
     timerRef.current = setTimeout(() => {
       if (!msgCardShow) return;
 
-      console.log(`타임: ${timerRef.current}`);
+      // console.log(`타임: ${timerRef.current}`);
       setMsgCardShow(false);
       onCloseModal();
     }, 3000);
 
     // Clear the interval when the component unmounts
     return () => {
-      console.log(`클리어: ${timerRef.current}`);
+      // console.log(`클리어: ${timerRef.current}`);
 
       clearTimeout(timerRef.current);
     };

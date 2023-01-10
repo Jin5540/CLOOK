@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import letter from "../../../assets/imgs/icon/letter.png";
 import SurveyModal from "../../Modal/SurveyModal";
+import useSurvey from "../../../hooks/useSurvey";
 
 export default function Survey() {
   const [isOpen, setIsOpen] = useState(false);
+  const { mutate: addSurvey } = useSurvey();
 
   return (
     <>
@@ -23,6 +25,7 @@ export default function Survey() {
           custom="true"
           position="middle"
           styles="w-[648px]"
+          addSurvey={addSurvey}
         />
       )}
     </>

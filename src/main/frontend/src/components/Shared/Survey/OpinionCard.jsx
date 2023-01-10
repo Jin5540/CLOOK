@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import SurveyCard from "../Survey/SurveyCard";
 
-export default function OpinionCard({
-  // data,
-  setData,
-  // setOpinionCardShow,
-  handleSubmit,
-}) {
+export default function OpinionCard({ setData, handleSubmit }) {
   const [input, setInput] = useState("");
 
   const handleChange = (e) => {
