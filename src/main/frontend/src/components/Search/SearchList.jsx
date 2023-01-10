@@ -38,7 +38,8 @@ export default function SearchList({ onCloseModal, dataList }) {
             ERROR!
           </span>
           <span className="text-xl font-medium leading-[140%] text-blue-600 text-center">
-            요청하신 내용을 찾을 수 없습니다.
+            {/* 요청하신 내용을 찾을 수 없습니다. */}
+            검색하신 지역을 찾을 수 없습니다.
             <br />
             검색어를 다시 확인해주세요.
           </span>

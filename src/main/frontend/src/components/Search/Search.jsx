@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 
-export default function Search({ setKeyword, helpVisible }) {
+export default function Search({ setKeyword, helpMsgVisible }) {
   const [input, setInput] = useState("");
   const [inputCheck, setInputCheck] = useState(false);
   const [addrCheck, setAddrCheck] = useState(false);
@@ -53,31 +53,23 @@ export default function Search({ setKeyword, helpVisible }) {
   return (
     <div>
       <div className="flex flex-row justify-between py-2 text-xl font-medium text-brand bg-white">
-        <div className="flex w-full max-w-[31rem]">
-          <div className="flex items-center w-full h-[3.75rem] px-2 bg-sub-brand rounded-default">
-            <div className="mx-2">
-              <Icon icon={faMagnifyingGlass} />
-            </div>
-            <input
-              className="w-full h-full bg-sub-brand border-none outline-none placeholder:text-white"
-              type="text"
-              placeholder="예) 신사동, 종로1가"
-              value={input}
-              ref={inputRef}
-              // onClick={onFocus}
-              onChange={handleChange}
-              onKeyDown={handleKeyDown}
-            />
+        <div className="flex items-center w-full h-[3.75rem] px-2 bg-sub-brand rounded-default">
+          <div className="mx-2">
+            <Icon icon={faMagnifyingGlass} />
           </div>
+          <input
+            className="w-full h-full bg-sub-brand border-none outline-none placeholder:text-white"
+            type="text"
+            placeholder="예) 신사동, 종로1가"
+            value={input}
+            ref={inputRef}
+            // onClick={onFocus}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+          />
         </div>
-        <button
-          className="w-24 h-[3.75rem] ml-[1.375rem] font-semibold text-white bg-brand rounded-default"
-          onClick={handleClick}
-        >
-          검색
-        </button>
       </div>
-      {(!helpVisible || (helpVisible && addrCheck)) && (
+      {(!helpMsgVisible || (helpMsgVisible && addrCheck)) && (
         <div className="flex flex-col w-full text-xl leading-[140%] font-medium mt-3 text-blue-600">
           {!inputCheck && (
             <>

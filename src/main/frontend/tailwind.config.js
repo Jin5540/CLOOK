@@ -53,12 +53,7 @@ module.exports = {
           "-webkit-box-shadow": theme("boxShadow.main"),
           "-moz-box-shadow": theme("boxShadow.main"),
         },
-        ".modal-shadow": {
-          boxShadow: "0px 0px 7px 2px rgb(219 234 254 / 75%)",
-          "-webkit-box-shadow": "0px 0px 7px 2px rgb(219 234 254 / 75%)",
-          "-moz-box-shadow": "0px 0px 7px 2px rgb(219 234 254 / 75%)",
-        },
-        ".modal-overlay": {
+        ".1-overlay": {
           position: "fixed",
           top: "0",
           left: "0",
@@ -73,8 +68,6 @@ module.exports = {
           top: "6.5rem",
           left: "50%",
           transform: "translateX(-50%)",
-          width: "80%",
-          height: "auto",
           maxWidth: "49.3125rem",
           borderRadius: theme("borderRadius.default"),
           backgroundColor: "transparent",
@@ -87,8 +80,6 @@ module.exports = {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "80%",
-          height: "auto",
           maxWidth: "49.3125rem",
           borderRadius: theme("borderRadius.default"),
           backgroundColor: "transparent",

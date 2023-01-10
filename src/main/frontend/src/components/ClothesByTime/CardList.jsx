@@ -17,7 +17,11 @@ export default function CardList({ item }) {
       styles={`flex flex-col items-center justify-between h-[260px] min-w-[308px] px-10 pt-6 pb-8`}
       selected={selected}
     >
-      <span className="min-w-[160px] h-10 flex items-center justify-center text-xl font-semibold text-brand bg-blue-100 rounded-[20px]">
+      <span
+        className={`${
+          selected ? "w-[120px]" : "w-[160px]"
+        } h-10 flex items-center justify-center text-xl font-semibold text-brand bg-blue-100 rounded-[20px]`}
+      >
         {selected && "지금"}
         {!selected && dateUtil.clothesTime(m)}
       </span>

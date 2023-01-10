@@ -1,28 +1,28 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import Search from "../Search/Search";
-import SearchList from "../Search/SearchList";
+import React from "react";
 import Modal from "../Shared/Modal/Modal";
-import useSearch from "../../hooks/useSearch";
-import ErrorImage from "../../assets/imgs/error/error1.png";
+import SearchContainer from "../Search/SearchContainer";
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import SectionError from "../Shared/Error/SectionError";
 
-export default function SearchModal({ onCloseModal, bgType, position }) {
-  const [keyword, setKeyword] = useState("");
-  const { searchQuery } = useSearch(keyword);
-  const { isSuccess, isError, refetch, data: dataList } = searchQuery;
-  const dataLength = dataList?.address?.length;
-
-  useEffect(() => {
-    if (!keyword) return;
-    refetch();
-  }, [keyword]);
+export default function SearchModal({
+  onCloseModal,
+  bgType,
+  position,
+  styles,
+}) {
+  const { reset } = useQueryErrorResetBoundary();
 
   return (
-    <Modal onCloseModal={onCloseModal} bgType={bgType} position={position}>
-      <Search setKeyword={setKeyword} helpVisible={keyword ? true : false} />
-      {keyword && dataList && (
-        <SearchList onCloseModal={onCloseModal} dataList={dataList} />
-      )}
+    <Modal
+      onCloseModal={onCloseModal}
+      bgType={bgType}
+      position={position}
+      styles={styles}
+    >
+      <ErrorBoundary onReset={reset} FallbackComponent={SectionError}>
+        <SearchContainer onCloseModal={onCloseModal} />
+      </ErrorBoundary>
     </Modal>
   );
 }

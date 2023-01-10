@@ -29,8 +29,7 @@ export default function TodaysCard() {
     <>
       {isLoading && <TodaysCardSkeleton />}
       {!isLoading && isSuccess && (
-        <Section styles="px-0">
-          {/* <div className="flex flex-row flex-wrap justify- items-center gap-4"> */}
+        <Section>
           <CardList card={card} uv={uv} air={air} sun={sun} />
         </Section>
       )}

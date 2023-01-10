@@ -34,7 +34,7 @@ export default function Modal({
         <div
           className={`${position && positionStyle} ${
             styles && styles
-          } modal-shadow`}
+          } global-shadow`}
         >
           <div className="modal-inner" ref={modalRef}>
             {!custom && <div className="modal-content">{children}</div>}

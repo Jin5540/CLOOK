@@ -29,6 +29,19 @@ export default function Chart({
     if (x === standardHour) {
       circle = (
         <g>
+          <text
+            x={2}
+            y={-20}
+            textAnchor="middle"
+            stroke="#1E3A8A"
+            fill="#1E3A8A"
+            style={{
+              fontFamily: "Pretendard",
+              fontSize: "20px",
+              lineHeight: "150%",
+              fontWeight: "300",
+            }}
+          >{`${props.datum.y}˚`}</text>
           <circle
             r={6}
             strokeWidth={3}
@@ -41,6 +54,19 @@ export default function Chart({
     } else {
       circle = (
         <g>
+          <text
+            x={2}
+            y={-20}
+            textAnchor="middle"
+            stroke="#9CA3AF"
+            fill="#9CA3AF"
+            style={{
+              fontFamily: "Pretendard",
+              fontSize: "20px",
+              lineHeight: "150%",
+              fontWeight: "300",
+            }}
+          >{`${props.datum.y}˚`}</text>
           <circle
             r={6}
             strokeWidth={3}
@@ -121,7 +147,8 @@ export default function Chart({
             <stop offset="50%" stopColor="#BFDBFE" stopOpacity={1} />
           </linearGradient> */}
           <linearGradient id="someGradientId" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="25%" stopColor="#BFDBFE" stopOpacity={1} />
+            {/* <stop offset="40%" stopColor="#BFDBFE" stopOpacity={1} /> */}
+            <stop offset="40%" stopColor="#C2DCFD" stopOpacity={1} />
             <stop offset="100%" stopColor="#d9d9d9" stopOpacity={0.79} />
           </linearGradient>
         </defs>
@@ -166,9 +193,9 @@ export default function Chart({
         //   tickSize: 0,
         //   tickRotation: 0,
         // }}
-        enablePointLabel={true} // 점 위에 값 나오는 것.
-        pointLabel={CustomPointLabel}
-        pointLabelYOffset={-12} // 점 위에 값 y 위치 조정
+        // enablePointLabel={true} // 점 위에 값 나오는 것.
+        // pointLabel={CustomPointLabel}
+        // pointLabelYOffset={-12} // 점 위에 값 y 위치 조정
         pointSize={10}
         pointColor="white"
         pointBorderWidth={3}

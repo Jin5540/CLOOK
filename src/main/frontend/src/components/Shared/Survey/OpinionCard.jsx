@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import SurveyCard from "../Survey/SurveyCard";
 
-export default function OpinionCard({
-  // data,
-  setData,
-  // setOpinionCardShow,
-  handleSubmit,
-}) {
+export default function OpinionCard({ setData, handleSubmit }) {
   const [input, setInput] = useState("");
 
   const handleChange = (e) => {
@@ -26,7 +21,7 @@ export default function OpinionCard({
 
   return (
     <SurveyCard title="점수를 주신 이유도 알려주세요!" onClose={handleClose}>
-      <div className="flex flex-col text-2xl text-brand font-bold leading-10 mt-4 mb-6">
+      <div className="flex flex-col w-full text-2xl text-brand font-bold leading-10 mt-4 mb-6">
         <textarea
           className="w-full h-[120px] text-base font-semibold leading-6 bg-blue-100 rounded-default outline-brand resize-none"
           name=""

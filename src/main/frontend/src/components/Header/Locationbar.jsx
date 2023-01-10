@@ -25,6 +25,7 @@ export default function Locationbar() {
           onCloseModal={() => setIsOpen(false)}
           bgType="true"
           position="top"
+          styles="w-[40.625rem]"
         />
       )}
     </>

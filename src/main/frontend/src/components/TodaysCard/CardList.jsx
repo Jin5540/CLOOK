@@ -16,9 +16,9 @@ export default function CardList({ card, uv, air, sun }) {
   const data = tscFormat.compoundCardData(card, uv, air, sun);
 
   return (
-    <div className="flex flex-row flex-wrap justify-evenly content-start">
+    <div className="grid grid-cols-3 gap-x-9 gap-y-10 justify-items-center max-[920px]:grid-cols-2 max-[600px]:grid-cols-1">
       {data.map((item, index) => (
-        <Card key={index} styles="w-[19.313rem] h-[15rem] p-5 mb-10">
+        <Card key={index} styles="w-[19.313rem] h-[15rem] p-5">
           <CardListItem
             type={item?.type}
             title={item?.title}

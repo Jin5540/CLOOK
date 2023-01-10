@@ -20,8 +20,8 @@ export default function ClothesByTime() {
       {isLoading && <ClothesByTimeSkeleton />}
       {!isLoading && status === "success" && (
         <>
-          <Title title="시간대별 옷차림" />
-          <div className="w-full h-[315px] px-3">
+          <Title title="시간대 별 옷차림" />
+          <div className="w-full h-[315px] ">
             <XScrollContainer styles="pr-3">
               {clothes.map((item, index) => (
                 <CardList key={index} item={item} />

@@ -83,11 +83,11 @@ body {
 }
 
 #root {
-  @apply w-full text-brand overflow-hidden;
+  @apply w-full bg-white text-brand overflow-hidden;
 }
 
 #modal-root {
-  @apply w-full;
+  @apply w-full bg-white;
 }
 
 code {

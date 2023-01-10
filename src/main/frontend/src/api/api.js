@@ -48,6 +48,7 @@ const setLocation = async (params) => {
 };
 
 const getSearchList = async (keyword) => {
+  if (!keyword) return;
   return httpClient
     .get("search", {
       params: {
