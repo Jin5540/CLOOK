@@ -33,13 +33,14 @@ export default function Main() {
               <CurrentWeather toptm={toptm} topspt={topspt} />
               {toptm.hasOwnProperty("time") &&
                 toptm.hasOwnProperty("message") && (
-                  <Card styles="relative flex items-center justify-center w-full h-20 pl-[106px]">
+                  <Card styles="relative flex items-center justify-center w-full min-h-[80px]">
                     <div className="absolute top-1/2 left-10 -translate-y-2/4">
                       <Icon icon={faBell} size={26} />
                     </div>
-                    <div className="absolute top-0 left-0 flex items-center w-full h-full">
-                      <span className="w-full text-2xl text-brand font-medium ml-[106px] pr-6">
-                        {/* 3시간내 비, 내일 오전 11시에 눈 소식이 있어요. */}
+                    <div className="flex justify-center items-center w-full h-full ml-[80px] mr-[60px]">
+                      <span className="text-2xl text-brand font-medium">
+                        {/* 3시간내 진눈깨비, 오전 11시에 비, 오후 11시에 눈, 내일
+                        오전 11시에 진눈깨비 소식이 있어요. */}
                         {formatUtil.sentenceFormat(toptm)}
                       </span>
                     </div>

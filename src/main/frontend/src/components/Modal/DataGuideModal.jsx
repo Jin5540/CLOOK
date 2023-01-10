@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "../Shared/Modal/Modal";
 import Icon from "../Shared/Icon/Icon";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
 export default function DataGuideModal({
   onCloseModal,
@@ -18,14 +19,15 @@ export default function DataGuideModal({
       position={position}
       styles={styles}
     >
-      <div className="flex flex-col justify-center items-center pl-[1.875rem] pr-3 pt-2 pb-10 bg-brand rounded-default">
+      <div className="relative flex flex-col justify-center items-center w-[40.5rem] pl-[1.875rem] pr-9 py-10 bg-brand rounded-default">
         <div
-          className="flex justify-end w-full text-white cursor-pointer"
+          className="absolute top-[19px] right-4 flex justify-center items-center w-[40px] h-[40px] text-white cursor-pointer"
           onClick={onCloseModal}
         >
-          <Icon icon={faTimes} size="1.563rem" />
+          <Icon icon={faTimes} size="1.875rem" />
+          {/* <Icon icon={faX} size="1.563rem" /> */}
         </div>
-        <div className="w-[40.688rem] text-white m-0 p-0 mr-[0.5rem] bg-brand rounded-default">
+        <div className="text-white bg-brand rounded-default">
           <span className="flex text-xl font-semibold leading-6 mb-3">
             데이터 오류 가능성
           </span>

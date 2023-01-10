@@ -97,6 +97,7 @@ export function timeFormat(type, date) {
 
 export function compoundCardData(card, uv, air, sun) {
   const updateTime = timeFormat("", card?.fcstTime);
+
   const data = [
     {
       type: 1,
@@ -135,7 +136,7 @@ export function compoundCardData(card, uv, air, sun) {
     {
       type: 3,
       title: "강수량",
-      value1: card?.rn1,
+      value1: `${card?.rn1}${card?.rn1 === "강수없음" ? "" : "mm"}`,
       time: updateTime,
     },
     {
