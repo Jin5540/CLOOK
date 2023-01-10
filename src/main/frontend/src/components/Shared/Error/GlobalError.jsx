@@ -8,7 +8,7 @@ export default function GlobalError({ error, resetErrorBoundary }) {
   console.log("===> Global Error");
 
   const status = error?.response?.status;
-  const errorMsg = error?.response?.statusText;
+  // const errorMsg = error?.response?.statusText;
 
   const { updateLocation } = useLocationContext();
   const handleReset = () => {
