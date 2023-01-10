@@ -10,9 +10,9 @@ export default function ScoreCard({
 }) {
   const [score, setScore] = useState(-1);
 
-  const scoreArr = Array(10)
+  const scoreArr = Array(11)
     .fill()
-    .map((value, index) => index + 1);
+    .map((value, index) => index);
 
   const handleClose = () => {
     setScoreCardShow(false);

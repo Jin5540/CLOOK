@@ -5,11 +5,21 @@ import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import SectionError from "../Shared/Error/SectionError";
 
-export default function SearchModal({ onCloseModal, bgType, position }) {
+export default function SearchModal({
+  onCloseModal,
+  bgType,
+  position,
+  styles,
+}) {
   const { reset } = useQueryErrorResetBoundary();
 
   return (
-    <Modal onCloseModal={onCloseModal} bgType={bgType} position={position}>
+    <Modal
+      onCloseModal={onCloseModal}
+      bgType={bgType}
+      position={position}
+      styles={styles}
+    >
       <ErrorBoundary onReset={reset} FallbackComponent={SectionError}>
         <SearchContainer onCloseModal={onCloseModal} />
       </ErrorBoundary>

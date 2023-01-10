@@ -23,7 +23,6 @@ export default function GlobalError({ error, resetErrorBoundary }) {
   switch (status) {
     case (400, 404):
       message = "죄송해요. 서비스에 문제가 생겼어요.\nURL을 확인해 주세요.";
-      // message = msg;
       buttonText = "메인으로 이동";
       handleClick = handleReset;
       break;

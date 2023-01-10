@@ -4,14 +4,14 @@ import * as dateUtil from "./dateUtil";
 export function sentenceFormat(data) {
   if (!data) return;
 
-  data.fcstDate = "20230107";
-  data.time = ["3시간 이내", "1200", "1400", "0000"];
+  // data.fcstDate = "20230107";
+  // data.time = ["3시간 이내", "1200", "1400", "0000"];
   // data.time = ["0800", "1200", "0000", "0100"];
-  data.date = ["20230107", "20230107", "20230107", "20230108"];
+  // data.date = ["20230107", "20230107", "20230107", "20230108"];
   // data.date = ["20230107", "20230107", "20230108", "20230108"];
-  data.message = ["진눈깨비", "눈", "눈", "비"];
+  // data.message = ["진눈깨비", "눈", "눈", "비"];
   // data.message = ["비", "눈", "비", "진눈깨비"];
-  // 3시간내 비, 내일 오전 11시에 눈 소식이 있어요.
+  // 3시간내 비, 오후 9시에 눈, 내일 오전 11시에 눈 소식이 있어요. */
 
   const date = data?.date;
   const time = data?.time;
@@ -33,13 +33,16 @@ export function sentenceFormat(data) {
       sentence += "3시간 내 ";
     } else {
       if (currentDate < Number(date[index])) sentence += "내일 ";
-
-      sentence += `${dateUtil.TimeFormat(Number(hour) / 100)} `;
+      sentence += `${dateUtil.TimeFormat(Number(hour) / 100)}에`;
     }
 
     sentence += message[index];
-    if (index === time.length - 1) sentence += " 소식이 있어요.";
-    else sentence += ", ";
+
+    if (index === time.length - 1) {
+      sentence += " 소식이 있어요.";
+    } else {
+      sentence += ", ";
+    }
 
     if (index < time.length - 1 && message[index] === message[index + 1]) {
       passIndex = index + 1;
@@ -47,8 +50,6 @@ export function sentenceFormat(data) {
 
     result += sentence;
   });
-
-  console.log(result);
 
   return result;
 }
