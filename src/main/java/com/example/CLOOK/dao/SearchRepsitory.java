@@ -176,9 +176,10 @@ public interface SearchRepsitory {
             // System.out.println("나와라 ::: responese ::: "+arr);
 
             for (int i = 0; i < arr.length(); i++) {
+                int countR=0;
                 JSONObject temp = (JSONObject) arr.get(i);
                 if (temp.isNull("road_address")) {
-
+                    
                     JSONObject addressarr = (JSONObject) temp.get("address");
 
                     System.out.println("temp2 ::: " + addressarr);
@@ -187,13 +188,18 @@ public interface SearchRepsitory {
                     String region_3depth_name = (String) addressarr.get("region_3depth_name");
 
                     addressList.add(address_name);
-                    if (!region_3depth_h_name.equals("")) {
+                    if (!region_3depth_h_name.equals("")&&countR<1) {
+                        countR++;
+                        region_3depth_h_name = region_3depth_h_name.replaceAll("[0-9]", "");
                         hnameList.add(region_3depth_h_name);
-                        System.out.println(region_3depth_h_name);
+                        System.out.println("add1"+region_3depth_h_name);
                         System.out.println("add1");
                     }
-                    if (!region_3depth_name.equals("")) {
+                    if (!region_3depth_name.equals("")&&countR<1) {
+                        countR++;
+                        region_3depth_name = region_3depth_name.replaceAll("[0-9]", "");
                         hnameList.add(region_3depth_name);
+                        System.out.println("add2"+region_3depth_name);
                         System.out.println("add2");
                     }
                     // hnameList.add(region_3depth_h_name);
@@ -206,11 +212,14 @@ public interface SearchRepsitory {
 
                     System.out.println("temp1 ::: " + addressarr);
                     String address_name = (String) addressarr.get("address_name");
-                    //String region_3depth_h_name = (String) addressarr.get("region_3depth_h_name");
+                    // String region_3depth_h_name = (String)
+                    // addressarr.get("region_3depth_h_name");
                     String region_3depth_name = (String) addressarr.get("region_3depth_name");
 
                     addressList.add(address_name);
-                    if (!region_3depth_name.equals("")) {
+                    if (!region_3depth_name.equals("")&&countR<1) {
+                        countR++;
+                        region_3depth_name = region_3depth_name.replaceAll("[0-9]", "");
                         hnameList.add(region_3depth_name);
                         System.out.println("add2");
                     }
