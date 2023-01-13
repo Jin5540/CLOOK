@@ -88,6 +88,8 @@ public interface AirRepsitory {
             String umdName = (String) object.get("umdName");
             String sidoName = (String) object.get("sidoName");
 
+            System.out.println("sigu"+sigu);
+            System.out.println("stationName"+stationName);
             if(umdName.contains(stationName)&&sidoName.equals(sigu)){
                 airVO.setTmx(tmX);
                 airVO.setTmy(tmY);
