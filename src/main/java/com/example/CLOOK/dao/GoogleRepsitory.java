@@ -43,6 +43,7 @@ public class GoogleRepsitory {
 
 
     private static Credential authorize() throws IOException, GeneralSecurityException {
+        
         InputStream in = GoogleRepsitory.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
             GsonFactory.getDefaultInstance(), new InputStreamReader(in)
@@ -92,6 +93,7 @@ public class GoogleRepsitory {
         }*/
 
         ValueRange appendBody = new ValueRange()
+        //.setValues(Arrays.asList(Arrays.asList(nowformat,googleVO.getNum(),googleVO.getComment())));
         .setValues(Arrays.asList(Arrays.asList(nowformat,googleVO.getNum(),googleVO.getComment())));
 
         AppendValuesResponse appendResult = sheetsService.spreadsheets().values()
