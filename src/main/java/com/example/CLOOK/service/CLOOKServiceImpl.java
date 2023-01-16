@@ -189,6 +189,7 @@ public class CLOOKServiceImpl implements CLOOKService {
         String[] array = stationName.split(" ");
         String a="";
         String b="";
+        String c="";
 
         // 출력
 
@@ -198,11 +199,13 @@ public class CLOOKServiceImpl implements CLOOKService {
 
         a=region;
         b=array[0];
+        c=array[1];
 
         System.out.println(a);
         System.out.println(b);
+        System.out.println(c);
 
-        return AirRepsitory.getTm(a,b);
+        return AirRepsitory.getTm(a,b,c);
     }
 
     @Override

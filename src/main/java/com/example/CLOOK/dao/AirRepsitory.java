@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 
 public interface AirRepsitory {
 
-    public static AirVO getTm(String stationName, String sigu)
+    public static AirVO getTm(String stationName, String sigu, String sgg)
             throws IOException, ParseException {
 
         String apiUrl = "http://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getTMStdrCrdnt";
@@ -87,15 +87,26 @@ public interface AirRepsitory {
             String tmY = (String) object.get("tmY");
             String umdName = (String) object.get("umdName");
             String sidoName = (String) object.get("sidoName");
+            String sggName = (String) object.get("sggName");
 
             System.out.println("sigu"+sigu);
             System.out.println("stationName"+stationName);
-            if(umdName.contains(stationName)&&sidoName.equals(sigu)){
-                airVO.setTmx(tmX);
-                airVO.setTmy(tmY);
-
-                System.out.println(airVO.getTmx()+"::"+airVO.getTmy());
+            if(sggName.substring(sggName.length() - 1).equals("시")){
+                if(umdName.contains(stationName)&&sidoName.equals(sigu)){
+                    airVO.setTmx(tmX);
+                    airVO.setTmy(tmY);
+    
+                    System.out.println(airVO.getTmx()+"::"+airVO.getTmy());
+                }
+            }else{
+                if(umdName.contains(stationName)&&sidoName.equals(sigu)&&sggName.equals(sgg)){
+                    airVO.setTmx(tmX);
+                    airVO.setTmy(tmY);
+    
+                    System.out.println(airVO.getTmx()+"::"+airVO.getTmy());
+                }
             }
+
 
 
         }
