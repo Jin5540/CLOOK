@@ -1907,15 +1907,15 @@ public interface WeatherRepsitory {
 
                 if (pty.equals("1") || pty.equals("5")) {
                     weatherVO.setIcon("비");
-                    weatherVO.setCharacter("우산");
+                    weatherVO.setCharacter("비");
                     weatherVO.setBackground("비");
                 } else if (pty.equals("2") || pty.equals("6")) {
                     weatherVO.setIcon("진눈깨비");
-                    weatherVO.setCharacter("우산");
+                    weatherVO.setCharacter("비");
                     weatherVO.setBackground("비");
                 } else if (pty.equals("3") || pty.equals("7")) {
                     weatherVO.setIcon("눈");
-                    weatherVO.setCharacter("눈사람");
+                    weatherVO.setCharacter("눈");
                     weatherVO.setBackground("눈");
                 } else {
 
@@ -2110,9 +2110,9 @@ public interface WeatherRepsitory {
                     if (category.equals("REH") && count1 < 1) {
                         count1 += 1;
                         String reh = (String) object.get("fcstValue");
-                        String fcstTime = (String) object.get("fcstTime");
+                        String baseTime1 = (String) object.get("baseTime");
                         weatherVO.setReh(reh);
-                        weatherVO.setFcstTime(fcstTime);
+                        weatherVO.setFcstTime(baseTime);
                     }
                     if (category.equals("VEC") && count2 < 1) {
                         count2 += 1;
