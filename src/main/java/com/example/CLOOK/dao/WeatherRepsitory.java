@@ -1421,14 +1421,13 @@ public interface WeatherRepsitory {
         for (int i = 0; i < item.size(); i++) {
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
-            String fcstDate = (String) object.get("fcstDate");
+            
 
             // System.out.println(category);
             if (category.equals("TMN") && counttmn < 1) {
                 counttmn += 1;
                 String tmn = (String) object.get("fcstValue");
                 weatherVO.setTmn(tmn);
-                weatherVO.setFcstDate(fcstDate);
 
             }
             if (category.equals("TMX") && counttmx < 1) {
@@ -1449,12 +1448,14 @@ public interface WeatherRepsitory {
         for (int i = 0; i < item.size(); i++) {
             object = (JSONObject) item.get(i);
             String category = (String) object.get("category");
+            String fcstDate = (String) object.get("fcstDate");
             String fcstTime = (String) object.get("fcstTime");
 
             if (category.equals("PTY")) {
                 String pty = (String) object.get("fcstValue");
                 weatherVO.setPty(pty);
                 weatherVO.setFcstTime(fcstTime);
+                weatherVO.setFcstDate(fcstDate);
 
                 String setdatetime = weatherVO.getFcstDate() + weatherVO.getFcstTime();
                 Date format1 = new SimpleDateFormat("yyyyMMddHHmm").parse(setdatetime);
@@ -1466,6 +1467,8 @@ public interface WeatherRepsitory {
 
                 if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= 0
                         & min_difference <= 1440) {
+                        
+                    System.out.println("분 차이 ::: "+min_difference);
 
                     if ((pty.equals("1") || pty.equals("5")) & countgr < 1) {
                         System.out.println("count" + countgr);
@@ -1573,7 +1576,8 @@ public interface WeatherRepsitory {
             String formatedNowDate = nowDate.format(formatterDate);
             String shortPartTime = sdformat.format(cal.getTime());
 
-            System.out.println("지금 측정시간 : " + nowPartTime);
+            System.out.println("분 값"+mmbigo);
+            
             System.out.println("비교 값" + hh);
 
             String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
@@ -1594,6 +1598,7 @@ public interface WeatherRepsitory {
                 cal22.setTime(date);
                 nowPartTime = sdformat.format(cal22.getTime());
             }
+            System.out.println("지금 측정시간 : " + nowPartTime);
             String baseDate = formatedNowDate; // 조회하고싶은 날짜
             String baseTime = nowPartTime; // 조회하고싶은 시간
             String type = "JSON"; // 타입 xml, json 등등 ..
