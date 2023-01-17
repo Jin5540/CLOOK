@@ -1540,6 +1540,7 @@ public interface WeatherRepsitory {
         while (true) {
             Calendar cal = Calendar.getInstance();
             Calendar cal3 = Calendar.getInstance();
+            Calendar cal22 = Calendar.getInstance();
             Date date = new Date();
             // 현재 날짜 구하기
             LocalDate nowDate = LocalDate.now();
@@ -1548,6 +1549,11 @@ public interface WeatherRepsitory {
 
             String htime = hhtime.format(cal.getTime());
             SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
+
+            SimpleDateFormat mmtime = new SimpleDateFormat("mm");
+
+            int mmbigo = Integer.parseInt(mmtime.format(cal22.getTime()));
+            
             int hh = Integer.parseInt(htime);
 
             // 포맷변경 ( 년월일 시분초)
@@ -1568,10 +1574,6 @@ public interface WeatherRepsitory {
             String shortPartTime = sdformat.format(cal.getTime());
 
             System.out.println("지금 측정시간 : " + nowPartTime);
-            int shortdate = Integer.parseInt(shortPartTime);
-
-            int nowbigo = Integer.parseInt(nowPartTime);
-
             System.out.println("비교 값" + hh);
 
             String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
@@ -1587,6 +1589,10 @@ public interface WeatherRepsitory {
                 String baseDate = sdf.format(cal2.getTime());
 
                 System.out.println(baseDate);
+            }
+            if(45<mmbigo){
+                cal22.setTime(date);
+                nowPartTime = sdformat.format(cal22.getTime());
             }
             String baseDate = formatedNowDate; // 조회하고싶은 날짜
             String baseTime = nowPartTime; // 조회하고싶은 시간

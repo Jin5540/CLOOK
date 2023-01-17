@@ -190,14 +190,20 @@ public interface SearchRepsitory {
                     addressList.add(address_name);
                     if (!region_3depth_h_name.equals("")&&countR<1) {
                         countR++;
-                        region_3depth_h_name = region_3depth_h_name.replaceAll("[0-9]", "");
+                        if(region_3depth_h_name.substring(region_3depth_h_name.length() - 1).equals("동")){
+                            region_3depth_h_name = region_3depth_h_name.replaceAll("[0-9]", "");
+                        }
+
                         hnameList.add(region_3depth_h_name);
                         System.out.println("add1"+region_3depth_h_name);
                         System.out.println("add1");
                     }
                     if (!region_3depth_name.equals("")&&countR<1) {
                         countR++;
-                        region_3depth_name = region_3depth_name.replaceAll("[0-9]", "");
+                        if(region_3depth_name.substring(region_3depth_name.length() - 1).equals("동")){
+                            region_3depth_name = region_3depth_name.replaceAll("[0-9]", "");
+                        }
+                        
                         hnameList.add(region_3depth_name);
                         System.out.println("add2"+region_3depth_name);
                         System.out.println("add2");
@@ -219,7 +225,9 @@ public interface SearchRepsitory {
                     addressList.add(address_name);
                     if (!region_3depth_name.equals("")&&countR<1) {
                         countR++;
-                        region_3depth_name = region_3depth_name.replaceAll("[0-9]", "");
+                        if(region_3depth_name.substring(region_3depth_name.length() - 1).equals("동")){
+                            region_3depth_name = region_3depth_name.replaceAll("[0-9]", "");
+                        }
                         hnameList.add(region_3depth_name);
                         System.out.println("add2");
                     }
