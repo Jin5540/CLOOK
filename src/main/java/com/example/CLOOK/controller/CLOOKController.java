@@ -86,7 +86,7 @@ public class CLOOKController {
         }
     }
 
-    /* 상단 - TMX / TMN / 예보메세지 */
+    /* 상단 - TMX / TMN */
     @GetMapping(value = "/toptm", produces = "application/json; charset=UTF-8")
     public WeatherVO shortpartweather1(HttpServletRequest req)
             throws IOException, ParseException, java.text.ParseException {
@@ -152,6 +152,23 @@ public class CLOOKController {
         }
     }
 
+    /* 1시간단위 - SKY / ICON / PTY / POP / T1H */
+    @GetMapping(value = "/meg", produces = "application/json; charset=UTF-8")
+    public List<WeatherVO> megweather(HttpServletRequest req, RedirectAttributes redirect)
+            throws IOException, ParseException, java.text.ParseException {
+
+        HttpSession session = req.getSession();
+
+        String sessionlocation = (String) session.getAttribute("location");
+        if (sessionlocation == null) {
+            return clookService.getweathertoday(clookService.gecodingnxny("서울특별시 중구 명동"),
+                    clookService.getsun("서울특별시 중구 명동"));
+        } else {
+            return clookService.getweathertoday(clookService.gecodingnxny(sessionlocation),
+                    clookService.getsun(sessionlocation));
+        }
+    }
+
     /* REH / VEC / WSD / PCP */
     @GetMapping(value = "/card", produces = "application/json; charset=UTF-8")
     public WeatherVO cardweather(HttpServletRequest req, RedirectAttributes redirect)
@@ -176,12 +193,11 @@ public class CLOOKController {
         String sessionregion = (String) session.getAttribute("region");
         if (sessionlocation == null && sessionregion == null) {
             return clookService.getair(clookService.getStationName(clookService.getTm("서울특별시 중구 명동", "명동")));
-        }
-        else if (sessionlocation != null && sessionregion == null) {
+        } else if (sessionlocation != null && sessionregion == null) {
             return clookService.getair(clookService.getStationName(clookService.getTm("서울특별시 중구 명동", "명동")));
         } else if (sessionlocation == null && sessionregion != null) {
             return clookService.getair(clookService.getStationName(clookService.getTm("서울특별시 중구 명동", "명동")));
-        }else {
+        } else {
             return clookService.getair(clookService.getStationName(clookService.getTm(sessionlocation, sessionregion)));
         }
     }
