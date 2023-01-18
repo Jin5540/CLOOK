@@ -152,20 +152,18 @@ public class CLOOKController {
         }
     }
 
-    /* 1시간단위 - SKY / ICON / PTY / POP / T1H */
-    @GetMapping(value = "/meg", produces = "application/json; charset=UTF-8")
-    public List<WeatherVO> megweather(HttpServletRequest req, RedirectAttributes redirect)
+    /* msg */
+    @GetMapping(value = "/msg", produces = "application/json; charset=UTF-8")
+    public WeatherVO msgweather(HttpServletRequest req, RedirectAttributes redirect)
             throws IOException, ParseException, java.text.ParseException {
 
         HttpSession session = req.getSession();
 
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
-            return clookService.getweathertoday(clookService.gecodingnxny("서울특별시 중구 명동"),
-                    clookService.getsun("서울특별시 중구 명동"));
+            return clookService.getMsg(clookService.gecodingnxny("서울특별시 중구 명동"));
         } else {
-            return clookService.getweathertoday(clookService.gecodingnxny(sessionlocation),
-                    clookService.getsun(sessionlocation));
+            return clookService.getMsg(clookService.gecodingnxny(sessionlocation));
         }
     }
 

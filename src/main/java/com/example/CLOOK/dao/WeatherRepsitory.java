@@ -431,7 +431,7 @@ public interface WeatherRepsitory {
 
                 } else if (category.equals("PTY")) {
                     String result = (String) object.get("fcstValue");
-                    //System.out.println("pty plus");
+                    // System.out.println("pty plus");
                     weatherVO.setPty(result);
                     weatherVO.setFcstTime(fcstTime);
                     weatherVO.setFcstDate(fcstDate);
@@ -447,7 +447,7 @@ public interface WeatherRepsitory {
         int count2 = 0;
         int end = 0;
         int end2 = 0;
-        //int sum2 = 0;
+        // int sum2 = 0;
 
         for (int m = 0; m < listweatherVO2.size(); m++) {
             WeatherVO weatherVO = new WeatherVO();
@@ -481,7 +481,7 @@ public interface WeatherRepsitory {
                         end++;
                     }
                     if (count2 == 2) {
-                        System.out.println("결과"+weatherVO.getPty());
+                        System.out.println("결과" + weatherVO.getPty());
                         itemVO.add(weatherVO);
                         count2 = 0;
                     }
@@ -507,7 +507,7 @@ public interface WeatherRepsitory {
 
                 } else {
                     count2++;
-                    if (listweatherVO2.get(m).getPty().equals("0")&&end2<1) {
+                    if (listweatherVO2.get(m).getPty().equals("0") && end2 < 1) {
                         weatherVO.setPty("0");
                     } else {
                         System.out.println("우산4");
@@ -516,10 +516,10 @@ public interface WeatherRepsitory {
                     }
 
                     if (count2 == 3) {
-                        System.out.println("결과"+weatherVO.getPty());
+                        System.out.println("결과" + weatherVO.getPty());
                         itemVO.add(weatherVO);
                         count2 = 0;
-                        end2=0;
+                        end2 = 0;
                     }
 
                 }
@@ -750,6 +750,223 @@ public interface WeatherRepsitory {
 
     }
 
+    /* 상단 - TMX / TMN */
+    public static WeatherVO getMsg(GeocodingVO geocodingVO)
+            throws IOException, ParseException, java.text.ParseException {
+
+        // 현재 시간
+        LocalTime now = LocalTime.now();
+        // 포맷 정의하기
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        // 포맷 적용하기
+        String formatedNow = now.format(formatter);
+
+        // 포맷 정의하기
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH00");
+        // 포맷 적용하기
+        String formatedNow2 = now.format(formatter2);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+
+        SimpleDateFormat nowformatter = new SimpleDateFormat("yyyyMMddHHmm");
+        String nowformat = nowformatter.format(cal.getTime());
+
+        System.out.println(nowformat);
+
+        int formatnow = Integer.parseInt(formatedNow);
+        // int formatnow = 02;
+
+        DateFormat df = new SimpleDateFormat("yyyyMMdd");
+        String currentdate = df.format(cal.getTime());
+
+        SimpleDateFormat hhtime = new SimpleDateFormat("HH");
+
+        String htime = hhtime.format(cal.getTime());
+
+        int hh = Integer.parseInt(htime);
+
+        cal.add(Calendar.DATE, -1);
+        String oneth = df.format(cal.getTime());
+
+        String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+        // 홈페이지에서 받은 키
+        String serviceKey = "lsreK53XwFXG2rEI3GpisRYQCjg97dt7uTl0HEZnBtYQvqdxXub024qirOptZW3z%2FEJyGQIDVoSWWrzXnUMBxQ%3D%3D";
+        String pageNo = "1";
+        String numOfRows = "100000";
+        String baseDate = "";
+        // 조회하고싶은 날짜
+        if (formatnow <= 210 & formatnow >= 0) {
+            baseDate = oneth;
+        } else {
+            baseDate = currentdate;
+        }
+        String baseTime = ""; // 조회하고싶은 시간
+        if (formatnow >= 210 & formatnow < 510) {
+            baseTime = "0200";
+        } else if (formatnow >= 510 & formatnow < 810) {
+            baseTime = "0500";
+        } else if (formatnow >= 810 & formatnow < 1110) {
+            baseTime = "0800";
+        } else if (formatnow >= 1110 & formatnow < 1410) {
+            baseTime = "1100";
+        } else if (formatnow >= 1410 & formatnow < 1710) {
+            baseTime = "1400";
+        } else if (formatnow >= 1710 & formatnow < 2010) {
+            baseTime = "1700";
+        } else if (formatnow >= 2010 & formatnow < 2310) {
+            baseTime = "2000";
+        } else {
+            baseTime = "2300";
+        }
+
+        System.out.println(baseDate);
+        System.out.println("today + weather" + baseTime);
+        String type = "JSON"; // 타입 xml, json 등등 ..
+        String nx = geocodingVO.getXLat(); // 위도
+        String ny = geocodingVO.getYLon();
+
+        StringBuilder urlBuilder = new StringBuilder(apiUrl);
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
+        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
+                + URLEncoder.encode(numOfRows, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=" + URLEncoder.encode(type, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("base_date", "UTF-8") + "="
+                + URLEncoder.encode(baseDate, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "="
+                + URLEncoder.encode(baseTime, "UTF-8"));
+
+        urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "=" + URLEncoder.encode(nx, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("ny", "UTF-8") + "=" + URLEncoder.encode(ny, "UTF-8"));
+        // urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" +
+        // URLEncoder.encode("UTF-8")); //경도
+        // urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" +
+        // URLEncoder.encode(ny, "UTF-8")); //위도
+
+        URL url = new URL(urlBuilder.toString());
+        // 어떻게 넘어가는지 확인하고 싶으면 아래 출력분 주석 해제
+        // System.out.println(url);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        // System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+
+        WeatherVO weatherVO = new WeatherVO();
+
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(rd.readLine());
+        JSONObject response = (JSONObject) object.get("response");
+        JSONObject body = (JSONObject) response.get("body");
+        JSONObject items = (JSONObject) body.get("items");
+        JSONArray item = (JSONArray) items.get("item");
+
+        // String status = (String) response.get("status");
+        int counttmn = 0;
+        int counttmx = 0;
+
+        List<String> timeList = new ArrayList<String>();
+        List<String> dateList = new ArrayList<String>();
+        List<String> messageList = new ArrayList<String>();
+
+        int countgr = 0;
+        int countgrs = 0;
+        int counts = 0;
+
+        for (int i = 0; i < item.size(); i++) {
+            object = (JSONObject) item.get(i);
+            String category = (String) object.get("category");
+            String fcstDate = (String) object.get("fcstDate");
+            String fcstTime = (String) object.get("fcstTime");
+
+            if (category.equals("PTY")) {
+                String pty = (String) object.get("fcstValue");
+                weatherVO.setPty(pty);
+                weatherVO.setFcstTime(fcstTime);
+                weatherVO.setFcstDate(fcstDate);
+
+                String setdatetime = weatherVO.getFcstDate() + weatherVO.getFcstTime();
+                Date format1 = new SimpleDateFormat("yyyyMMddHHmm").parse(setdatetime);
+                Date format2 = new SimpleDateFormat("yyyyMMddHHmm").parse(nowformat);
+
+                long time_difference = format1.getTime() - format2.getTime();
+                long hours_difference = (time_difference / (1000 * 60 * 60)) % 24;
+                long min_difference = time_difference / 60000;
+
+                if (hours_difference >= 0 & hours_difference <= 23 & min_difference >= 0
+                        & min_difference <= 1440) {
+
+                    System.out.println("분 차이 ::: " + min_difference);
+
+                    if ((pty.equals("1") || pty.equals("5")) & countgr < 1) {
+                        System.out.println("count" + countgr);
+                        dateList.add(weatherVO.getFcstDate());
+                        messageList.add("비");
+                        countgr += 1;
+                        weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
+                        if (min_difference <= 180) {
+                            timeList.add("3시간 이내");
+                            weatherVO.setTime(timeList);
+                        } else if (min_difference <= 1440) {
+                            timeList.add((weatherVO.getFcstTime()));
+                            weatherVO.setTime(timeList);
+                        }
+                    } else if ((pty.equals("2") || pty.equals("6")) & countgrs < 1) {
+                        dateList.add(weatherVO.getFcstDate());
+                        messageList.add("진눈깨비");
+                        countgrs += 1;
+                        weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
+                        if (min_difference <= 180) {
+                            timeList.add("3시간 이내");
+                            weatherVO.setTime(timeList);
+                        } else if (min_difference <= 1440) {
+                            timeList.add((weatherVO.getFcstTime()));
+                            weatherVO.setTime(timeList);
+                        }
+                    } else if ((pty.equals("3") || pty.equals("7")) & counts < 1) {
+                        dateList.add(weatherVO.getFcstDate());
+                        messageList.add("눈");
+                        counts += 1;
+                        weatherVO.setMessage(messageList);
+                        weatherVO.setDate(dateList);
+                        if (min_difference <= 180) {
+                            timeList.add("3시간 이내");
+                            weatherVO.setTime(timeList);
+                        } else if (min_difference <= 1440) {
+                            timeList.add((weatherVO.getFcstTime()));
+                            weatherVO.setTime(timeList);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
+         * if(status.equals("NOT_FOUND"))
+         * {
+         * resultString="잘못 설정된 데이터값입니다. 관리자에게 문의해주시기 바랍니다";
+         * 
+         * }else if(status.equals("ERROR"))
+         * {
+         * resultString="서버 에러입니다. 관리자에게 문의해주시기 바랍니다";
+         * }else{}
+         * /
+         */
+
+        // System.out.println(item);
+
+        return weatherVO;
+
+    }
+
     public static List<WeatherVO> getToday(GeocodingVO geocodingVO, SunVO sun)
             throws IOException, ParseException, java.text.ParseException {
         // 현재 시간
@@ -969,55 +1186,12 @@ public interface WeatherRepsitory {
 
                 if (weatherVO.getPty() != null) {
                     if (weatherVO.getPty().equals("1") || weatherVO.getPty().equals("5")) {
-                        if (countgr1 < 1) {
-                            System.out.println("countr1" + countgr1);
-                            dateList1.add(weatherVO.getFcstDate());
-                            messageList1.add("비");
-                            countgr1 += 1;
-                            test.setMessage(messageList1);
-                            test.setDate(dateList1);
-                            if (min_difference <= 180) {
-                                timeList1.add("3시간 이내");
-                                test.setTime(timeList1);
-                            } else if (min_difference <= 1440) {
-                                timeList1.add((weatherVO.getFcstTime()));
-                                test.setTime(timeList1);
-                            }
-                        }
                         test.setIcon("비");
                         test.setPop(weatherVO.getPop());
                     } else if (weatherVO.getPty().equals("2") || weatherVO.getPty().equals("6")) {
-                        if (countgrs1 < 1) {
-                            dateList1.add(weatherVO.getFcstDate());
-                            messageList1.add("진눈깨비");
-                            countgrs1 += 1;
-                            test.setMessage(messageList1);
-                            test.setDate(dateList1);
-                            if (min_difference <= 180) {
-                                timeList1.add("3시간 이내");
-                                test.setTime(timeList1);
-                            } else if (min_difference <= 1440) {
-                                timeList1.add((weatherVO.getFcstTime()));
-                                test.setTime(timeList1);
-                            }
-                        }
                         test.setIcon("진눈깨비");
                         test.setPop(weatherVO.getPop());
                     } else if (weatherVO.getPty().equals("3") || weatherVO.getPty().equals("7")) {
-                        if (counts1 < 1) {
-                            dateList1.add(weatherVO.getFcstDate());
-                            messageList1.add("눈");
-                            counts1 += 1;
-                            test.setMessage(messageList1);
-                            test.setDate(dateList1);
-                            if (min_difference <= 180) {
-                                timeList1.add("3시간 이내");
-                                test.setTime(timeList1);
-                            } else if (min_difference <= 1440) {
-                                timeList1.add((weatherVO.getFcstTime()));
-                                test.setTime(timeList1);
-                            }
-                        }
                         test.setIcon("눈");
                         test.setPop(weatherVO.getPop());
                     } else {
@@ -1213,46 +1387,6 @@ public interface WeatherRepsitory {
                         } else if (weatherVO.getPty().equals("3") || weatherVO.getPty().equals("7")) {
                             test.setIcon("눈");
                             test.setPop(weatherVO.getPop());
-                        } else if (weatherVO.getPty().equals("1") || weatherVO.getPty().equals("5") & countgr < 1) {
-                            System.out.println("count" + countgr);
-                            dateList.add(weatherVO.getFcstDate());
-                            messageList.add("비");
-                            countgr += 1;
-                            weatherVO.setMessage(messageList);
-                            weatherVO.setDate(dateList);
-                            if (min_difference <= 180) {
-                                timeList.add("3시간 이내");
-                                weatherVO.setTime(timeList);
-                            } else if (min_difference <= 1440) {
-                                timeList.add((weatherVO.getFcstTime()));
-                                weatherVO.setTime(timeList);
-                            }
-                        } else if (weatherVO.getPty().equals("2") || weatherVO.getPty().equals("6") & countgrs < 1) {
-                            dateList.add(weatherVO.getFcstDate());
-                            messageList.add("진눈깨비");
-                            countgrs += 1;
-                            weatherVO.setMessage(messageList);
-                            weatherVO.setDate(dateList);
-                            if (min_difference <= 180) {
-                                timeList.add("3시간 이내");
-                                weatherVO.setTime(timeList);
-                            } else if (min_difference <= 1440) {
-                                timeList.add((weatherVO.getFcstTime()));
-                                weatherVO.setTime(timeList);
-                            }
-                        } else if (weatherVO.getPty().equals("3") || weatherVO.getPty().equals("7") & counts < 1) {
-                            dateList.add(weatherVO.getFcstDate());
-                            messageList.add("눈");
-                            counts += 1;
-                            weatherVO.setMessage(messageList);
-                            weatherVO.setDate(dateList);
-                            if (min_difference <= 180) {
-                                timeList.add("3시간 이내");
-                                weatherVO.setTime(timeList);
-                            } else if (min_difference <= 1440) {
-                                timeList.add((weatherVO.getFcstTime()));
-                                weatherVO.setTime(timeList);
-                            }
                         } else {
                             if (weatherVO.getSky() != null) {
                                 if (weatherVO.getSky().equals("1")) {

@@ -18,6 +18,7 @@ public interface CLOOKService {
    public GeocodingVO gecodingnxny(String address);
    public List<WeatherVO> getweatherclothes(GeocodingVO gecoding, UvVO uv) throws IOException, ParseException, java.text.ParseException;
    public List<WeatherVO> getweathertoday(GeocodingVO gecoding, SunVO sun) throws IOException, ParseException, java.text.ParseException;
+   public WeatherVO getMsg(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException;
    public JSONObject getweather2(GeocodingVO gecoding) throws IOException, ParseException;
    public String getweather3(GeocodingVO gecoding) throws IOException, ParseException;
    public WeatherVO getpartweather1(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException;

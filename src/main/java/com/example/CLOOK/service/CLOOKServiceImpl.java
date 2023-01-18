@@ -221,4 +221,9 @@ public class CLOOKServiceImpl implements CLOOKService {
         
     }
 
+    @Override
+    public WeatherVO getMsg(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException {
+        return null;
+    }
+
 }
