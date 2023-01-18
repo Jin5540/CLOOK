@@ -2104,6 +2104,7 @@ public interface WeatherRepsitory {
         int sum = 0;
         while (true) {
             Calendar cal = Calendar.getInstance();
+            Calendar cal22 = Calendar.getInstance();
             Calendar cal3 = Calendar.getInstance();
             Date date = new Date();
             // 현재 날짜 구하기
@@ -2112,7 +2113,12 @@ public interface WeatherRepsitory {
             SimpleDateFormat hhtime = new SimpleDateFormat("HHmm");
 
             String htime = hhtime.format(cal.getTime());
+            SimpleDateFormat mmtime = new SimpleDateFormat("mm");
+
             SimpleDateFormat sdformat = new SimpleDateFormat("HH30");
+
+            int mmbigo = Integer.parseInt(mmtime.format(cal22.getTime()));
+
             int hh = Integer.parseInt(htime);
             // 포맷변경 ( 년월일 시분초)
 
@@ -2150,6 +2156,10 @@ public interface WeatherRepsitory {
                 String baseDate = sdf.format(cal2.getTime());
 
                 System.out.println(baseDate);
+            }
+            if (45 < mmbigo) {
+                cal22.setTime(date);
+                nowPartTime = sdformat.format(cal22.getTime());
             }
             String baseDate = formatedNowDate; // 조회하고싶은 날짜
             String baseTime = nowPartTime; // 조회하고싶은 시간
