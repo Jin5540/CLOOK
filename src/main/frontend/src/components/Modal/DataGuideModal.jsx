@@ -2,7 +2,6 @@ import React from "react";
 import Modal from "../Shared/Modal/Modal";
 import Icon from "../Shared/Icon/Icon";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { faX } from "@fortawesome/free-solid-svg-icons";
 
 export default function DataGuideModal({
   onCloseModal,
@@ -19,13 +18,12 @@ export default function DataGuideModal({
       position={position}
       styles={styles}
     >
-      <div className="relative flex flex-col justify-center items-center w-[40.5rem] pl-[1.875rem] pr-9 py-10 bg-brand rounded-default">
+      <div className="relative flex flex-col justify-center items-center w-full px-5 py-[1.875rem] bg-brand rounded-default md:w-[40.5rem] md:pl-[1.875rem] md:pr-9 md:py-10">
         <div
-          className="absolute top-[19px] right-4 flex justify-center items-center w-[40px] h-[40px] text-white cursor-pointer"
+          className="absolute top-5 right-5 flex justify-center items-center text-white cursor-pointer"
           onClick={onCloseModal}
         >
-          <Icon icon={faTimes} size="1.875rem" />
-          {/* <Icon icon={faX} size="1.563rem" /> */}
+          <Icon icon={faTimes} styles="text-xl md:text-3xl xl:text-[2.25rem]" />
         </div>
         <div className="text-white bg-brand rounded-default">
           <span className="flex text-xl font-semibold leading-6 mb-3">

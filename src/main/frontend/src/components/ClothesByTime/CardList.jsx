@@ -14,18 +14,22 @@ export default function CardList({ item }) {
 
   return (
     <Card
-      styles={`flex flex-col items-center justify-between h-[260px] min-w-[308px] px-10 pt-6 pb-8`}
+      styles={`flex flex-col items-center justify-between w-auto h-[10rem] my-2 px-6 pt-[0.688rem] pb-5 md:h-[13.125rem] lg:min-w-[19.25rem] lg:h-[16.25rem] lg:px-10 lg:pt-6 lg:pb-8`}
       selected={selected}
     >
       <span
         className={`${
-          selected ? "w-[120px]" : "w-[160px]"
-        } h-10 flex items-center justify-center text-xl font-semibold text-brand bg-blue-100 rounded-[20px]`}
+          selected ? "px-[1.375rem] md:px-10" : "px-7 md:px-8"
+        } h-6 flex items-center justify-center text-base font-semibold text-brand bg-blue-100 rounded-[1.25rem] md:h-8 md:text-lg lg:h-10 lg:text-xl`}
       >
         {selected && "지금"}
         {!selected && dateUtil.clothesTime(m)}
       </span>
-      <div className="flex justify-between items-center gap-5 w-full">
+      <div
+        className={`flex ${
+          subClothes ? "justify-between" : "justify-around"
+        } items-center gap-2 w-full md:gap-5`}
+      >
         {clothes1 && <CardItem clothes={clothes1} selected={selected} />}
         {clothes2 && <CardItem clothes={clothes2} selected={selected} />}
         {subClothes && <CardItem clothes={subClothes} selected={selected} />}

@@ -16,12 +16,12 @@ export default function ClothesByTime() {
   // const status = "success";
 
   return (
-    <Section>
+    <Section styles="pt-1">
       {isLoading && <ClothesByTimeSkeleton />}
       {!isLoading && status === "success" && (
         <>
           <Title title="시간대 별 옷차림" />
-          <div className="w-full h-[315px] ">
+          <div className="w-full h-[11.875rem] md:h-[15.375rem] lg:h-[19.688rem]">
             <XScrollContainer styles="pr-3">
               {clothes.map((item, index) => (
                 <CardList key={index} item={item} />

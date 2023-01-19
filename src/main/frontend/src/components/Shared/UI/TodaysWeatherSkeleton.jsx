@@ -1,19 +1,36 @@
 import React from "react";
+import Icon from "../Icon/Icon";
+import { faChartLine } from "@fortawesome/free-solid-svg-icons";
 
 export default function TodaysWeatherSkeleton() {
   return (
-    <div
+    <section
       role="status"
-      className="animate-pulse flex flex-col items-center w-full max-w-[992px]"
+      className="animate-pulse text-gray-200 w-full min-w-[17rem] mb-14 md:mb-10"
     >
-      <section className=" w-full bg-white mb-14 p-3">
-        <span className="bg-gray-200 w-[183px] h-[60px] rounded-default inline-block text-4xl leading-[150%] font-bold text-black mb-10"></span>
-
-        <div className="border border-gray-200 rounded-default px-7 py-7 flex flex-col justify-between w-full h-[441px] mt-6 mb-5 cursor-default">
-          <div className="bg-gray-200 rounded-default w-full h-[66px]"></div>
-          <div className="bg-gray-200 rounded-default w-full h-[300px]"></div>
+      <span className="mt-1 rounded-default bg-gray-200 inline-block text-2xl leading-150 font-bold text-transparent mb-2 md:text-3xl md:mb-0 xl:text-4xl">
+        오늘의 날씨
+      </span>
+      <div className="flex justify-end mb-[0.625rem]">
+        <span className="rounded-default bg-gray-200 text-transparent text-base font-bold leading-[1.375rem] cursor-pointer md:mt-1 md:ml-1">
+          ⓘ 데이터 안내
+        </span>
+      </div>
+      <div className="rounded-default border border-gray-200 flex flex-col items-center justify-between h-[18.75rem] p-6 md:h-[22.5rem] md:p-7 lg:h-[27.5rem] lg:p-7">
+        {/* <div className="rounded-default bg-gray-200 w-full h-1/4 mb-5"></div>
+        <div className="rounded-default bg-gray-200 flex items-center justify-center w-full h-3/4">
+          <Icon
+            icon={faChartLine}
+            styles="text-3xl text-gray-100 md:text-5xl"
+          />
+        </div> */}
+        <div className="rounded-default bg-gray-200 flex items-center justify-center w-full h-full">
+          <Icon
+            icon={faChartLine}
+            styles="text-3xl text-gray-100 md:text-5xl"
+          />
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

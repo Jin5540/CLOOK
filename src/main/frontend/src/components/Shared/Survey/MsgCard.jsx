@@ -31,14 +31,14 @@ export default function MsgCard({ onCloseModal, msgCardShow, setMsgCardShow }) {
 
   return (
     <Card
-      styles={`flex items-center justify-center w-[643px] px-9 py-5 shadow-none`}
+      styles={`flex items-center justify-center w-full px-6 py-5 shadow-none md:w-[643px] md:px-9`}
       selected={true}
     >
       <div className="flex justify-start items-center w-full">
-        <div className="text-[#D9D9D9] mr-6">
-          <Icon icon={faCheck} size="2.438rem" />
+        <div className="flex items-center text-[#D9D9D9] mr-6">
+          <Icon icon={faCheck} styles="text-3xl lg:text-[2.25rem]" />
         </div>
-        <span className="text-white text-xl font-semibold leading-normal">
+        <span className="text-white text-xl font-bold leading-150 md:text-2xl">
           소중한 의견 감사합니다!
         </span>
       </div>
@@ -46,7 +46,7 @@ export default function MsgCard({ onCloseModal, msgCardShow, setMsgCardShow }) {
         className={`flex justify-end w-[20%] cursor-pointer`}
         onClick={handleClose}
       >
-        <Icon icon={faTimes} size="1.563rem" />
+        <Icon icon={faTimes} styles="text-2xl md:text-3xl lg:text-[2.25rem]" />
       </div>
     </Card>
   );

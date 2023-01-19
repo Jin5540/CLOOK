@@ -1,52 +1,39 @@
 import React, { Suspense } from "react";
-import Section from "../Shared/Section/Section";
-import MainSkeleton from "../Shared/UI/MainSkeleton";
 import useWeather from "../../hooks/useWeather";
-import Card from "../Shared/Card/Card";
-import Icon from "../Shared/Icon/Icon";
+import Section from "../Shared/Section/Section";
 import CurrentWeather from "./CurrentWeather";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
-import * as formatUtil from "../../util/formatUtil";
+import OneSentence from "./OneSentence";
+import MainSkeleton from "../Shared/UI/MainSkeleton";
 import fakeToptm from "../../json/toptm.json";
 import fakeTopspt from "../../json/topspt.json";
+import fakeMsg from "../../json/msg.json";
 
 export default function Main() {
   const queryResults = useWeather(["toptm", "topspt"], "");
+  const queryResult = useWeather(["msg"], "");
+
   const toptm = queryResults[0]?.data;
   const topspt = queryResults[1]?.data;
+  const { isSuccess: msgIsSucc, data: msg } = queryResult;
 
   const isLoading = queryResults?.some((query) => query?.isLoading);
   const isSuccess = queryResults?.every((query) => query?.status === "success");
 
   // const toptm = fakeToptm;
   // const topspt = fakeTopspt;
+  // const msg = fakeMsg;
   // const isLoading = false;
   // const isSuccess = true;
+  // const msgIsSucc = true;
 
   return (
     <>
       {(isLoading || !isSuccess) && <MainSkeleton />}
       {!isLoading && isSuccess && (
         <Section>
-          {toptm && topspt && (
-            <>
-              <CurrentWeather toptm={toptm} topspt={topspt} />
-              {toptm.hasOwnProperty("time") &&
-                toptm.hasOwnProperty("message") && (
-                  <Card styles="relative flex items-center justify-center w-full min-h-[80px]">
-                    <div className="absolute top-1/2 left-10 -translate-y-2/4">
-                      <Icon icon={faBell} size={26} />
-                    </div>
-                    <div className="flex justify-center items-center w-full h-full ml-[80px] mr-[60px]">
-                      <span className="text-2xl text-brand font-medium">
-                        {/* 3시간내 진눈깨비, 오전 11시에 비, 오후 11시에 눈, 내일
-                        오전 11시에 진눈깨비 소식이 있어요. */}
-                        {formatUtil.sentenceFormat(toptm)}
-                      </span>
-                    </div>
-                  </Card>
-                )}
-            </>
+          {toptm && topspt && <CurrentWeather toptm={toptm} topspt={topspt} />}
+          {msgIsSucc && msg && (
+            <OneSentence msg={msg} curDate={toptm.fcstDate} />
           )}
         </Section>
       )}

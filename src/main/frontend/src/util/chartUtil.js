@@ -79,6 +79,7 @@ export function chartDataFormat(obj, propForX, propForY) {
   return chartData.length > 0 ? chartData : null;
 }
 
+// Chart y-tick scope
 export function getMaxMin(obj, key) {
   if (!obj || !key) return;
 
@@ -91,19 +92,4 @@ export function getMaxMin(obj, key) {
   });
 
   return { max, min };
-}
-
-export function chartTimeFormat2(hour, firstHour) {
-  if ((!hour && hour !== 0) || (!firstHour && firstHour !== 0)) return;
-
-  if (0 <= hour && hour < 12) {
-    // 다음날 자정
-    if (0 === hour && firstHour !== 0) {
-      return "내일";
-    }
-
-    return `오전 ${hour} 시`;
-  } else {
-    return `오후 ${hour > 12 ? hour - 12 : hour} 시`;
-  }
 }

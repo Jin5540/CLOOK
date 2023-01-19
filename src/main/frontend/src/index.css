@@ -83,7 +83,7 @@ body {
 }
 
 #root {
-  @apply w-full bg-white text-brand overflow-hidden;
+  @apply w-full bg-white text-brand font-normal overflow-hidden;
 }
 
 #modal-root {
@@ -101,15 +101,7 @@ code {
   }
 }
 
-@layer components {
-  .w-inherit {
-    width: inherit;
-  }
-
-  .max-w-inherit {
-    width: inherit;
-  }
-}
+@layer components {}
 
 ::-webkit-scrollbar {
   /* 12px */

@@ -3,7 +3,7 @@ import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import GlobalError from "./components/Shared/Error/GlobalError";
 import Header from "./components/Header/Header";
-import Content from "./components/Shared/Content/Content";
+import Content from "./components/Content/Content";
 import Footer from "./components/Footer/Footer";
 import Survey from "./components/Shared/Survey/Survey";
 

@@ -26,16 +26,17 @@ export default function Modal({
   }, []);
 
   const positionStyle =
-    position === "top" ? "modal-wrapper-top" : "modal-wrapper-middle";
+    position === "top"
+      ? "modal-wrapper-top top-[8.5rem] md:top-[6.5rem]"
+      : "modal-wrapper-middle";
+  const overlayStyle = bgType
+    ? "modal-overlay"
+    : "modal-overlay bg-transparent";
 
   return (
     <ModalContainerPortal>
-      <div className={`modal-overlay ${!bgType && "bg-transparent"}`}>
-        <div
-          className={`${position && positionStyle} ${
-            styles && styles
-          } global-shadow`}
-        >
+      <div className={overlayStyle}>
+        <div className={`${positionStyle} ${styles ? styles : ""}`}>
           <div className="modal-inner" ref={modalRef}>
             {!custom && <div className="modal-content">{children}</div>}
             {custom && <>{children}</>}

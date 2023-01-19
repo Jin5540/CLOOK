@@ -6,9 +6,10 @@ export default function useSearch(keyword) {
     ["search", keyword],
     () => getApi("search", keyword),
     {
-      staleTime: 1000 * 60 * 5,
+      // staleTime: 1000 * 60 * 5,
+      staleTime: 0,
       enabled: false,
-      useErrorBoundary: true,
+      useErrorBoundary: false,
     }
   );
 
