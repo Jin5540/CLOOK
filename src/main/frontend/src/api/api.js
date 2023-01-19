@@ -16,6 +16,8 @@ export function getApi(api, params) {
       return getToptm();
     case "topspt":
       return getTopspt();
+    case "msg":
+      return getMsg();
     case "today":
       return getToday();
     case "clothes":
@@ -48,6 +50,7 @@ const setLocation = async (params) => {
 };
 
 const getSearchList = async (keyword) => {
+  // console.log(`keyword: ${keyword}`);
   if (!keyword) return;
   return httpClient
     .get("search", {
@@ -64,6 +67,10 @@ const getToptm = async () => {
 
 const getTopspt = async () => {
   return httpClient.get("topspt").then((res) => res.data);
+};
+
+const getMsg = async () => {
+  return httpClient.get("msg").then((res) => res.data);
 };
 
 const getToday = async () => {

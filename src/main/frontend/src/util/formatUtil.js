@@ -1,54 +1,110 @@
 import * as dateUtil from "./dateUtil";
 
+export function sentenceSort(data) {
+  const sortData = [];
+
+  data.time?.forEach((hour, index) => {
+    const arr = [
+      hour === "3시간 이내" ? -3 : Number(hour) / 100,
+      Number(data.date[index]),
+      data.message[index],
+    ];
+    sortData.push(arr);
+  });
+
+  sortData.sort((a, b) => {
+    if (a[0] > b[0]) {
+      if (a[1] === b[1]) return 1;
+      if (a[1] > b[1]) return 1;
+      if (a[1] < b[1]) return -1;
+    } else if (a[0] < b[0]) {
+      if (a[1] === b[1]) return -1;
+      if (a[1] < b[1]) return -1;
+      if (a[1] > b[1]) return 1;
+    } else {
+      if (a[1] === b[1]) return 0;
+      if (a[1] < b[1]) return -1;
+      if (a[1] > b[1]) return 1;
+    }
+  });
+
+  return sortData;
+}
+
+function dupleDataRemove(data) {
+  const sumArr = [];
+  let msg = "";
+  data
+    .filter((value) => value[0] === -3)
+    .forEach((item, index, arr) => {
+      msg += item[2];
+
+      if (arr.length - 1 === 0) {
+        sumArr.push(arr[0][0], arr[0][1], arr[0][2]);
+        return;
+      }
+
+      if (index < arr.length - 1) {
+        msg += "·";
+      } else {
+        sumArr.push(arr[0][0], arr[0][1], msg);
+      }
+    });
+
+  const deleteArr = [];
+  let passIndex = -1111;
+  data
+    .filter((value) => value[0] !== -3)
+    .forEach((item, index, arr) => {
+      const nextItem = arr[index + 1];
+
+      if (index === passIndex) {
+        if (item[2] === nextItem[2]) passIndex = index + 1;
+        return;
+      }
+
+      if (index >= arr.length - 1) {
+        deleteArr.push([item[0], item[1], item[2]]);
+        return;
+      }
+
+      if (item[2] === nextItem[2]) {
+        passIndex = index + 1;
+      }
+      deleteArr.push([item[0], item[1], item[2]]);
+    });
+
+  if (sumArr.length > 0) {
+    if (deleteArr.length > 0) deleteArr.unshift(sumArr);
+    else deleteArr.push(sumArr);
+  }
+
+  return deleteArr;
+}
+
 // Main.jsx - One sentence card format
 export function sentenceFormat(data) {
   if (!data) return;
 
-  // data.fcstDate = "20230107";
-  // data.time = ["3시간 이내", "1200", "1400", "0000"];
-  // data.time = ["0800", "1200", "0000", "0100"];
-  // data.date = ["20230107", "20230107", "20230107", "20230108"];
-  // data.date = ["20230107", "20230107", "20230108", "20230108"];
-  // data.message = ["진눈깨비", "눈", "눈", "비"];
-  // data.message = ["비", "눈", "비", "진눈깨비"];
-  // 3시간내 비, 오후 9시에 눈, 내일 오전 11시에 눈 소식이 있어요. */
-
-  const date = data?.date;
-  const time = data?.time;
-  const message = data?.message;
   const currentDate = Number(data?.fcstDate);
-  const currentTime = dateUtil.currentHour();
+
+  // console.log(data);
+  const sortData = sentenceSort(data);
+  // console.log(sortData);
+  const resultData = dupleDataRemove(sortData);
+  // console.log(resultData);
 
   let result = "";
-  let passIndex = -1;
-
-  time.forEach((hour, index) => {
-    if (!date || !time || !message || !currentDate || !currentTime) return;
-
-    if (passIndex === index) return;
-
-    let sentence = "";
-
-    if (hour === "3시간 이내") {
-      sentence += "3시간 내 ";
+  resultData.forEach((item, index) => {
+    if (item[0] === -3) {
+      result += "3시간 내 ";
     } else {
-      if (currentDate < Number(date[index])) sentence += "내일 ";
-      sentence += `${dateUtil.TimeFormat(Number(hour) / 100)}에`;
+      if (currentDate < item[1]) result += "내일 ";
+      result += `${dateUtil.TimeFormat(item[0])}에 `;
     }
 
-    sentence += message[index];
-
-    if (index === time.length - 1) {
-      sentence += " 소식이 있어요.";
-    } else {
-      sentence += ", ";
-    }
-
-    if (index < time.length - 1 && message[index] === message[index + 1]) {
-      passIndex = index + 1;
-    }
-
-    result += sentence;
+    result += item[2];
+    result += index < resultData.length - 1 ? ", " : " 소식이 있어요.";
   });
 
   return result;
@@ -82,6 +138,11 @@ export function stateOrCityFormat(value) {
     case "대구":
       if (!value.includes("대구광역시")) {
         value = value.replaceAll("대구", "대구광역시");
+      }
+      break;
+    case "대전":
+      if (!value.includes("대전광역시")) {
+        value = value.replaceAll("대전", "대전광역시");
       }
       break;
     case "울산":

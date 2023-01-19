@@ -9,13 +9,17 @@ export default function Survey() {
 
   return (
     <>
-      <div className="absolute bottom-0 w-full max-w-[79rem]">
-        <div className="fixed bottom-[60px] flex flex-col items-end w-full max-w-[79rem] pointer-events-none">
+      <div className="absolute bottom-0 w-full max-w-1280">
+        <div className="fixed bottom-[60px] flex flex-col items-end w-full max-w-1280 pointer-events-none">
           <button
-            className="flex justify-center items-center w-[100px] h-[100px] mt-5 mr-4 bg-brand rounded-full cursor-pointer pointer-events-auto global-shadow"
+            className="flex justify-center items-center w-[60px] h-[60px] mr-4 bg-brand rounded-full cursor-pointer pointer-events-auto global-shadow md:w-[80px] md:h-[80px] lg:w-[100px] lg:h-[100px]"
             onClick={() => setIsOpen(true)}
           >
-            <img className="w-[90px] h-[90px]" src={letter} alt="letter" />
+            <img
+              className="w-[56px] h-[56px] md:w-[76px] md:h-[76px] lg:w-[90px] lg:h-[90px]"
+              src={letter}
+              alt="letter"
+            />
           </button>
         </div>
       </div>
@@ -24,7 +28,7 @@ export default function Survey() {
           onCloseModal={() => setIsOpen(false)}
           custom="true"
           position="middle"
-          styles="w-[648px]"
+          styles="w-full px-5 md:w-[648px] md:px-0 global-shadow"
           addSurvey={addSurvey}
         />
       )}

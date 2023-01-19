@@ -20,9 +20,9 @@ export default function SearchModal({
       position={position}
       styles={styles}
     >
-      <ErrorBoundary onReset={reset} FallbackComponent={SectionError}>
-        <SearchContainer onCloseModal={onCloseModal} />
-      </ErrorBoundary>
+      {/* <ErrorBoundary onReset={reset} FallbackComponent={SectionError}> */}
+      <SearchContainer onCloseModal={onCloseModal} />
+      {/* </ErrorBoundary> */}
     </Modal>
   );
 }

@@ -2,6 +2,7 @@ import React from "react";
 
 export default function Button({
   text,
+  basicStyles,
   styles,
   onClick,
   selected,
@@ -9,16 +10,15 @@ export default function Button({
   disabled,
   disabledStyle,
 }) {
-  const basicStyles =
-    "flex justify-center items-center text-[1.063rem] font-medium leading-6 px-5 py-[0.688rem] rounded-md";
-
   return (
     <>
       {disabled && (
         <button
-          className={`${basicStyles && basicStyles} ${
-            disabledStyle && disabledStyle
-          }`}
+          className={`${
+            basicStyles
+              ? basicStyles
+              : "flex justify-center items-center text-[1.063rem] font-medium leading-6 p-[0.625rem] rounded-md"
+          } ${disabledStyle}`}
           disabled={disabled}
         >
           {text}
@@ -27,9 +27,7 @@ export default function Button({
       {!disabled && (
         <button
           onClick={onClick}
-          className={`${basicStyles && basicStyles} ${styles && styles} ${
-            selected && selected
-          } ${hover && hover} cursor-pointer`}
+          className={`cursor-pointer ${basicStyles} ${styles} ${selected} ${hover}`}
         >
           {text}
         </button>

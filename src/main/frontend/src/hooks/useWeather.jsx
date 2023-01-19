@@ -9,11 +9,13 @@ export default function useWeather(apis, params) {
   const queryResults = useQueries({
     queries: apis.map((api) => {
       if (api) {
+        let errorOption = api === "msg" ? false : true;
+
         return {
           queryKey: [api, location],
           queryFn: () => getApi(api, params),
           staleTime: 1000 * 60 * 5,
-          useErrorBoundary: true,
+          useErrorBoundary: errorOption,
         };
       }
     }),

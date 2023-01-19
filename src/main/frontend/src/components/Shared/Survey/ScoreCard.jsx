@@ -27,38 +27,44 @@ export default function ScoreCard({
     setOpinionCardShow(true);
   };
 
+  const title = "이 서비스를 친구나 지인에게\n얼마나 추천하고 싶은가요?";
+
   return (
-    <SurveyCard
-      title="이 서비스를 친구나 지인에게\n 얼마나 추천하고 싶은가요?"
-      onClose={handleClose}
-    >
-      <div className="flex justify-between w-full m-0 mt-4 mb-[0.625rem]">
+    <SurveyCard title={title} onClose={handleClose}>
+      <div className="flex justify-between w-full text-[0.938rem] font-normal leading-[1.563rem] text-brand md:hidden">
+        <span>비추천</span>
+      </div>
+      <div className="flex flex-wrap justify-center gap-x-2 gap-y-[0.625rem] w-full m-0 mt-1 md:justify-between md:flex-row md:mb-0 lg:mt-4">
         {scoreArr.map((item, index) => (
           <Button
             key={index}
             text={item}
             onClick={() => setScore((pre) => item)}
-            styles="w-[2.813rem] h-[2.813rem] p-0 text-brand bg-blue-100"
+            basicStyles="w-[2.313rem] h-[2.313rem] text-[1.063rem] leading-6 rounded-md md:w-11 md:h-11"
+            styles="text-brand bg-blue-100"
             selected={score === item ? "text-white bg-brand" : ""}
             hover="hover:bg-brand hover:border-transparent hover:text-white"
           />
         ))}
       </div>
-      <div className="flex justify-between w-full text-[0.938rem] font-normal leading-[1.563rem] text-brand mb-6">
-        <span>추천</span> <span>비추천</span>
+      <div className="flex justify-end w-full text-[0.938rem] font-normal leading-[1.563rem] text-brand mb-6 md:justify-between">
+        <span className="hidden md:inline-block">비추천</span>
+        <span className="">추천</span>
       </div>
-      <div className="flex justify-between w-full text-base font-semibold leading-[1.188rem]">
+      <div className="flex justify-between w-full">
         <Button
           text="좀 더 둘러보고 다시 올게요!"
+          basicStyles="text-sm font-semibold leading-[1.188rem] px-5 py-[0.438rem] rounded-default md:text-base md:py-[0.688rem]"
           styles="text-white bg-[#9CA3AF] hover:bg-[#81868d]"
           onClick={handleClose}
         />
         <Button
           text="보내기"
+          onClick={handleGoToOpinionCard}
+          basicStyles="text-sm font-semibold leading-[1.188rem] px-5 py-[0.438rem] rounded-default md:text-base md:py-[0.688rem]"
           styles="text-white bg-brand"
           disabled={score > -1 ? false : true}
           disabledStyle="text-white bg-blue-100"
-          onClick={handleGoToOpinionCard}
         />
       </div>
     </SurveyCard>

@@ -1,9 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require("tailwindcss/plugin");
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx}"],
   theme: {
+    screens: {
+      xs: "360px",
+      ...defaultTheme.screens,
+    },
     extend: {
+      width: {
+        994: "62.125rem",
+        1280: "80rem",
+      },
+      maxWidth: {
+        994: "62.125rem",
+        1280: "80rem",
+      },
       fontFamily: {
         pretendard: ["Pretendard", "sans-serif"],
       },
@@ -23,6 +37,11 @@ module.exports = {
       fontSize: {
         "3xl": "1.75rem",
         "4xl": "2.5rem",
+      },
+      lineHeight: {
+        "semi-nomal": "1.4",
+        140: "140%",
+        150: "150%",
       },
       borderRadius: {
         default: "0.625rem",
@@ -53,7 +72,7 @@ module.exports = {
           "-webkit-box-shadow": theme("boxShadow.main"),
           "-moz-box-shadow": theme("boxShadow.main"),
         },
-        ".1-overlay": {
+        ".modal-overlay": {
           position: "fixed",
           top: "0",
           left: "0",
@@ -68,8 +87,6 @@ module.exports = {
           top: "6.5rem",
           left: "50%",
           transform: "translateX(-50%)",
-          maxWidth: "49.3125rem",
-          borderRadius: theme("borderRadius.default"),
           backgroundColor: "transparent",
           overflow: "auto",
           outline: "0",
@@ -80,8 +97,6 @@ module.exports = {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          maxWidth: "49.3125rem",
-          borderRadius: theme("borderRadius.default"),
           backgroundColor: "transparent",
           overflow: "auto",
           outline: "0",
@@ -93,7 +108,6 @@ module.exports = {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "transparent",
-          borderRadius: theme("borderRadius.default"),
         },
         ".modal-content": {
           display: "flex",
@@ -104,6 +118,7 @@ module.exports = {
           height: "100%",
           padding: "28px 48px 22px 48px",
           backgroundColor: theme("colors.white"),
+          borderRadius: theme("borderRadius.default"),
         },
       };
 

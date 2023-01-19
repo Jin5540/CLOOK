@@ -136,7 +136,7 @@ export function compoundCardData(card, uv, air, sun) {
     {
       type: 3,
       title: "강수량",
-      value1: `${card?.rn1}${card?.rn1 === "강수없음" ? "" : "mm"}`,
+      value1: card?.rn1,
       time: updateTime,
     },
     {

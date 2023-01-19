@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 
-export default function Search({ setKeyword, helpMsgVisible }) {
+export default function Search({ setKeyword, dataList, isError }) {
   const [input, setInput] = useState("");
   const [inputCheck, setInputCheck] = useState(false);
   const [addrCheck, setAddrCheck] = useState(false);
@@ -52,28 +52,29 @@ export default function Search({ setKeyword, helpMsgVisible }) {
 
   return (
     <div>
-      <div className="flex flex-row justify-between py-2 text-xl font-medium text-brand bg-white">
+      <div className="flex flex-row justify-between py-2 text-xl font-semibold leading-140 text-brand bg-white">
         <div className="flex items-center w-full h-[3.75rem] px-2 bg-sub-brand rounded-default">
           <div className="mx-2">
             <Icon icon={faMagnifyingGlass} />
           </div>
           <input
-            className="w-full h-full bg-sub-brand border-none outline-none placeholder:text-white"
+            className="w-full h-full text-brand bg-sub-brand border-none outline-none placeholder:text-white"
             type="text"
             placeholder="예) 신사동, 종로1가"
             value={input}
             ref={inputRef}
-            // onClick={onFocus}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
           />
         </div>
       </div>
-      {(!helpMsgVisible || (helpMsgVisible && addrCheck)) && (
-        <div className="flex flex-col w-full text-xl leading-[140%] font-medium mt-3 text-blue-600">
+      {!isError && !dataList?.address && (
+        <div className="flex flex-col w-full text-base font-normal leading-[1.188rem] mt-3 text-blue-600 md:leading-140 md:font-medium md:text-lg xl:text-xl">
           {!inputCheck && (
             <>
-              <span className={addrCheck ? "text-red" : "text-blue-600"}>
+              <span
+                className={`mb-2 ${addrCheck ? "text-red" : "text-blue-600"}`}
+              >
                 *<b>~읍/면/동/가/로/길</b> 로 검색해주세요.
               </span>
               <span>*국내 도시만 서비스되고 있습니다.</span>

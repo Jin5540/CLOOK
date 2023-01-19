@@ -72,16 +72,16 @@ export function getWeatherImages(type, value) {
       case "2":
         image = characterB; // 기본B타입
         break;
-      case "3":
+      case "더움":
         image = characterHot; // 더워하는
         break;
-      case "4":
+      case "추움":
         image = characterCold; // 추워하는
         break;
-      case "5":
+      case "비":
         image = characterRain; // 비 오는
         break;
-      case "6":
+      case "눈":
         image = characterSnow; // 눈 오는
         break;
       default:

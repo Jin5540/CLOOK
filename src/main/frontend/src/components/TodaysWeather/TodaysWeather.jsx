@@ -25,7 +25,7 @@ export default function TodaysWeather() {
           <Title title="오늘의 날씨" />
           <div className="flex justify-end mb-[0.625rem]">
             <span
-              className="text-base font-bold leading-[1.375rem] mt-1 ml-1 cursor-pointer"
+              className="text-base font-bold leading-[1.375rem] cursor-pointer md:mt-1 md:ml-1"
               onClick={() => setIsOpen(true)}
             >
               ⓘ 데이터 안내
@@ -37,10 +37,10 @@ export default function TodaysWeather() {
               custom="true"
               bgType={false}
               position="middle"
-              styles="w-auto"
+              styles="px-5 w-full lg:px-0 lg:w-auto"
             />
           )}
-          <Card styles="flex items-center justify-center h-[27.563rem] p-6">
+          <Card styles="flex items-center justify-center h-[18.75rem] p-4 md:h-[22.5rem] md:p-5 lg:h-[27.5rem] lg:p-6">
             <ChartContainer data={today} />
           </Card>
         </>
