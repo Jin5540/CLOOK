@@ -750,7 +750,7 @@ public interface WeatherRepsitory {
 
     }
 
-    /* 상단 - TMX / TMN */
+    /* 상단 - Message */
     public static WeatherVO getMsg(GeocodingVO geocodingVO)
             throws IOException, ParseException, java.text.ParseException {
 

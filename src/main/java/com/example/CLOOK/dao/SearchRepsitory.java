@@ -173,7 +173,10 @@ public interface SearchRepsitory {
             // JSONObject documents = new JSONObject(object);
             JSONArray arr = object.getJSONArray("documents");
 
-            // System.out.println("나와라 ::: responese ::: "+arr);
+            JSONObject meta = (JSONObject) object.get("meta");
+            int total_count = (int) meta.get("total_count");
+
+            System.out.println(total_count);
 
             for (int i = 0; i < arr.length(); i++) {
                 int countR=0;
@@ -212,6 +215,7 @@ public interface SearchRepsitory {
                     // nameList.add(region_3depth_name);
                     geocodingVO.setAddress(addressList);
                     geocodingVO.setRegionarr(hnameList);
+                    geocodingVO.setCount(total_count);
                     // geocodingVO.setRegion_3depth_name(nameList);
                 } else {
                     JSONObject addressarr = (JSONObject) temp.get("road_address");
@@ -235,6 +239,7 @@ public interface SearchRepsitory {
                     // nameList.add(region_3depth_name);
                     geocodingVO.setAddress(addressList);
                     geocodingVO.setRegionarr(hnameList);
+                    geocodingVO.setCount(total_count);
                     // geocodingVO.setRegion_3depth_name(nameList);
 
                 }

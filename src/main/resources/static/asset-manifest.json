@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.fefd1290.css",
-    "main.js": "/static/js/main.bfdf5616.js",
+    "main.css": "/static/css/main.d784e8b9.css",
+    "main.js": "/static/js/main.7a5916cb.js",
     "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
     "static/media/characterSnow.png": "/static/media/characterSnow.f68adcc40aa201fb67f1.png",
     "static/media/Pretendard-Black.subset.woff2": "/static/media/Pretendard-Black.subset.f3fa2b26c97b3e87b979.woff2",
@@ -14,6 +14,7 @@
     "static/media/Pretendard-ExtraLight.subset.woff2": "/static/media/Pretendard-ExtraLight.subset.4521676833c412121f84.woff2",
     "static/media/Pretendard-Thin.subset.woff2": "/static/media/Pretendard-Thin.subset.770619bf32e0cae375cb.woff2",
     "static/media/characterRain.png": "/static/media/characterRain.fa1c81cd8e8c701ada29.png",
+    "static/media/characterErrorShadowVer.png": "/static/media/characterErrorShadowVer.b9d5ef4651e8afdf613e.png",
     "static/media/characterCold.png": "/static/media/characterCold.abff6c1a2323385d0a3c.png",
     "static/media/characterA.png": "/static/media/characterA.7e1c041d8752632c880a.png",
     "static/media/characterB.png": "/static/media/characterB.daf73104fb3fccd1b751.png",
@@ -25,7 +26,6 @@
     "static/media/cloudAfternoonBackground.jpg": "/static/media/cloudAfternoonBackground.395de4f91180fc02fc53.jpg",
     "static/media/noCloudAfternoonBackground.jpg": "/static/media/noCloudAfternoonBackground.fe537a8379a5a55a6ce8.jpg",
     "static/media/snowCloudyBackground.jpg": "/static/media/snowCloudyBackground.1ab9253b33857080db34.jpg",
-    "static/media/error1.png": "/static/media/error1.21fecb1fa3ecde331c39.png",
     "static/media/sleet.png": "/static/media/sleet.070ad3ca4c75042059ec.png",
     "static/media/snow.png": "/static/media/snow.57a30a0849646ae55070.png",
     "static/media/sunCloud.png": "/static/media/sunCloud.6c5b9cbe8bd4188dfff2.png",
@@ -42,15 +42,15 @@
     "static/media/longSleeve.svg": "/static/media/longSleeve.5767635235554a0139208106c513a620.svg",
     "static/media/umbrella.svg": "/static/media/umbrella.af1cbbb3e27faf0de3d7e27ee65fc012.svg",
     "static/media/sleeveless.svg": "/static/media/sleeveless.67d9a0232427ca45b8e3af2dd8b70f18.svg",
+    "index.html": "/index.html",
     "static/media/tShirt.svg": "/static/media/tShirt.85f99fb35a00cff4fc2ccabdf3f25be4.svg",
     "static/media/hat.svg": "/static/media/hat.c2fa563bd3c918a639e7c1f079559676.svg",
-    "index.html": "/index.html",
-    "main.fefd1290.css.map": "/static/css/main.fefd1290.css.map",
-    "main.bfdf5616.js.map": "/static/js/main.bfdf5616.js.map",
+    "main.d784e8b9.css.map": "/static/css/main.d784e8b9.css.map",
+    "main.7a5916cb.js.map": "/static/js/main.7a5916cb.js.map",
     "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fefd1290.css",
-    "static/js/main.bfdf5616.js"
+    "static/css/main.d784e8b9.css",
+    "static/js/main.7a5916cb.js"
   ]
 }

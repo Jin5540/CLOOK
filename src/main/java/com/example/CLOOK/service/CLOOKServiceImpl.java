@@ -155,6 +155,8 @@ public class CLOOKServiceImpl implements CLOOKService {
             }else{
                 result1 = array[1];
             }
+            System.out.println("result1"+result1);
+            System.out.println("result2"+result2);
         }
 
         return SunRepsitory.getSun(mapper.getLocaion(result1, result2));
@@ -223,7 +225,7 @@ public class CLOOKServiceImpl implements CLOOKService {
 
     @Override
     public WeatherVO getMsg(GeocodingVO gecoding) throws IOException, ParseException, java.text.ParseException {
-        return null;
+        return WeatherRepsitory.getMsg(gecoding);
     }
 
 }
