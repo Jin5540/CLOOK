@@ -54,7 +54,13 @@ export default function ScoreCard({
       <div className="flex justify-between w-full">
         <Button
           text="좀 더 둘러보고 다시 올게요!"
-          basicStyles="text-sm font-semibold leading-[1.188rem] px-5 py-[0.438rem] rounded-default md:text-base md:py-[0.688rem]"
+          basicStyles="hidden text-base font-semibold leading-[1.188rem] px-5 py-[0.688rem] rounded-default md:flex"
+          styles="text-white bg-[#9CA3AF] hover:bg-[#81868d]"
+          onClick={handleClose}
+        />
+        <Button
+          text="나중에 다시 올게요!"
+          basicStyles="flex text-sm font-semibold leading-[1.188rem] px-5 py-[0.438rem] rounded-default md:hidden"
           styles="text-white bg-[#9CA3AF] hover:bg-[#81868d]"
           onClick={handleClose}
         />

@@ -1,9 +1,6 @@
 import React from "react";
 import Modal from "../Shared/Modal/Modal";
 import SearchContainer from "../Search/SearchContainer";
-import { useQueryErrorResetBoundary } from "@tanstack/react-query";
-import { ErrorBoundary } from "react-error-boundary";
-import SectionError from "../Shared/Error/SectionError";
 
 export default function SearchModal({
   onCloseModal,
@@ -11,8 +8,6 @@ export default function SearchModal({
   position,
   styles,
 }) {
-  const { reset } = useQueryErrorResetBoundary();
-
   return (
     <Modal
       onCloseModal={onCloseModal}
@@ -20,9 +15,7 @@ export default function SearchModal({
       position={position}
       styles={styles}
     >
-      {/* <ErrorBoundary onReset={reset} FallbackComponent={SectionError}> */}
       <SearchContainer onCloseModal={onCloseModal} />
-      {/* </ErrorBoundary> */}
     </Modal>
   );
 }

@@ -4,12 +4,7 @@ import CardItem from "./CardItem";
 import * as dateUtil from "../../util/dateUtil";
 
 export default function CardList({ item }) {
-  const { m, clothes1, clothes2 } = item;
-  const subClothes = item.hasOwnProperty("item1")
-    ? item.item1
-    : item.hasOwnProperty("item2")
-    ? item.item2
-    : item.item3;
+  const { m, clothes1, clothes2, item1, item2, item3 } = item;
   const selected = m === "지금" ? true : false;
 
   return (
@@ -27,12 +22,14 @@ export default function CardList({ item }) {
       </span>
       <div
         className={`flex ${
-          subClothes ? "justify-between" : "justify-around"
+          item1 || item2 || item3 ? "justify-between" : "justify-around"
         } items-center gap-2 w-full md:gap-5`}
       >
         {clothes1 && <CardItem clothes={clothes1} selected={selected} />}
         {clothes2 && <CardItem clothes={clothes2} selected={selected} />}
-        {subClothes && <CardItem clothes={subClothes} selected={selected} />}
+        {item1 && <CardItem clothes={item1} selected={selected} />}
+        {item2 && <CardItem clothes={item2} selected={selected} />}
+        {item3 && <CardItem clothes={item3} selected={selected} />}
       </div>
     </Card>
   );

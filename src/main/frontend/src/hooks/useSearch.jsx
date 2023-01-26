@@ -10,6 +10,7 @@ export default function useSearch(keyword) {
       staleTime: 0,
       enabled: false,
       useErrorBoundary: false,
+      retry: 0,
     }
   );
 

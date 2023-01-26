@@ -1,4 +1,3 @@
-import React from "react";
 import { useQueries } from "@tanstack/react-query";
 import { getApi } from "../api/api";
 import { useLocationContext } from "../contexts/LocationContext";

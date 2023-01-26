@@ -101,7 +101,11 @@ code {
   }
 }
 
-@layer components {}
+@layer components {
+  .text-shadow {
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
 
 ::-webkit-scrollbar {
   /* 12px */

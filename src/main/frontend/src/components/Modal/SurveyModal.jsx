@@ -33,6 +33,7 @@ export default function SurveyModal({
       custom={custom}
       position={position}
       styles={styles}
+      outSideClickDisabled={true}
     >
       {scoreCardShow && (
         <ScoreCard

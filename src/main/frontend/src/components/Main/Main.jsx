@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import useWeather from "../../hooks/useWeather";
 import Section from "../Shared/Section/Section";
 import CurrentWeather from "./CurrentWeather";
@@ -14,7 +14,7 @@ export default function Main() {
 
   const toptm = queryResults[0]?.data;
   const topspt = queryResults[1]?.data;
-  const { isSuccess: msgIsSucc, data: msg } = queryResult;
+  const { isSuccess: msgIsSucc, data: msg } = queryResult[0];
 
   const isLoading = queryResults?.some((query) => query?.isLoading);
   const isSuccess = queryResults?.every((query) => query?.status === "success");
@@ -31,9 +31,13 @@ export default function Main() {
       {(isLoading || !isSuccess) && <MainSkeleton />}
       {!isLoading && isSuccess && (
         <Section>
-          {toptm && topspt && <CurrentWeather toptm={toptm} topspt={topspt} />}
-          {msgIsSucc && msg && (
-            <OneSentence msg={msg} curDate={toptm.fcstDate} />
+          {toptm && topspt && (
+            <>
+              <CurrentWeather toptm={toptm} topspt={topspt} />
+              {msgIsSucc && msg.hasOwnProperty("message") && (
+                <OneSentence msg={msg} />
+              )}
+            </>
           )}
         </Section>
       )}

@@ -28,7 +28,7 @@ export default function MsgWithImage({
             : "w-[7.5rem] h-[7.5rem] mb-[1.875rem] lg:w-[9.375rem] lg:h-[9.375rem] lg:mb-5"
         }`}
         src={imgSrc ? imgSrc : ErrorCharacter}
-        alt="image"
+        alt="ErrorCharacter"
       />
 
       {title && (
