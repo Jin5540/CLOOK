@@ -961,7 +961,7 @@ public interface WeatherRepsitory {
          * /
          */
 
-        // System.out.println(item);
+        System.out.println(weatherVO.getMessage()+" ::: "+weatherVO.getTime());
 
         return weatherVO;
 
