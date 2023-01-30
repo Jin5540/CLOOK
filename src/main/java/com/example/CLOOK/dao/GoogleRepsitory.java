@@ -53,7 +53,7 @@ public class GoogleRepsitory {
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(GoogleNetHttpTransport.newTrustedTransport(), 
         GsonFactory.getDefaultInstance(), clientSecrets, scopes)
-            .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("token")))
+            .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("webapps/token")))
             .setAccessType("offline")
             .build();
         
