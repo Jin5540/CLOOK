@@ -4,9 +4,7 @@ import Icon from "../Shared/Icon/Icon";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import * as formatUtil from "../../util/formatUtil";
 
-export default function OneSentence({ msg, fsctDate }) {
-  msg.fsctDate = fsctDate;
-
+export default function OneSentence({ msg }) {
   return (
     <Card styles="relative flex items-center justify-center w-full min-h-[80px] py-[10px]">
       <div className="absolute top-1/2 left-10 -translate-y-2/4">

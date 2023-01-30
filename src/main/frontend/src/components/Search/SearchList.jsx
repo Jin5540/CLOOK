@@ -1,7 +1,6 @@
 import React from "react";
 import { useLocationContext } from "../../contexts/LocationContext";
 import SearchListItem from "./SearchListItem";
-import ErrorCharacter from "../../assets/imgs/error/characterErrorShadowVer.png";
 import MsgWithImage from "../Shared/Message/MsgWithImage";
 
 export default function SearchList({ onCloseModal, dataList }) {
@@ -22,7 +21,7 @@ export default function SearchList({ onCloseModal, dataList }) {
 
   return (
     <>
-      {dataList?.address?.length > 0 && (
+      {dataList?.count > 0 && (
         <ul className="flex flex-col items-start w-full max-h-[15.375rem] py-2 overflow-auto md:max-h-[26.125rem]">
           {addrArr &&
             addrArr.map((item, index) => (
@@ -37,7 +36,7 @@ export default function SearchList({ onCloseModal, dataList }) {
         </ul>
       )}
 
-      {dataList?.address === null && (
+      {dataList?.count <= 0 && (
         <MsgWithImage
           boxStyles="flex flex-col items-center w-full pt-2 pb-2 text-brand lg:pb-4"
           imgStyles="w-[7.5rem] h-[7.5rem] mb-[0.625rem] md:mb-4 lg:w-[11.25rem] lg:h-[11.25rem] lg:mb-[1.563rem]"

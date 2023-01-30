@@ -9,7 +9,7 @@ import * as common from "../../util/common";
 export default function SearchContainer({ onCloseModal }) {
   const [keyword, setKeyword] = useState("");
   const { searchQuery } = useSearch(keyword);
-  const { isError, refetch, data: dataList } = searchQuery;
+  const { isSuccess, isError, refetch, data: dataList } = searchQuery;
   const { updateLocation } = useLocationContext();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function SearchContainer({ onCloseModal }) {
     refetch();
   };
 
-  const handleMain = () => {
+  const handleMoveToMain = () => {
     // 메인으로 이동
     updateLocation("서울특별시 중구 명동", "명동");
     onCloseModal();
@@ -32,11 +32,14 @@ export default function SearchContainer({ onCloseModal }) {
   return (
     <>
       <Search setKeyword={setKeyword} dataList={dataList} isError={isError} />
-      {!isError && keyword && dataList && (
+      {isSuccess && keyword && dataList && (
         <SearchList onCloseModal={onCloseModal} dataList={dataList} />
       )}
       {isError && (
-        <SearchError handleMain={handleMain} handleReset={handleReset} />
+        <SearchError
+          handleMoveToMain={handleMoveToMain}
+          handleReset={handleReset}
+        />
       )}
     </>
   );

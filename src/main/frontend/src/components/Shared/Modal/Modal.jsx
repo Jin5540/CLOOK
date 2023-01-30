@@ -8,6 +8,7 @@ export default function Modal({
   bgType,
   position,
   styles,
+  outSideClickDisabled,
   children,
 }) {
   const modalRef = useRef(null);
@@ -37,7 +38,10 @@ export default function Modal({
     <ModalContainerPortal>
       <div className={overlayStyle}>
         <div className={`${positionStyle} ${styles ? styles : ""}`}>
-          <div className="modal-inner" ref={modalRef}>
+          <div
+            className="modal-inner m-0 p-0"
+            ref={outSideClickDisabled ? null : modalRef}
+          >
             {!custom && <div className="modal-content">{children}</div>}
             {custom && <>{children}</>}
           </div>

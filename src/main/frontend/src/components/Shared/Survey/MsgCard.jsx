@@ -31,7 +31,7 @@ export default function MsgCard({ onCloseModal, msgCardShow, setMsgCardShow }) {
 
   return (
     <Card
-      styles={`flex items-center justify-center w-full px-6 py-5 shadow-none md:w-[643px] md:px-9`}
+      styles={`flex items-center justify-between w-full px-6 py-[1.875rem] shadow-none md:w-[643px] md:px-9`}
       selected={true}
     >
       <div className="flex justify-start items-center w-full">
@@ -43,7 +43,7 @@ export default function MsgCard({ onCloseModal, msgCardShow, setMsgCardShow }) {
         </span>
       </div>
       <div
-        className={`flex justify-end w-[20%] cursor-pointer`}
+        className={`flex justify-end ml-4 cursor-pointer`}
         onClick={handleClose}
       >
         <Icon icon={faTimes} styles="text-2xl md:text-3xl lg:text-[2.25rem]" />

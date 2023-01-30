@@ -1,6 +1,6 @@
 import * as dateUtil from "./dateUtil";
 
-export function sentenceSort(data) {
+function sentenceSort(data) {
   const sortData = [];
 
   data.time?.forEach((hour, index) => {
@@ -14,88 +14,77 @@ export function sentenceSort(data) {
 
   sortData.sort((a, b) => {
     if (a[0] > b[0]) {
-      if (a[1] === b[1]) return 1;
       if (a[1] > b[1]) return 1;
-      if (a[1] < b[1]) return -1;
+      else if (a[1] < b[1]) return -1;
+      else return 1;
     } else if (a[0] < b[0]) {
-      if (a[1] === b[1]) return -1;
       if (a[1] < b[1]) return -1;
-      if (a[1] > b[1]) return 1;
+      else if (a[1] > b[1]) return 1;
+      else return -1;
     } else {
-      if (a[1] === b[1]) return 0;
       if (a[1] < b[1]) return -1;
-      if (a[1] > b[1]) return 1;
+      else if (a[1] > b[1]) return 1;
+      else return 0;
     }
   });
 
   return sortData;
 }
 
-function dupleDataRemove(data) {
-  const sumArr = [];
-  let msg = "";
+function dupleDataSort(data) {
+  const resultArr = [];
+  let message = "";
   data
     .filter((value) => value[0] === -3)
     .forEach((item, index, arr) => {
-      msg += item[2];
-
-      if (arr.length - 1 === 0) {
-        sumArr.push(arr[0][0], arr[0][1], arr[0][2]);
-        return;
-      }
-
+      //
       if (index < arr.length - 1) {
-        msg += "·";
+        message += `${item[2]}·`;
       } else {
-        sumArr.push(arr[0][0], arr[0][1], msg);
+        message += item[2];
+        resultArr.push([item[0], item[1], message]);
       }
     });
 
-  const deleteArr = [];
-  let passIndex = -1111;
+  const passIdxArr = [];
   data
     .filter((value) => value[0] !== -3)
     .forEach((item, index, arr) => {
-      const nextItem = arr[index + 1];
+      const length = arr.length - 1;
 
-      if (index === passIndex) {
-        if (item[2] === nextItem[2]) passIndex = index + 1;
+      if (length === 0) {
+        resultArr.push(item);
         return;
       }
 
-      if (index >= arr.length - 1) {
-        deleteArr.push([item[0], item[1], item[2]]);
-        return;
-      }
+      if (passIdxArr.indexOf(index) > -1) return;
+      resultArr.push(item);
 
-      if (item[2] === nextItem[2]) {
-        passIndex = index + 1;
+      for (let i = index + 1; i <= length; i++) {
+        if (item[2] === arr[i][2]) {
+          passIdxArr.push(i);
+        } else {
+          break;
+        }
       }
-      deleteArr.push([item[0], item[1], item[2]]);
     });
 
-  if (sumArr.length > 0) {
-    if (deleteArr.length > 0) deleteArr.unshift(sumArr);
-    else deleteArr.push(sumArr);
-  }
-
-  return deleteArr;
+  return resultArr;
 }
 
 // Main.jsx - One sentence card format
 export function sentenceFormat(data) {
   if (!data) return;
 
-  const currentDate = Number(data?.fcstDate);
-
-  // console.log(data);
   const sortData = sentenceSort(data);
+  const dupleData = dupleDataSort(sortData);
+  // console.log(data);
   // console.log(sortData);
-  const resultData = dupleDataRemove(sortData);
   // console.log(resultData);
 
+  const currentDate = Number(data?.fcstDate);
   let result = "";
-  resultData.forEach((item, index) => {
+  dupleData.forEach((item, index) => {
     if (item[0] === -3) {
       result += "3시간 내 ";
     } else {
@@ -104,7 +93,7 @@ export function sentenceFormat(data) {
     }
 
     result += item[2];
-    result += index < resultData.length - 1 ? ", " : " 소식이 있어요.";
+    result += index < dupleData.length - 1 ? ", " : " 소식이 있어요.";
   });
 
   return result;

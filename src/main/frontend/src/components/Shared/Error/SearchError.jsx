@@ -2,7 +2,7 @@ import React from "react";
 import MsgWithImage from "../Message/MsgWithImage";
 import Button from "../Button/Button";
 
-export default function SearchError({ handleMain, handleReset }) {
+export default function SearchError({ handleMoveToMain, handleReset }) {
   const title = "앗 죄송해요!";
   const message = "서비스에 문제가 생겼어요.\n빠른 시간 내에 다시 돌아올게요.";
 
@@ -18,7 +18,7 @@ export default function SearchError({ handleMain, handleReset }) {
       <div className="flex mb-10 ">
         <Button
           text="메인으로 이동"
-          onClick={handleMain}
+          onClick={handleMoveToMain}
           basicStyles="w-[8.25rem] h-[3.125rem] text-base font-semibold leading-[1.188rem] rounded-default lg:w-[12.5rem] lg:h-[3.75rem] lg:text-xl lg:leading-6"
           styles="mr-[0.938rem] text-white bg-brand lg:mr-10"
           hover="lg:hover:bg-brand-dark"
