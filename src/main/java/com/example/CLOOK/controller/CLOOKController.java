@@ -228,4 +228,8 @@ public class CLOOKController {
         clookService.insertSheet(googleVO);
     }
 
+    @GetMapping(value = "/Callback", produces = "application/json; charset=UTF-8")
+    public void callback(HttpServletRequest req) throws IOException, ParseException {
+    }
+
 }

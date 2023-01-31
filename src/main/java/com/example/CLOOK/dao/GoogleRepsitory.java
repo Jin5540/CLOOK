@@ -57,7 +57,8 @@ public class GoogleRepsitory {
             .setAccessType("offline")
             .build();
         
-        Credential credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+        LocalServerReceiver localServerReceiver = new LocalServerReceiver.Builder().setHost("localhost").setPort(3000).build();
+        Credential credential = new AuthorizationCodeInstalledApp(flow, localServerReceiver).authorize("user");
 
         return credential;
     }
