@@ -2,14 +2,12 @@ import { useQueries } from "@tanstack/react-query";
 import { getApi } from "../api/api";
 import { useLocationContext } from "../contexts/LocationContext";
 
-export default function useWeather(apis, params) {
+export default function useWeather(apis, params, errorOption) {
   const { location } = useLocationContext();
 
   const queryResults = useQueries({
     queries: apis.map((api) => {
       if (api) {
-        let errorOption = api === "msg" ? false : true;
-
         return {
           queryKey: [api, location],
           queryFn: () => getApi(api, params),

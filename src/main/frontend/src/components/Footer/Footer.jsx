@@ -8,7 +8,7 @@ export default function Footer() {
         src="/images/logo_white.png"
         alt="logo"
       />
-      <span className="mr-2">V1.0</span>
+      <span className="mr-2">V1.0-Beta</span>
       <span className="mr-2">Team. Clook</span>
       <span className="mr-2">team.clook@gmail.com</span>
       <span className="mr-2">날씨: 기상청</span>

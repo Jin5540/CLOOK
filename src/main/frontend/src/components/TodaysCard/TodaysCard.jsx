@@ -9,14 +9,14 @@ import fakeAir from "../../json/air.json";
 import fakeSun from "../../json/sun.json";
 
 export default function TodaysCard() {
-  const queryResults = useWeather(["card", "uv", "air", "sun"], "");
+  const queryResults = useWeather(["card", "uv", "air", "sun"], "", false);
   const card = queryResults[0].data;
   const uv = queryResults[1].data;
   const air = queryResults[2].data;
   const sun = queryResults[3].data;
 
   const isLoading = queryResults?.some((query) => query.isLoading);
-  const isSuccess = queryResults.every((query) => query.status === "success");
+  const isSuccess = queryResults.some((query) => query.status === "success");
 
   // const card = fakeCard;
   // const uv = fakeUv;

@@ -53,11 +53,12 @@ public class GoogleRepsitory {
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(GoogleNetHttpTransport.newTrustedTransport(), 
         GsonFactory.getDefaultInstance(), clientSecrets, scopes)
-            .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("token")))
+            .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("webapps/token")))
             .setAccessType("offline")
             .build();
         
-        Credential credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+        LocalServerReceiver localServerReceiver = new LocalServerReceiver.Builder().setHost("localhost").setPort(3000).build();
+        Credential credential = new AuthorizationCodeInstalledApp(flow, localServerReceiver).authorize("user");
 
         return credential;
     }

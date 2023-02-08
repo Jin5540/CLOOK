@@ -19,7 +19,7 @@ export default function Content() {
   const { reset } = useQueryErrorResetBoundary();
 
   return (
-    <div className="flex flex-col items-center w-full max-w-994 px-6 mt-[136px] md:mt-[119px] lg:px-0">
+    <div className="flex flex-col items-center w-full max-w-994 px-6 mt-[160px] lg:mt-[119px] lg:px-0">
       {isLoading && (
         <>
           <MainSkeleton />

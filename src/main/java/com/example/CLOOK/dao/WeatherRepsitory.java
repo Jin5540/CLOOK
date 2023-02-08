@@ -961,7 +961,7 @@ public interface WeatherRepsitory {
          * /
          */
 
-        // System.out.println(item);
+        System.out.println(weatherVO.getMessage()+" ::: "+weatherVO.getTime());
 
         return weatherVO;
 
@@ -2012,18 +2012,18 @@ public interface WeatherRepsitory {
                     String fcstTime = (String) object.get("fcstTime");
 
                     // System.out.println(category);
-                    if (category.equals("SKY") && countsky < 2) {
+                    if (category.equals("SKY") && countsky < 1) {
                         countsky += 1;
                         String sky = (String) object.get("fcstValue");
                         weatherVO.setSky(sky);
                         weatherVO.setFcstTime(fcstTime);
                     }
-                    if (category.equals("T1H") && countt1h < 2) {
+                    if (category.equals("T1H") && countt1h < 1) {
                         countt1h += 1;
                         int t1h = Integer.parseInt((String) object.get("fcstValue"));
                         weatherVO.setT1h(t1h);
                     }
-                    if (category.equals("PTY") && countpty < 2) {
+                    if (category.equals("PTY") && countpty < 1) {
                         countpty += 1;
                         String pty = (String) object.get("fcstValue");
                         weatherVO.setPty(pty);

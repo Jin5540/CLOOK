@@ -5,7 +5,7 @@ import * as dateUtil from "../../util/dateUtil";
 export default function CurrentWeather({ toptm, topspt }) {
   return (
     <div
-      className="flex flex-col items-center w-full h-[400px] mt-6 mb-5 pt-12 rounded-2xl md:flex-row md:items-center md:pt-0"
+      className="flex flex-col items-center w-full h-[400px] max-h-[400px] mt-6 mb-5 pt-12 rounded-2xl md:flex-row md:items-center md:pt-0"
       style={{
         background: `url(${getWeatherImages("bg", topspt.background)})`,
         backgroundRepeat: "no-repeat",
@@ -42,11 +42,11 @@ export default function CurrentWeather({ toptm, topspt }) {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-start md:basis-1/2">
+      <div className="flex flex-col h-[calc(18.75rem-28%)] mt-5 md:basis-1/2 md:justify-center md:items-start md:h-[18.75rem]">
         <img
-          className="relative t-0 l-0 w-auto h-[220px] animate-slow-bounce md:h-[18.75rem] md:ml-5"
+          className="relative t-0 l-0 w-auto h-full animate-slow-bounce md:ml-5"
           src={getWeatherImages("character", topspt.character)}
-          alt=""
+          alt="Weather-related characters"
         />
       </div>
     </div>
