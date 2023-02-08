@@ -8,7 +8,7 @@ import ClothesByTimeSkeleton from "../Shared/UI/ClothesByTimeSkeleton";
 import fakeClothes from "../../json/clothes.json";
 
 export default function ClothesByTime() {
-  const queryResults = useWeather(["clothes"], "");
+  const queryResults = useWeather(["clothes"], "", true);
   const { isLoading, status, data: clothes } = queryResults[0];
 
   // const clothes = fakeClothes;

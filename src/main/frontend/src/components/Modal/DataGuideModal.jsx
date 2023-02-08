@@ -18,7 +18,7 @@ export default function DataGuideModal({
       position={position}
       styles={styles}
     >
-      <div className="relative flex flex-col justify-center items-center w-full px-5 py-[1.875rem] bg-brand rounded-default md:w-[40.5rem] md:pl-[1.875rem] md:pr-9 md:py-10">
+      <div className="relative flex flex-col justify-center items-center w-full px-5 py-[1.875rem] bg-brand rounded-default md:pl-[1.875rem] md:pr-9 md:py-10">
         <div
           className="absolute top-5 right-5 flex justify-center items-center text-white cursor-pointer"
           onClick={onCloseModal}

@@ -11,7 +11,7 @@ import fakeToday from "../../json/today.json";
 export default function TodaysWeather() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const queryResults = useWeather(["today"], "");
+  const queryResults = useWeather(["today"], "", true);
   const { isLoading, status, data: today } = queryResults[0];
 
   // const today = fakeToday;
@@ -38,7 +38,7 @@ export default function TodaysWeather() {
               custom="true"
               bgType={false}
               position="middle"
-              styles="px-5 w-full lg:px-0 lg:w-auto rounded-default global-shadow"
+              styles="w-[90%] rounded-default global-shadow md:w-[40.5rem]"
             />
           )}
           <Card styles="flex items-center justify-center h-[18.75rem] p-4 md:h-[22.5rem] md:p-5 lg:h-[27.5rem] lg:p-6">

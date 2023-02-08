@@ -28,7 +28,7 @@ export default function Survey() {
           onCloseModal={() => setIsOpen(false)}
           custom="true"
           position="middle"
-          styles="w-full min-w-[20.25rem] px-5 md:w-[40.5rem] md:px-0 global-shadow"
+          styles="w-[90%] md:w-[40.5rem] global-shadow"
           addSurvey={addSurvey}
         />
       )}

@@ -41,15 +41,6 @@ export default function ClothesByTimeSkeleton() {
                         />
                       </div>
                     </div>
-                    // <div className="flex flex-col items-center w-20 h-20 md:w-[91px] md:h-[116px]">
-                    //   <div className="rounded-default bg-gray-200 flex justify-center items-center w-full h-[3.125rem] md:h-[4.5rem]">
-                    //     <Icon
-                    //       icon={faMountainSun}
-                    //       styles="text-sm text-gray-100 md:text-base"
-                    //     />
-                    //   </div>
-                    //   <span className="rounded-default bg-gray-200 w-full h-6 text-base font-medium leading-150 mt-[6px] md:text-lg md:mt-4 lg:text-xl"></span>
-                    // </div>
                   ))}
                 </div>
               </div>

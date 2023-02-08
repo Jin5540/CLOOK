@@ -30,7 +30,7 @@ import umbrella from "../assets/imgs/todaysCard/umbrella.png";
 import suns from "../assets/imgs/todaysCard/sun.png";
 
 export function getWeatherImages(type, value) {
-  if (!type || !value) return;
+  if (!type || (!value && value != 0)) return;
 
   let image = null;
 
@@ -66,10 +66,12 @@ export function getWeatherImages(type, value) {
     // character
     switch (value) {
       // background
-      case "1":
+      case "0":
+      case 0:
         image = characterA; // 기본A타입
         break;
-      case "2":
+      case "1":
+      case 1:
         image = characterB; // 기본B타입
         break;
       case "더움":
@@ -136,7 +138,7 @@ export function getWeatherImages(type, value) {
       case "강수량":
         image = umbrella;
         break;
-      case "일출/일몰":
+      case "일출일몰":
         image = suns;
         break;
       default:

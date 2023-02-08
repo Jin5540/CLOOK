@@ -17,13 +17,6 @@ export default function TodaysWeatherSkeleton() {
         </span>
       </div>
       <div className="rounded-default border border-gray-200 flex flex-col items-center justify-between h-[18.75rem] p-6 md:h-[22.5rem] md:p-7 lg:h-[27.5rem] lg:p-7">
-        {/* <div className="rounded-default bg-gray-200 w-full h-1/4 mb-5"></div>
-        <div className="rounded-default bg-gray-200 flex items-center justify-center w-full h-3/4">
-          <Icon
-            icon={faChartLine}
-            styles="text-3xl text-gray-100 md:text-5xl"
-          />
-        </div> */}
         <div className="rounded-default bg-gray-200 flex items-center justify-center w-full h-full">
           <Icon
             icon={faChartLine}

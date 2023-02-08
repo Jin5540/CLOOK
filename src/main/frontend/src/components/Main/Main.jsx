@@ -9,8 +9,8 @@ import fakeTopspt from "../../json/topspt.json";
 import fakeMsg from "../../json/msg.json";
 
 export default function Main() {
-  const queryResults = useWeather(["toptm", "topspt"], "");
-  const queryResult = useWeather(["msg"], "");
+  const queryResults = useWeather(["toptm", "topspt"], "", true);
+  const queryResult = useWeather(["msg"], "", false);
 
   const toptm = queryResults[0]?.data;
   const topspt = queryResults[1]?.data;
