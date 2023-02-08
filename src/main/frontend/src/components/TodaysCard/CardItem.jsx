@@ -10,10 +10,10 @@ export default function CardItem({ item }) {
 
   return (
     <div className="flex flex-col justify-between w-full h-full">
-      <div className="flex items-center text-base leading-150 font-semibold text-brand md:text-lg xl:text-xl">
+      <div className="flex text-base leading-150 font-semibold text-brand md:text-lg xl:text-xl">
         {titleIcon && (
           <img
-            className="h-5 md:h-6"
+            className="h-5 mt-[1px] md:h-6"
             src={getWeatherImages("cardIcon", name)}
             alt={name}
           />
