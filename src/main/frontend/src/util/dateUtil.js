@@ -16,6 +16,11 @@ export function currentHour() {
   return now.hour();
 }
 
+export function getDate(date, format) {
+  if (date) return dayjs(date).format(format);
+  else return dayjs().format(format);
+}
+
 export function TimeFormat(hour) {
   if (!hour && hour !== 0) return;
 
