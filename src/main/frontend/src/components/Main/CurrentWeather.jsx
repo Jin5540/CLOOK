@@ -42,7 +42,7 @@ export default function CurrentWeather({ toptm, topspt }) {
         </div>
       </div>
 
-      <div className="flex flex-col h-[calc(18.75rem-28%)] mt-5 md:basis-1/2 md:justify-center md:items-start md:h-[18.75rem]">
+      <div className="flex flex-col h-[12.5rem] mt-5 md:basis-1/2 md:justify-center md:items-start md:h-[18.75rem]">
         <img
           className="relative t-0 l-0 w-auto h-full animate-slow-bounce md:ml-5"
           src={getWeatherImages("character", topspt.character)}

@@ -76,13 +76,14 @@ function dupleDataSort(data) {
 export function sentenceFormat(data) {
   if (!data) return;
 
+  const currentDate = dateUtil.getDate(null, "YYMMDD");
+
   const sortData = sentenceSort(data);
   const dupleData = dupleDataSort(sortData);
   // console.log(data);
   // console.log(sortData);
   // console.log(resultData);
 
-  const currentDate = Number(data?.fcstDate);
   let result = "";
   dupleData.forEach((item, index) => {
     if (item[0] === -3) {
