@@ -76,7 +76,7 @@ function dupleDataSort(data) {
 export function sentenceFormat(data) {
   if (!data) return;
 
-  const currentDate = dateUtil.getDate(null, "YYMMDD");
+  const currentDate = dateUtil.getDate(null, "YYYYMMDD");
 
   const sortData = sentenceSort(data);
   const dupleData = dupleDataSort(sortData);

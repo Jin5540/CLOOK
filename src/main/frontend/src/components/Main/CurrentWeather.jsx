@@ -24,7 +24,7 @@ export default function CurrentWeather({ toptm, topspt }) {
             {dateUtil.dateFormat(toptm.fcstDate)}
           </span>
         </div>
-        <div className="flex items-center justify-evenly gap-[30px] w-full max-w-[16.25rem] md:flex-col md:justify-center">
+        <div className="flex items-center justify-evenly gap-[30px] w-full max-w-[16.25rem] md:flex-col md:justify-center md:gap-0">
           <div className="flex items-center text-5xl leading-150 font-normal md:text-8xl md:my-2">
             <span className="text-shadow">{topspt.t1h}</span>
             <span className="text-shadow">°C</span>
