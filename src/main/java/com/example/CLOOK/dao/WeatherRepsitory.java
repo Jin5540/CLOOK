@@ -1912,15 +1912,15 @@ public interface WeatherRepsitory {
                 String format = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(format);
                 cal2.add(Calendar.DATE, -1); // 날짜를 하루 뺀다.
-                String baseDate = sdf.format(cal2.getTime());
+                formatedNowDate = sdf.format(cal2.getTime());
 
-                System.out.println(baseDate);
+                System.out.println(formatedNowDate);
             }
             if (45 < mmbigo) {
                 cal22.setTime(date);
                 nowPartTime = sdformat.format(cal22.getTime());
             }
-            System.out.println("지금 측정시간 : " + nowPartTime);
+            System.out.println("지금 측정시간 top : " + nowPartTime + " 날짜 ::: "+ formatedNowDate);
             String baseDate = formatedNowDate; // 조회하고싶은 날짜
             String baseTime = nowPartTime; // 조회하고싶은 시간
             String type = "JSON"; // 타입 xml, json 등등 ..
@@ -2153,9 +2153,9 @@ public interface WeatherRepsitory {
                 String format = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(format);
                 cal2.add(Calendar.DATE, -1); // 날짜를 하루 뺀다.
-                String baseDate = sdf.format(cal2.getTime());
+                formatedNowDate = sdf.format(cal2.getTime());
 
-                System.out.println(baseDate);
+                System.out.println(formatedNowDate);
             }
             if (45 < mmbigo) {
                 cal22.setTime(date);
