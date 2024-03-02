@@ -139,7 +139,6 @@ public class CLOOKController {
             return clookService.getweatherclothes(clookService.gecodingnxny(sessionlocation),
                     clookService.getUv(sessionlocation));
         }
-
     }
 
     /* 1시간단위 - SKY / ICON / PTY / POP / T1H */

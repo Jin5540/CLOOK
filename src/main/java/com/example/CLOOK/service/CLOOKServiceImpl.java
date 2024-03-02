@@ -18,7 +18,6 @@ import com.example.CLOOK.dao.WeatherRepsitory;
 import com.example.CLOOK.dao.SearchRepsitory;
 import com.example.CLOOK.dao.SunRepsitory;
 import com.example.CLOOK.dao.UVRepsitory;
-import com.example.CLOOK.dao.UVRepsitory_copy;
 import com.example.CLOOK.domain.AirVO;
 import com.example.CLOOK.domain.GeocodingVO;
 import com.example.CLOOK.domain.GoogleVO;
@@ -37,7 +36,6 @@ public class CLOOKServiceImpl implements CLOOKService {
 
     @Override
     public GeocodingVO location(String address) throws IOException, ParseException {
-
         log.info("location_service ::: ");
 
         return SearchRepsitory.searchData(address);
@@ -46,11 +44,9 @@ public class CLOOKServiceImpl implements CLOOKService {
 
     @Override
     public GeocodingVO gecodingnxny(String address) {
-
         log.info("gecodingnxny_service ::: ");
 
         GeocodingVO vo = GeocodingRepsitory2.getData(address);
-
         return GeocodingRepsitory.changData(vo);
 
     }
@@ -58,7 +54,6 @@ public class CLOOKServiceImpl implements CLOOKService {
     @Override
     public List<WeatherVO> getweatherclothes(GeocodingVO gecoding, UvVO uv)
             throws IOException, ParseException, java.text.ParseException {
-
         log.info("getweatherclothes_service ::: ");
 
         return WeatherRepsitory.getShortWeather4(gecoding, uv);
@@ -67,7 +62,6 @@ public class CLOOKServiceImpl implements CLOOKService {
     @Override
     public List<WeatherVO> getweathertoday(GeocodingVO gecoding, SunVO sun)
             throws IOException, ParseException, java.text.ParseException {
-
         log.info("getweathertoday_service ::: ");
 
         return WeatherRepsitory.getToday(gecoding, sun);
