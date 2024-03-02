@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import com.example.CLOOK.service.CLOOKService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
@@ -43,13 +45,15 @@ public class CLOOKController {
     @GetMapping(value = "/search", produces = "application/json; charset=UTF-8")
     public GeocodingVO searchAPI(@RequestParam(value = "saddress") String saddress)
             throws IOException, ParseException {
+        log.info("searchAPI_controller ::: ");
 
         return clookService.location(saddress);
     }
 
     /* 세션 정보 */
     @GetMapping(value = "/location", produces = "application/json; charset=UTF-8")
-    public String location(HttpServletRequest req) {
+    public String locationAPI(HttpServletRequest req) {
+        log.info("location_controller ::: ");
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
@@ -74,13 +78,14 @@ public class CLOOKController {
                 session.setAttribute("location", address);
                 session.setAttribute("region", region);
                 result = address;
-                System.out.println(result);
+
                 return JSONObject.quote(result);
             } else {
                 session.removeAttribute("location");
                 session.setAttribute("location", address);
                 session.setAttribute("region", region);
                 result = address;
+
                 return JSONObject.quote(result);
             }
         }
@@ -88,8 +93,9 @@ public class CLOOKController {
 
     /* 상단 - TMX / TMN / 예보메세지 */
     @GetMapping(value = "/toptm", produces = "application/json; charset=UTF-8")
-    public WeatherVO shortpartweather1(HttpServletRequest req)
+    public WeatherVO topTemperatureAPI(HttpServletRequest req)
             throws IOException, ParseException, java.text.ParseException {
+        log.info("shortpartweather1_controller ::: ");
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
@@ -102,8 +108,9 @@ public class CLOOKController {
 
     /* 상단 - SKY / PTY / T1H / ICON / CHARACTER */
     @GetMapping(value = "/topspt", produces = "application/json; charset=UTF-8")
-    public WeatherVO shortpartweather2(HttpServletRequest req)
+    public WeatherVO topOtherAPI(HttpServletRequest req)
             throws IOException, ParseException, java.text.ParseException {
+        log.info("shortpartweather2_controller ::: ");
 
         HttpSession session = req.getSession();
         String sessionlocation = (String) session.getAttribute("location");
@@ -119,9 +126,9 @@ public class CLOOKController {
 
     /* 3시간단위 - 옷 */
     @GetMapping(value = "/clothes", produces = "application/json; charset=UTF-8")
-    public List<WeatherVO> clothesweather(HttpServletRequest req, RedirectAttributes redirect)
+    public List<WeatherVO> clotheAPI(HttpServletRequest req, RedirectAttributes redirect)
             throws IOException, ParseException, java.text.ParseException {
-
+        log.info("clothesweather_controller ::: ");
         HttpSession session = req.getSession();
 
         String sessionlocation = (String) session.getAttribute("location");
@@ -137,9 +144,9 @@ public class CLOOKController {
 
     /* 1시간단위 - SKY / ICON / PTY / POP / T1H */
     @GetMapping(value = "/today", produces = "application/json; charset=UTF-8")
-    public List<WeatherVO> todayweather(HttpServletRequest req, RedirectAttributes redirect)
+    public List<WeatherVO> todayAPI(HttpServletRequest req, RedirectAttributes redirect)
             throws IOException, ParseException, java.text.ParseException {
-
+        log.info("todayweather_controller ::: ");
         HttpSession session = req.getSession();
 
         String sessionlocation = (String) session.getAttribute("location");
@@ -154,9 +161,9 @@ public class CLOOKController {
 
     /* REH / VEC / WSD / PCP */
     @GetMapping(value = "/card", produces = "application/json; charset=UTF-8")
-    public WeatherVO cardweather(HttpServletRequest req, RedirectAttributes redirect)
+    public WeatherVO cardAPI(HttpServletRequest req, RedirectAttributes redirect)
             throws IOException, ParseException, java.text.ParseException {
-
+        log.info("cardweather_controller ::: ");
         HttpSession session = req.getSession();
 
         String sessionlocation = (String) session.getAttribute("location");
@@ -169,7 +176,7 @@ public class CLOOKController {
 
     @GetMapping(value = "/air", produces = "application/json; charset=UTF-8")
     public AirVO airAPI(HttpServletRequest req, RedirectAttributes redirect) throws IOException, ParseException {
-
+        log.info("airAPI_controller ::: ");
         HttpSession session = req.getSession();
 
         String sessionlocation = (String) session.getAttribute("location");
@@ -188,7 +195,9 @@ public class CLOOKController {
 
     @GetMapping(value = "/uv", produces = "application/json; charset=UTF-8")
     public UvVO uvAPI(HttpServletRequest req) throws IOException, ParseException {
+        log.info("uvAPI_controller ::: ");
         HttpSession session = req.getSession();
+
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
             return clookService.getUv("서울특별시 중구 명동");
@@ -199,18 +208,21 @@ public class CLOOKController {
 
     @GetMapping(value = "/sun", produces = "application/json; charset=UTF-8")
     public SunVO sunAPI(HttpServletRequest req) throws IOException, ParseException {
+        log.info("sunAPI_controller ::: ");
         HttpSession session = req.getSession();
+
         String sessionlocation = (String) session.getAttribute("location");
         if (sessionlocation == null) {
             return clookService.getsun("서울특별시 중구 명동");
         } else {
             return clookService.getsun(sessionlocation);
         }
-
     }
 
     @PostMapping(value = "/sheet", produces = "application/json; charset=UTF-8")
     public void googleSheet(@RequestBody GoogleVO googleVO, Model model) throws IOException, GeneralSecurityException {
+        log.info("googleSheet_controller ::: ");
+
         clookService.insertSheet(googleVO);
     }
 
